@@ -1,0 +1,18 @@
+# 数据与模型（体积大、授权独立）
+data/*
+!data/geo/
+!data/geo/**
+datasets/
+outputs/
+venv/
+models/
+LLaMA-Factory/
+
+# 私有凭据
+scripts/credentials_local.py
+config/llm.json
+
+# Python
+__pycache__/
+*.pyc
+*.log

@@ -1,0 +1,382 @@
+{
+ "flood_opt": {
+  "zh": "洪水（flood_opt）",
+  "source": "OPT",
+  "n": 200,
+  "det": 100.0,
+  "sev": 100.0,
+  "validation": "按天留出",
+  "holdout_det": 100.0,
+  "holdout_sev": 99.5
+ },
+ "drought_grace": {
+  "zh": "干旱（drought_grace）",
+  "source": "GRACE",
+  "n": 140,
+  "det": 100.0,
+  "sev": 100.0,
+  "validation": "时间留出",
+  "holdout_det": 100.0,
+  "holdout_sev": 100.0
+ },
+ "wildfire": {
+  "zh": "野火",
+  "source": "TIR",
+  "n": 60,
+  "det": 100.0,
+  "sev": 100.0,
+  "validation": "按天留出",
+  "holdout_det": 100.0,
+  "holdout_sev": 96.5
+ },
+ "iod": {
+  "zh": "印度洋偶极",
+  "source": "TIR",
+  "n": 200,
+  "det": 99.5,
+  "sev": 99.5,
+  "validation": "按年留出",
+  "holdout_det": 98.5,
+  "holdout_sev": 98.5
+ },
+ "drought_ndvi_clim": {
+  "zh": "干旱（drought_ndvi_clim）",
+  "source": "OPT",
+  "n": 120,
+  "det": 99.2,
+  "sev": 99.2,
+  "validation": "时间留出",
+  "holdout_det": 88.0,
+  "holdout_sev": 88.0
+ },
+ "marine_heatwave": {
+  "zh": "海洋热浪",
+  "source": "TIR",
+  "n": 200,
+  "det": 99.0,
+  "sev": 100.0,
+  "validation": "按年留出",
+  "holdout_det": 99.5,
+  "holdout_sev": 100.0
+ },
+ "coastal_sla": {
+  "zh": "海岸高水位（coastal_sla）",
+  "source": "ALT",
+  "n": 94,
+  "det": 98.9,
+  "sev": 85.1,
+  "validation": "时间留出",
+  "holdout_det": 86.5,
+  "holdout_sev": 80.5
+ },
+ "coral_dhw": {
+  "zh": "珊瑚白化",
+  "source": "TIR",
+  "n": 88,
+  "det": 98.9,
+  "sev": 79.5,
+  "validation": "按年留出",
+  "holdout_det": 97.5,
+  "holdout_sev": 56.5
+ },
+ "enso": {
+  "zh": "ENSO",
+  "source": "TIR",
+  "n": 200,
+  "det": 98.5,
+  "sev": 100.0,
+  "validation": "按年留出",
+  "holdout_det": 99.5,
+  "holdout_sev": 99.5
+ },
+ "green_tide": {
+  "zh": "绿潮",
+  "source": "OPT",
+  "n": 49,
+  "det": 98.0,
+  "sev": 79.6,
+  "validation": "按天留出",
+  "holdout_det": 88.5,
+  "holdout_sev": 65.6
+ },
+ "flare": {
+  "zh": "太阳耀斑",
+  "source": "SPACE",
+  "n": 200,
+  "det": 97.0,
+  "sev": 97.0,
+  "validation": "未验证（检出无法验证）",
+  "holdout_det": null,
+  "holdout_sev": null
+ },
+ "snow_fsc": {
+  "zh": "积雪（snow_fsc）",
+  "source": "OPT",
+  "n": 29,
+  "det": 96.6,
+  "sev": 58.6,
+  "validation": "按天留出",
+  "holdout_det": 90.3,
+  "holdout_sev": 61.1
+ },
+ "waterlogging_pct": {
+  "zh": "内涝",
+  "source": "MW",
+  "n": 80,
+  "det": 96.2,
+  "sev": 70.0,
+  "validation": "按年留出",
+  "holdout_det": 93.5,
+  "holdout_sev": 81.5
+ },
+ "snow_swe": {
+  "zh": "积雪（snow_swe）",
+  "source": "MW",
+  "n": 75,
+  "det": 96.0,
+  "sev": 78.7,
+  "validation": "时间留出",
+  "holdout_det": 98.0,
+  "holdout_sev": 81.5
+ },
+ "gpm_nt": {
+  "zh": "暴雨",
+  "source": "PRECIP",
+  "n": 200,
+  "det": 95.5,
+  "sev": 65.5,
+  "validation": "按天留出",
+  "holdout_det": 86.5,
+  "holdout_sev": 46.0
+ },
+ "groundwater_grace": {
+  "zh": "地下水",
+  "source": "GRACE",
+  "n": 160,
+  "det": 95.0,
+  "sev": 95.0,
+  "validation": "时间留出",
+  "holdout_det": 95.0,
+  "holdout_sev": 95.0
+ },
+ "bloom_chla": {
+  "zh": "水华",
+  "source": "OPT",
+  "n": 62,
+  "det": 93.5,
+  "sev": 90.3,
+  "validation": "时间留出",
+  "holdout_det": 90.5,
+  "holdout_sev": 90.5
+ },
+ "flood_precip_global": {
+  "zh": "洪水（flood_precip_global）",
+  "source": "PRECIP",
+  "n": 64,
+  "det": 92.2,
+  "sev": 92.2,
+  "validation": "时间留出",
+  "holdout_det": 76.2,
+  "holdout_sev": 76.2
+ },
+ "coastal_nt": {
+  "zh": "海岸高水位（coastal_nt）",
+  "source": "ALT",
+  "n": 200,
+  "det": 90.5,
+  "sev": 89.5,
+  "validation": "按天留出",
+  "holdout_det": 70.5,
+  "holdout_sev": 50.5
+ },
+ "earthquake_def": {
+  "zh": "地震形变",
+  "source": "SAR",
+  "n": 108,
+  "det": 88.9,
+  "sev": 67.6,
+  "validation": "未验证（无日期字段）",
+  "holdout_det": null,
+  "holdout_sev": null
+ },
+ "sea_ice_amsr2": {
+  "zh": "海冰（sea_ice_amsr2）",
+  "source": "MW",
+  "n": 132,
+  "det": 88.6,
+  "sev": 65.9,
+  "validation": "按天留出",
+  "holdout_det": 84.0,
+  "holdout_sev": 64.2
+ },
+ "groundwater_overuse": {
+  "zh": "地下水超采",
+  "source": "SAR",
+  "n": 200,
+  "det": 88.0,
+  "sev": 70.5,
+  "validation": "未验证（无日期字段）",
+  "holdout_det": null,
+  "holdout_sev": null
+ },
+ "volcano_thermal": {
+  "zh": "火山热异常",
+  "source": "TIR",
+  "n": 75,
+  "det": 88.0,
+  "sev": 93.3,
+  "validation": "按年留出",
+  "holdout_det": 76.0,
+  "holdout_sev": 89.5
+ },
+ "wildfire_smoke": {
+  "zh": "野火烟羽",
+  "source": "ATM",
+  "n": 82,
+  "det": 87.8,
+  "sev": 67.1,
+  "validation": "未验证（日期与类别耦合）",
+  "holdout_det": null,
+  "holdout_sev": null
+ },
+ "wave": {
+  "zh": "巨浪",
+  "source": "ALT",
+  "n": 28,
+  "det": 85.7,
+  "sev": 53.6,
+  "validation": "未验证（日期与类别耦合）",
+  "holdout_det": null,
+  "holdout_sev": null
+ },
+ "uvai_dust": {
+  "zh": "沙尘气溶胶",
+  "source": "ATM",
+  "n": 97,
+  "det": 84.5,
+  "sev": 74.2,
+  "validation": "按天留出",
+  "holdout_det": 77.5,
+  "holdout_sev": 62.0
+ },
+ "volcano_so2": {
+  "zh": "火山SO2",
+  "source": "ATM",
+  "n": 76,
+  "det": 84.2,
+  "sev": 65.8,
+  "validation": "时间留出",
+  "holdout_det": 74.4,
+  "holdout_sev": 74.4
+ },
+ "geomagnetic": {
+  "zh": "地磁暴",
+  "source": "SPACE",
+  "n": 35,
+  "det": 82.9,
+  "sev": 74.3,
+  "validation": "未验证（日期与类别耦合）",
+  "holdout_det": null,
+  "holdout_sev": null
+ },
+ "hurricane_rain": {
+  "zh": "台风降水",
+  "source": "PRECIP",
+  "n": 200,
+  "det": 82.0,
+  "sev": 84.5,
+  "validation": "按年留出",
+  "holdout_det": 82.0,
+  "holdout_sev": 83.0
+ },
+ "sanddust": {
+  "zh": "沙尘暴",
+  "source": "ATM",
+  "n": 60,
+  "det": 81.7,
+  "sev": 60.0,
+  "validation": "按天留出",
+  "holdout_det": 74.1,
+  "holdout_sev": 39.2
+ },
+ "sea_ice_s2_arctic": {
+  "zh": "海冰（sea_ice_s2_arctic）",
+  "source": "OPT",
+  "n": 27,
+  "det": 81.5,
+  "sev": 81.5,
+  "validation": "未验证（日期与类别耦合）",
+  "holdout_det": null,
+  "holdout_sev": null
+ },
+ "heatwave_lst": {
+  "zh": "热浪",
+  "source": "TIR",
+  "n": 69,
+  "det": 81.2,
+  "sev": 81.2,
+  "validation": "时间留出",
+  "holdout_det": 91.0,
+  "holdout_sev": 91.0
+ },
+ "ground_subsidence": {
+  "zh": "地面沉降",
+  "source": "SAR",
+  "n": 200,
+  "det": 81.0,
+  "sev": 81.0,
+  "validation": "按年留出",
+  "holdout_det": 100.0,
+  "holdout_sev": 100.0
+ },
+ "flood_water": {
+  "zh": "洪水（flood_water）",
+  "source": "SAR",
+  "n": 63,
+  "det": 81.0,
+  "sev": 81.0,
+  "validation": "时间留出",
+  "holdout_det": 59.4,
+  "holdout_sev": 55.6
+ },
+ "hurricane_opt": {
+  "zh": "台风",
+  "source": "OPT",
+  "n": 35,
+  "det": 80.0,
+  "sev": 77.1,
+  "validation": "未验证（无日期字段）",
+  "holdout_det": null,
+  "holdout_sev": null
+ },
+ "haze": {
+  "zh": "雾/霾",
+  "source": "ATM",
+  "n": 200,
+  "det": 79.5,
+  "sev": 79.5,
+  "validation": "按天留出",
+  "holdout_det": 86.5,
+  "holdout_sev": 86.5
+ },
+ "snowstorm": {
+  "zh": "暴雪",
+  "source": "MW",
+  "n": 200,
+  "det": 70.0,
+  "sev": 62.5,
+  "validation": "按天留出",
+  "holdout_det": 75.9,
+  "holdout_sev": 68.3
+ },
+ "wind_gale": {
+  "zh": "海上大风",
+  "source": "SCAT",
+  "n": 78,
+  "det": 65.4,
+  "sev": 48.7,
+  "validation": "按天留出",
+  "holdout_det": 63.0,
+  "holdout_sev": 41.8
+ }
+}

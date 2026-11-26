@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>遥感灾害识别 · 按采集方式分栏演示</title>
+<style>
+  :root { --fg:#0f172a; --muted:#5b6672; --line:#e2e8f0; --bg:#f5f7fa; --acc:#2563eb; --ok:#0f766e; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:15px/1.6 system-ui, "Segoe UI", "Microsoft YaHei", sans-serif; color:var(--fg); background:var(--bg); }
+  header { padding:16px 24px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+  header h1 { margin:0; font-size:18px; }
+  header p { margin:3px 0 0; color:var(--muted); font-size:13px; }
+  .tabs { display:flex; gap:6px; flex-wrap:wrap; padding:12px 24px 0; background:#fff; border-bottom:1px solid var(--line); }
+  .tab { padding:8px 14px; border:1px solid var(--line); border-bottom:0; border-radius:8px 8px 0 0; background:#f8fafc; cursor:pointer; font-size:14px; color:var(--muted); }
+  .tab.active { background:#fff; color:var(--acc); font-weight:600; box-shadow:0 -2px 0 var(--acc) inset; }
+  main { display:grid; grid-template-columns: 360px 1fr; gap:16px; max-width:1280px; margin:18px auto; padding:0 16px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; }
+  .card h2 { margin:0 0 10px; font-size:13px; letter-spacing:.04em; color:var(--muted); font-weight:600; }
+  .el-list { display:flex; flex-direction:column; gap:8px; max-height:420px; overflow:auto; }
+  .el { border:1px solid var(--line); border-radius:10px; padding:8px 10px; cursor:pointer; }
+  .el.sel { border-color:var(--acc); box-shadow:0 0 0 1px var(--acc) inset; }
+  .el b { font-size:14px; }
+  .el span { color:var(--muted); font-size:12px; margin-left:6px; }
+  .thumbs { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; }
+  .thumbs img { width:64px; height:64px; object-fit:cover; border-radius:6px; border:1px solid var(--line); cursor:pointer; }
+  .thumb { position:relative; display:inline-block; }
+  .tbadge { position:absolute; left:0; bottom:0; font-size:10px; background:rgba(255,255,255,.9); border:1px solid var(--line); border-radius:0 6px 0 6px; padding:0 4px; color:#475569; }
+  .tbadge.unseen { color:#b45309; border-color:#f59e0b; }
+  .cap { background:#f8fafc; border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:8px; padding:10px 12px; margin-bottom:12px; font-size:13px; }
+  .cap b { font-size:15px; }
+  .cap .m { color:var(--muted); }
+  .cap .big { font-weight:700; color:var(--acc); }
+  label { display:block; font-size:12px; color:var(--muted); margin:10px 0 4px; }
+  input[type=text], input[type=file], select { width:100%; padding:8px 10px; border:1px solid var(--line); border-radius:8px; font-size:14px; background:#fff; }
+  button { border:0; border-radius:8px; padding:10px; font-size:14px; cursor:pointer; background:var(--acc); color:#fff; }
+  button.ghost { background:var(--ok); }
+  button:disabled { opacity:.55; cursor:default; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .btns { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; }
+  .kv { display:grid; grid-template-columns:110px 1fr; gap:6px 10px; font-size:14px; }
+  .kv div:nth-child(odd) { color:var(--muted); }
+  .risk { display:inline-block; padding:2px 10px; border-radius:999px; font-size:13px; font-weight:600; }
+  .risk.低 { background:#dcfce7; color:#166534; }
+  .risk.中 { background:#fef9c3; color:#854d0e; }
+  .risk.高 { background:#fee2e2; color:#991b1b; }
+  pre { background:#0f172a; color:#e2e8f0; padding:12px; border-radius:8px; overflow:auto; font-size:12px; }
+  .muted { color:var(--muted); font-size:13px; }
+  a { color:var(--acc); }
+  .pill { font-size:11px; color:#64748b; border:1px solid var(--line); border-radius:999px; padding:1px 8px; margin-left:6px; }
+  #preview { width:100%; border-radius:10px; margin-top:10px; display:none; }
+  @media (max-width: 960px) { main { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>遥感灾害识别 · 演示</h1>
+  <p>按采集方式分栏：光学 / 热红外 / 被动微波 / 雷达降水 / 测高 / 重力 / 散射计 / 空间天气 —— 每栏元素可一键用样例图测试；样例优先取「按日期留出」的验证图（训练集之外的日期）</p>
+  <div id="status" class="muted" style="margin-top:6px">状态读取中…</div>
+</header>
+<div class="tabs" id="tabs"></div>
+<main>
+  <section class="card">
+    <div id="cap" class="cap" style="display:none"></div>
+    <h2>① 选择元素（当前采集方式）</h2>
+    <input type="text" id="q" placeholder="搜索元素（中英文均可）" style="margin-bottom:8px">
+    <div class="el-list" id="els"></div>
+
+    <h2 style="margin-top:16px">② 输入</h2>
+    <label>上传自己的渲染图</label>
+    <input type="file" id="file" accept="image/*">
+    <div class="row">
+      <div><label>纬度（可选）</label><input type="text" id="lat" placeholder="30.5"></div>
+      <div><label>经度（可选）</label><input type="text" id="lon" placeholder="114.3"></div>
+    </div>
+    <label>研判后端</label>
+    <select id="backend">
+      <option value="template">模板（离线）</option>
+      <option value="llm">大模型 API（DeepSeek）</option>
+    </select>
+    <div class="btns">
+      <button id="go">识别上传图</button>
+      <button id="goSample" class="ghost">用样例图测试</button>
+    </div>
+    <div style="margin-top:8px"><button id="goAgg" style="width:100%;background:#7c3aed">汇总研判（已跑的元素）</button></div>
+    <div class="muted" id="hint" style="margin-top:8px">首次推理加载 4B 基座约 1–2 分钟，之后同元素秒级。</div>
+    <img id="preview" alt="预览">
+
+    <details style="margin-top:14px">
+      <summary class="muted">大模型接口配置</summary>
+      <label>Base URL</label><input type="text" id="llmBase" placeholder="https://api.deepseek.com/v1">
+      <label>API Key</label><input type="text" id="llmKey" placeholder="sk-…（只存本地）">
+      <label>模型</label><input type="text" id="llmModel" placeholder="deepseek-flash">
+      <div class="bts" style="display:flex;gap:8px;margin-top:10px">
+        <button id="saveLLM" style="flex:1">保存</button>
+        <button id="testLLM" class="ghost" style="flex:1">测试连接</button>
+      </div>
+      <div class="muted" id="llmStatus" style="margin-top:8px">未读取。</div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>③ 结果</h2>
+    <div id="out" class="muted">尚未运行。左侧选一个元素，点「用样例图测试」最快。</div>
+    <details style="margin-top:16px"><summary class="muted">工程清单（脚本 / 文档 / 接口）</summary>
+      <div id="artifacts" class="muted" style="margin-top:8px">读取中…</div>
+    </details>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+let CATALOG = [], curSource = null, curEl = null, RECENT = [];
+
+function esc(s){ return String(s ?? '').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+async function loadCatalog(){
+  const r = await fetch('/api/catalog'); const d = await r.json();
+  CATALOG = d.groups || [];
+  const tabs = $('tabs'); tabs.innerHTML = '';
+  CATALOG.forEach((g, i) => {
+    const t = document.createElement('div');
+    t.className = 'tab' + (i === 0 ? ' active' : '');
+    t.textContent = g.label + '（' + g.elements.length + '）';
+    t.dataset.src = g.source;
+    t.onclick = () => { document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active'); curSource = g; renderEls(); };
+    tabs.appendChild(t);
+  });
+  curSource = CATALOG[0] || null;
+  renderEls();
+}
+
+function renderEls(){
+  const box = $('els'); box.innerHTML = '';
+  if (!curSource) return;
+  const q = ($('q') && $('q').value || '').trim().toLowerCase();
+  curSource.elements.filter(e => !q || e.name.toLowerCase().includes(q) || (e.zh||'').includes(q)).forEach(e => {
+    const d = document.createElement('div');
+    d.className = 'el' + (curEl && curEl.name === e.name ? ' sel' : '');
+    d.dataset.el = e.name;
+    d.dataset.src = curSource.source;
+    d.innerHTML = '<b>' + esc(e.zh) + '</b><span>' + esc(e.name) + '</span>';
+    if (e.samples && e.samples.length) {
+      const th = document.createElement('div'); th.className = 'thumbs';
+      e.samples.forEach(s => {
+        const u = s.url || s;
+        const tag = s.tag || '';
+        const wrap = document.createElement('div');
+        wrap.className = 'thumb';
+        const im = document.createElement('img');
+        im.src = u;
+        im.title = tag + (s.label ? ' · 标签 ' + s.label : '');
+        im.onclick = (ev) => { ev.stopPropagation(); selectEl(e, d); runSample(u); };
+        wrap.appendChild(im);
+        if (tag) {
+          const b = document.createElement('span');
+          b.className = 'tbadge' + (tag === '未见日期' ? ' unseen' : '');
+          b.textContent = tag;
+          wrap.appendChild(b);
+        }
+        th.appendChild(wrap);
+      });
+      d.appendChild(th);
+    }
+    d.onclick = () => selectEl(e, d);
+    box.appendChild(d);
+  });
+}
+
+
+function renderCap(e){
+  const box = $('cap');
+  if (!e || !e.cap) { box.style.display = 'none'; return; }
+  const c = e.cap;
+  const f = (v) => v === null || v === undefined ? '—' : (v.toFixed(1) + '%');
+  const ho = (c.holdout_det === null || c.holdout_det === undefined) ? '—'
+    : (f(c.holdout_det) + ' / ' + f(c.holdout_sev));
+  box.style.display = 'block';
+  box.innerHTML = `<b>${esc(c.zh)}</b> <span class="m">${esc(c.source)} · n=${c.n ?? '—'} · ${esc(c.validation)}</span><br>
+    <span class="m">同分布</span> <span class="big">${f(c.det)} / ${f(c.sev)}</span>
+    <span class="m" style="margin-left:14px">未见日期</span> <span class="big">${ho}</span>`;
+}
+function selectEl(e, node){
+  curEl = e;
+  document.querySelectorAll('.el').forEach(x => x.classList.remove('sel'));
+  node.classList.add('sel');
+  renderCap(e);
+}
+
+async function predictWithBlob(blob, name){
+  if (!curEl) { alert('先在左边选一个元素'); return; }
+  const fd = new FormData();
+  fd.append('element', curEl.name);
+  fd.append('lat', $('lat').value);
+  fd.append('lon', $('lon').value);
+  fd.append('report_backend', $('backend').value);
+  fd.append('file', blob, name);
+  $('go').disabled = $('goSample').disabled = true;
+  $('out').textContent = '推理中…（首次约 1–2 分钟）';
+  try {
+    const r = await fetch('/api/predict', { method:'POST', body: fd });
+    render(await r.json());
+  } catch(e) { $('out').textContent = '请求失败：' + e; }
+  finally { $('go').disabled = $('goSample').disabled = false; }
+}
+
+async function runSample(url){
+  const r = await fetch(url); const b = await r.blob();
+  $('preview').src = URL.createObjectURL(b); $('preview').style.display = 'block';
+  await predictWithBlob(b, url.split('/').pop() || 'sample.png');
+}
+
+// 按文件名自动推荐元素
+async function routeByName(fname){
+  if (!fname) return;
+  try {
+    const d = await (await fetch('/api/route?name=' + encodeURIComponent(fname))).json();
+    const c = (d.candidates || [])[0];
+    if (!c) { $('hint').textContent = '文件名无可识别词根，请手动选元素。'; return; }
+    let src = '';
+    CATALOG.forEach(g => g.elements.forEach(e => { if (e.name === c.element) src = g.source; }));
+    const tab = document.querySelector('.tab[data-src="' + src + '"]');
+    if (tab) tab.click();
+    const node = document.querySelector('.el[data-el="' + c.element + '"]');
+    if (node) node.click();
+    $('hint').textContent = '按文件名推荐：' + c.zh + '（' + c.element + '），已自动选中。';
+  } catch (e) { /* 静默 */ }
+}
+
+$('file').addEventListener('change', () => {
+  const f = $('file').files[0]; if (!f) return;
+  $('preview').src = URL.createObjectURL(f); $('preview').style.display = 'block';
+  routeByName(f.name);
+});
+$('go').addEventListener('click', () => {
+  const f = $('file').files[0];
+  if (!f) { alert('先选一张图，或点「用样例图测试」'); return; }
+  predictWithBlob(f, f.name);
+});
+$('goSample').addEventListener('click', () => {
+  if (!curEl) { alert('先选元素'); return; }
+  const s0 = (curEl.samples && curEl.samples[0]) ? curEl.samples[0] : null;
+  const u = s0 ? (s0.url || s0) : null;
+  if (!u) { alert('这个元素没有样例图'); return; }
+  runSample(u);
+});
+
+function downloadJSON(){
+  const el = document.getElementById('rawjson');
+  if (!el) return;
+  const blob = new Blob([el.textContent], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'result_' + (curEl ? curEl.name : 'result') + '.json';
+  a.click();
+}
+function render(d){
+  const out = $('out');
+  if (d.error) { out.innerHTML = '<p style="color:#b91c1c">' + esc(d.error) + '</p><pre>' + esc(d.raw||'') + '</pre>'; return; }
+  const p = d.prediction || {}, rep = d.report || {};
+  if (p.element) { RECENT = RECENT.filter(x => x.element !== p.element); RECENT.push(p); }
+  const loc = rep.location || p.location || {};
+  const where = loc.province ? (loc.province + (loc.city ? ' · ' + loc.city : '')) : '—';
+  out.innerHTML = `
+    <div class="kv">
+      <div>元素</div><div>${esc(p.element || (curEl && curEl.name) || '')}<span class="pill">${esc(curEl && curEl.zh || '')}</span></div>
+      <div>检出</div><div>${p.detected ? '是' : '否'}</div>
+      <div>等级</div><div>${esc(p.severity)}</div>
+      <div>物理量</div><div>${esc(p.physical_quantity)}</div>
+      <div>判据</div><div>${esc(p.criterion)}</div>
+      <div>位置</div><div>${esc(where)}</div>
+      <div>风险</div><div><span class="risk ${esc(rep.risk||'')}">${esc(rep.risk||'—')}</span></div>
+    </div>
+    <p style="margin:14px 0 6px"><b>研判</b></p><p>${esc(rep.summary||'')}</p>
+    <p class="muted">建议：${(rep.actions||[]).map(esc).join('；')||'—'}</p>
+    <p class="muted">后端：${esc(rep.backend||'')}</p>
+    ${loc.lat ? `<p><a target="_blank" href="https://www.openstreetmap.org/?mlat=${loc.lat}&mlon=${loc.lon}#map=9/${loc.lat}/${loc.lon}">在地图上查看</a></p>` : ''}
+    <p><button style="background:#475569;padding:6px 10px;font-size:13px" onclick="downloadJSON()">导出结果 JSON</button></p>
+    <details style="margin-top:12px"><summary class="muted">原始 JSON</summary><pre id="rawjson">${esc(JSON.stringify(p,null,1))}</pre></details>`;
+}
+
+// LLM 配置
+function loadLLM(){
+  fetch('/api/llm').then(r=>r.json()).then(d=>{
+    if (d.base_url) $('llmBase').value = d.base_url;
+    if (d.model) $('llmModel').value = d.model;
+    $('llmStatus').textContent = d.configured ? ('已配置：'+d.model+'（key '+d.api_key+'）') : '未配置 API key。';
+  }).catch(()=>{ $('llmStatus').textContent='读取失败'; });
+}
+$('saveLLM').addEventListener('click', async e => {
+  e.preventDefault();
+  const body = { base_url: $('llmBase').value, model: $('llmModel').value };
+  if ($('llmKey').value.trim()) body.api_key = $('llmKey').value.trim();
+  const r = await fetch('/api/llm', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
+  const d = await r.json(); $('llmKey').value='';
+  $('llmStatus').textContent = d.ok ? ('已保存：'+d.model+'（key '+d.api_key+'）') : '保存失败';
+});
+$('testLLM').addEventListener('click', async e => {
+  e.preventDefault(); $('llmStatus').textContent='测试中…';
+  const r = await fetch('/api/llm/test',{method:'POST'}); const d = await r.json();
+  $('llmStatus').textContent = d.ok ? ('连接正常；'+(d.model_in_list?'模型可用':'模型不在列表')+'：'+(d.models||[]).slice(0,6).join(', ')) : ('失败：'+d.error);
+});
+
+async function loadArtifacts(){
+  try {
+    const d = await (await fetch('/api/artifacts')).json();
+    const box = $('artifacts');
+    const line = (a) => '<div>· <b>' + esc(a.name) + '</b> <span class="muted">(' + (a.lines||'') + ' 行) ' + esc(a.desc) + '</span></div>';
+    box.innerHTML =
+      '<div><b>脚本 ' + (d.scripts||[]).length + ' 个</b></div>' + (d.scripts||[]).map(line).join('') +
+      '<div style="margin-top:8px"><b>文档 ' + (d.docs||[]).length + ' 篇</b></div>' + (d.docs||[]).map(line).join('') +
+      '<div style="margin-top:8px"><b>接口</b></div>' + (d.endpoints||[]).map(line).join('');
+  } catch(e) { $('artifacts').textContent = '读取失败'; }
+}
+async function loadStatus(){
+  try {
+    const d = await (await fetch('/api/status')).json();
+    $('status').innerHTML = '元素 <b>' + d.elements + '</b> · 模型 <b style="color:' + (d.model_loaded ? '#0f766e' : '#b45309') + '">'
+      + (d.model_loaded ? '已暖机（' + (d.current_element||'') + '）' : '未加载（首次推理约 1–2 分钟）') + '</b>'
+      + ' · 缓存的挂件 ' + d.adapters_cached
+      + (d.last_e2e ? (' · 端到端 <b style="color:' + (d.last_e2e.ok === d.last_e2e.total ? '#0f766e' : '#b45309') + '">' + d.last_e2e.ok + '/' + d.last_e2e.total + '</b>') : '');
+  } catch(e) { $('status').textContent = '状态读取失败'; }
+}
+
+$('goAgg').addEventListener('click', async () => {
+  if (!RECENT.length) { alert('先跑至少一个元素'); return; }
+  $('out').textContent = '汇总研判中…（' + RECENT.length + ' 个元素）';
+  try {
+    const r = await fetch('/api/report_aggregate', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: RECENT, lat: parseFloat($('lat').value) || null,
+                             lon: parseFloat($('lon').value) || null, backend: $('backend').value })
+    });
+    const d = await r.json();
+    if (d.error) { $('out').textContent = d.error; return; }
+    const rep = d.report || {};
+    const loc = rep.location || {};
+    $('out').innerHTML = `
+      <div class="kv">
+        <div>参与元素</div><div>${RECENT.map(x => esc(x.element)).join('、')}</div>
+        <div>综合风险</div><div><span class="risk ${esc(rep.risk||'')}">${esc(rep.risk||'—')}</span></div>
+        <div>位置</div><div>${esc(loc.province ? loc.province + (loc.city ? ' · ' + loc.city : '') : '—')}</div>
+      </div>
+      <p style="margin:14px 0 6px"><b>综合研判</b></p><p>${esc(rep.summary||'')}</p>
+      <p class="muted">建议：${(rep.actions||[]).map(esc).join('；')||'—'}</p>
+      <p class="muted">后端：${esc(rep.backend||'')}</p>`;
+  } catch (e) { $('out').textContent = '请求失败：' + e; }
+});
+
+// 键盘快捷键：1-9 切标签，S 跑样例，A 汇总研判
+document.addEventListener('keydown', (e) => {
+  const t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')) return;
+  const tabs = [...document.querySelectorAll('.tab')];
+  if (e.key >= '1' && e.key <= '9') {
+    const i = parseInt(e.key, 10) - 1;
+    if (tabs[i]) { tabs[i].click(); e.preventDefault(); }
+  } else if (e.key === 's' || e.key === 'S') {
+    const b = $('goSample'); if (b) b.click();
+  } else if (e.key === 'a' || e.key === 'A') {
+    const b = $('goAgg'); if (b) b.click();
+  }
+});
+loadCatalog(); loadLLM(); loadStatus(); loadArtifacts();
+$('q').addEventListener('input', () => renderEls()); setInterval(loadStatus, 15000);
+</script>
+</body>
+</html>
