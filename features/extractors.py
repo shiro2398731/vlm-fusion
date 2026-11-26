@@ -8,6 +8,7 @@
 """
 from __future__ import annotations
 
+import os
 import numpy as np
 from typing import List, Optional
 from PIL import Image
@@ -91,12 +92,48 @@ class DinoV2Extractor(FeatureExtractor):
 
 
 class ClipExtractor(FeatureExtractor):
-    """冻结 CLIP：图像嵌入与类别文本相似度（占位，后续填入）。"""
+    """冻结 CLIP：图像嵌入与类别文本相似度。"""
 
     name = "clip_vit_b32"
 
+    def __init__(self, model_name=os.environ.get("VLM_CLIP_DIR", r"C:\vlmdisaster\models\clip-vit-b32"),
+                 prompt_template="a satellite remote-sensing disaster map showing {label}",
+                 cache_dir=None, device=None, **kw):
+        super().__init__(**kw)
+        self.model_name = model_name
+        self.prompt_template = prompt_template
+        self.cache_dir = cache_dir or os.environ.get("VLM_HF_HOME", r"C:\vlmdisaster\models\hf")
+        self.device = device
+        self.model = None
+        self.proc = None
+
+    def load(self):
+        import torch
+        from transformers import CLIPModel, CLIPProcessor
+        self.torch = torch
+        self.device = self.device or ("cuda" if torch.cuda.is_available() else "cpu")
+        self.model = CLIPModel.from_pretrained(self.model_name, cache_dir=self.cache_dir)
+        self.proc = CLIPProcessor.from_pretrained(self.model_name, cache_dir=self.cache_dir)
+        self.model.eval().to(self.device)
+
     def extract(self, bundle, labels=None):
-        bundle.meta["semantic_status"] = "clip_not_implemented"
+        labels = list(labels or [])
+        if not labels:
+            bundle.meta["semantic_status"] = "no_labels"
+            return bundle
+        if self.model is None:
+            self.load()
+        torch = self.torch
+        img = _to_rgb(bundle.image_path)
+        prompts = [self.prompt_template.format(label=l) for l in labels]
+        inp = self.proc(text=prompts, images=img, return_tensors="pt", padding=True)
+        inp = {k: v.to(self.device) for k, v in inp.items()}
+        with torch.no_grad():
+            out = self.model(**inp)
+        probs = out.logits_per_image[0].softmax(dim=0)
+        bundle.semantic_scores = {str(l): float(p) for l, p in zip(labels, probs)}
+        bundle.semantic_vector = out.image_embeds[0].detach().cpu().numpy()
+        bundle.meta["semantic"] = {"model": self.model_name, "labels": labels}
         return bundle
 
 
