@@ -32,14 +32,20 @@ from fastapi.staticfiles import StaticFiles  # noqa: E402
 from report_llm import report as make_report, aggregate_report  # noqa: E402
 from reverse_geocode import geocode  # noqa: E402
 
-MODEL = r"C:\vlmdisaster\models\Qwen3-VL-4B\models\Qwen--Qwen3-VL-4B-Instruct\snapshots\master"
-OUT_ROOT = r"C:\vlmdisaster\outputs"
-LF_DATA = r"C:\vlmdisaster\LLaMA-Factory\data"
+_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL = os.environ.get(
+    "VLM_MODEL",
+    os.path.join(_REPO, "models", "Qwen3-VL-4B", "models",
+                 "Qwen--Qwen3-VL-4B-Instruct", "snapshots", "master"))
+OUT_ROOT = os.environ.get("VLM_OUTPUTS", os.path.join(_REPO, "outputs"))
+LF_DATA = os.environ.get("VLM_LF_DATA", os.path.join(_REPO, "LLaMA-Factory", "data"))
 STATIC = r"C:\vlmdisaster\web"
 DATASETS = r"C:\vlmdisaster\datasets"
 DEMO_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "demo_samples")
-APPENDIX = r"C:\vlmdisaster\处理方案\论文附录_元素总表_20261117.md"
-CAPABILITY = r"C:\vlmdisaster\处理方案\元素能力_20261125.json"
+APPENDIX = os.environ.get("VLM_APPENDIX",
+                          os.path.join(_REPO, "docs", "appendix_elements.md"))
+CAPABILITY = os.environ.get("VLM_CAPABILITY",
+                            os.path.join(_REPO, "elements_capability.json"))
 ARTIFACTS = r"C:\vlmdisaster\处理方案\工程清单_20261125.json"
 
 SOURCE_ZH = {"OPT": "光学", "TIR": "热红外", "MW": "被动微波", "PRECIP": "雷达降水",
@@ -144,14 +150,20 @@ def parse_json(t):
     return None
 
 
-def predict(name, img_path):
+def predict(name, img_path, extra_text=""):
     import torch
     from qwen_vl_utils import process_vision_info
 
     model, proc = use_adapter(name)
+    prompt = prompt_of(name)
+    if extra_text.strip():
+        prompt = prompt + (
+            "\n\nAdditional measurements and features. Use them together with the image; "
+            "they come from physical statistics, a deep-network visual feature map and a "
+            "semantic (image-text) model:\n" + extra_text.strip())
     msgs = [{"role": "user", "content": [
         {"type": "image", "image": "file://%s" % img_path},
-        {"type": "text", "text": prompt_of(name)}]}]
+        {"type": "text", "text": prompt}]}]
     text = proc.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
     imgs, vids = process_vision_info(msgs)
     inp = proc(text=[text], images=imgs, videos=vids, return_tensors="pt").to(model.device)
@@ -316,6 +328,7 @@ def api_catalog():
 
 @app.post("/api/predict")
 async def api_predict(element: str = Form(...), lat: str = Form(""), lon: str = Form(""),
+                      extra_text: str = Form(""),
                       report_backend: str = Form("template"),
                       file: UploadFile = File(...)):
     if element not in list_elements():
@@ -326,7 +339,7 @@ async def api_predict(element: str = Form(...), lat: str = Form(""), lon: str = 
         f.write(await file.read())
     try:
         with _lock:
-            pred, raw = predict(element, path)
+            pred, raw = predict(element, path, extra_text)
     except RuntimeError as e:
         msg = str(e)
         if "out of memory" in msg.lower():

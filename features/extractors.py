@@ -13,6 +13,7 @@ from typing import List, Optional
 from PIL import Image
 
 from .base import FeatureBundle, FeatureExtractor
+from .numeric import NumericExtractor
 
 
 def _to_rgb(path):
@@ -101,6 +102,7 @@ class ClipExtractor(FeatureExtractor):
 
 REGISTRY = {
     "none": NoneExtractor,
+    "numeric": NumericExtractor,
     "resnet50": ResNetExtractor,
     "dinov2_small": DinoV2Extractor,
     "clip_vit_b32": ClipExtractor,

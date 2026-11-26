@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
-"""A 文本级 + B 图像级融合。"""
+"""融合层：三路特征 → Qwen 输入（图像 + 追加文本）。
+
+可配置项：
+  include_numeric / include_visual / include_semantic : 开关
+  image_layout : side（并排）| overlay（叠加）
+  visual_weight: 叠加时特征图权重
+  max_text_lines: 文本预算
+"""
 from __future__ import annotations
 
 import os
@@ -11,69 +18,109 @@ from PIL import Image
 from .base import Fusion, FusionInput
 
 
-def _save_map(arr, index_path, tag):
+def _tmp_path(index_path, tag):
     d = os.path.join(os.path.dirname(os.path.dirname(index_path)), "fusion_tmp")
     os.makedirs(d, exist_ok=True)
-    p = os.path.join(d, "%s_%s.png" % (os.path.basename(index_path)[:-4], tag))
-    Image.fromarray(arr).save(p)
-    return p
+    return os.path.join(d, "%s_%s.png" % (os.path.basename(index_path)[:-4], tag))
+
+
+def _blend(index_path, vmap, weight):
+    base = Image.open(index_path).convert("RGB").resize((384, 384))
+    vm = Image.fromarray(vmap).convert("RGB").resize((384, 384))
+    return Image.blend(base, vm, max(0.0, min(1.0, weight)))
 
 
 class TextImageFusion(Fusion):
-    """把语义分数与物理统计写进文本，把视觉特征图作为第二张图。"""
-
     mode = "text+image"
+
+    def __init__(self, include_numeric=True, include_visual=True,
+                 include_semantic=True, image_layout="side",
+                 visual_weight=0.35, max_text_lines=6, **kw):
+        super().__init__(**kw)
+        self.include_numeric = include_numeric
+        self.include_visual = include_visual
+        self.include_semantic = include_semantic
+        self.layout = image_layout
+        self.visual_weight = visual_weight
+        self.max_text_lines = max_text_lines
+
+    def _numeric_line(self, bundle):
+        if not self.include_numeric:
+            return None
+        meta = (bundle.meta or {}).get("numeric") or {}
+        fields, vals = meta.get("fields"), meta.get("values")
+        if fields and vals:
+            pairs = ["%s=%.4g" % (k, v) for k, v in zip(fields, vals)]
+            return "Physical statistics (normalized): " + ", ".join(pairs) + "."
+        if bundle.physical_stats:
+            return "Physical statistics: " + ", ".join(
+                "%s=%.4g" % kv for kv in bundle.physical_stats.items()) + "."
+        return None
+
+    def _semantic_line(self, bundle):
+        if not (self.include_semantic and bundle.semantic_scores):
+            return None
+        top = sorted(bundle.semantic_scores.items(), key=lambda x: -x[1])
+        s = ", ".join("%s=%.3f" % (k, v) for k, v in top[:4])
+        return ("Semantic similarity to class descriptions: " + s +
+                ". Most similar: %s; treat as a hint, not a label." % top[0][0])
 
     def compose(self, bundle) -> FusionInput:
         images = [bundle.image_path]
         lines = []
 
-        if bundle.physical_stats:
-            kv = ", ".join("%s=%.4g" % (k, v) for k, v in bundle.physical_stats.items())
-            lines.append("Physical statistics: %s." % kv)
+        if self.include_visual and bundle.visual_map is not None:
+            if self.layout == "overlay":
+                p = _tmp_path(bundle.image_path, "ovl")
+                _blend(bundle.image_path, bundle.visual_map, self.visual_weight).save(p)
+                images = [p]
+                lines.append("Image is a blend of the physical index map and a deep-network "
+                             "visual feature map.")
+            else:
+                p = _tmp_path(bundle.image_path, "vmap")
+                Image.fromarray(bundle.visual_map).save(p)
+                images = [bundle.image_path, p]
+                lines.append("Second image: deep-network visual feature map of the same window; "
+                             "use it together with the physical index map.")
 
-        if bundle.semantic_scores:
-            top = sorted(bundle.semantic_scores.items(), key=lambda x: -x[1])
-            sem = ", ".join("%s=%.3f" % (k, v) for k, v in top)
-            lines.append("Semantic similarity to class descriptions: %s." % sem)
-            lines.append("The most similar class is %s; treat this as a hint, not a label."
-                         % top[0][0])
+        for fn in (self._numeric_line, self._semantic_line):
+            s = fn(bundle)
+            if s:
+                lines.append(s)
 
-        if bundle.visual_map is not None:
-            images.append(_save_map(bundle.visual_map, bundle.image_path, "vmap"))
-            lines.append("The second image is a deep-network visual feature map of the same window; "
-                         "use it together with the physical index map.")
-
-        return FusionInput(images=images, text="\n".join(lines), meta={"mode": self.mode})
+        lines = lines[:self.max_text_lines]
+        return FusionInput(images=images, text="\n".join(lines),
+                           meta={"mode": self.mode,
+                                 "streams": {"numeric": bool(self._numeric_line(bundle)),
+                                             "visual": self.include_visual and bundle.visual_map is not None,
+                                             "semantic": bool(bundle.semantic_scores)}})
 
 
 class DecisionFusion(Fusion):
-    """C 决策级：先应用规则，把三路分数合成一个先验文本（后续接分类头）。"""
+    """C 决策级：三路各出先验，后续可替换为分类头。"""
 
     mode = "decision"
 
     def compose(self, bundle) -> FusionInput:
         lines = []
+        if bundle.physical_stats:
+            lines.append("Physical prior: " + ", ".join(
+                "%s=%.4g" % kv for kv in bundle.physical_stats.items()) + ".")
         if bundle.semantic_scores:
             top = max(bundle.semantic_scores.items(), key=lambda x: x[1])
-            lines.append("Semantic prior: %s (score %.3f)." % (top[0], top[1]))
-        if bundle.physical_stats:
-            lines.append("Physical prior: %s." %
-                         ", ".join("%s=%.4g" % kv for kv in bundle.physical_stats.items()))
+            lines.append("Semantic prior: %s (%.3f)." % (top[0], top[1]))
+        if bundle.visual_map is not None:
+            lines.append("Visual feature map available but not verbalized in decision mode.")
         return FusionInput(images=[bundle.image_path], text="\n".join(lines),
                            meta={"mode": self.mode})
 
 
-MODES = {
-    "text+image": TextImageFusion,
-    "decision": DecisionFusion,
-}
+MODES = {"text+image": TextImageFusion, "decision": DecisionFusion}
 
 
 def build(modes, **cfg):
-    for m in modes:
-        if m in ("text+image", "image", "text"):
-            return TextImageFusion(**cfg)
+    if any(m in ("text", "image", "text+image") for m in modes):
+        return TextImageFusion(**cfg)
     if "decision" in modes:
         return DecisionFusion(**cfg)
     raise KeyError("unknown fusion modes: %s" % modes)

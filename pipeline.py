@@ -32,22 +32,27 @@ def _composite(images: List[str]) -> str:
 class ElementPipeline:
     def __init__(self, cfg: Dict[str, Any]) -> None:
         self.cfg = cfg
+        num = cfg.get("numeric") or {}
         vis = cfg.get("visual") or {}
         sem = cfg.get("semantic") or {}
+        self.numeric = FE.build(num.get("extractor", "numeric"),
+                                scale=num.get("scale"), fields=num.get("fields"))
         self.visual = FE.build(vis.get("extractor", "none"),
                                output=vis.get("output", "map"))
-        self.semantic = FE.build(sem.get("extractor", "none"))
+        self.semantic = FE.build(sem.get("extractor", "none"),
+                                 labels=sem.get("labels") or [])
         self.labels = sem.get("labels") or []
-        self.fusion = FL.build(cfg.get("fusion", {}).get("mode", ["text+image"]))
+        self.fusion = FL.build(cfg.get("fusion", {}).get("mode", ["text+image"]),
+                               **dict(cfg.get("fusion") or {}))
 
     def run(self, image_path: str, api: str, element: str, stats=None) -> Dict[str, Any]:
         bundle = FeatureBundle(element=element, image_path=image_path,
                                physical_stats=stats or {})
+        bundle = self.numeric.extract(bundle)
         bundle = self.visual.extract(bundle)
         bundle = self.semantic.extract(bundle, labels=self.labels)
         fused = self.fusion.compose(bundle)
         img = _composite(fused.images)
-        # 服务端支持 extra_text 后即可直接拼接；当前为骨架，先按单图调用
         pred = self._predict(api, element, img, fused.text)
         return {"fusion": fused.text, "meta": bundle.meta, "prediction": pred}
 

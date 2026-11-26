@@ -3,15 +3,34 @@ snow_fsc:
   physical:
     source: raw_workflow
     renderer: snow_fsc
+
+  # 数值支路：物理统计量（渲染前算出，客观）
+  numeric:
+    extractor: numeric
+    fields: [mean_fsc]
+    scale:
+      mean_fsc: [0.0, 1.0]
+
+  # 视觉支路：冻结 CNN
   visual:
     extractor: none          # none | resnet50 | dinov2_small
     output: map              # map | vector
+
+  # 语义支路：冻结 CLIP（占位，后续填充）
   semantic:
     extractor: none          # none | clip_vit_b32 | clip_vit_l14
     labels: [no_snow, light, moderate, heavy]
     prompt_template: "a satellite snow-cover map showing {label} snow"
+
   fusion:
-    mode: [text, image]      # text / image / decision / embedding
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    image_layout: side       # side | overlay
+    visual_weight: 0.35
+    max_text_lines: 6
+
   eval:
     backend: local           # local | api
     model: qwen3-vl-4b
