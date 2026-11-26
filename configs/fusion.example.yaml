@@ -1,0 +1,17 @@
+# 三路特征融合配置示例：一个元素一份
+snow_fsc:
+  physical:
+    source: raw_workflow
+    renderer: snow_fsc
+  visual:
+    extractor: none          # none | resnet50 | dinov2_small
+    output: map              # map | vector
+  semantic:
+    extractor: none          # none | clip_vit_b32 | clip_vit_l14
+    labels: [no_snow, light, moderate, heavy]
+    prompt_template: "a satellite snow-cover map showing {label} snow"
+  fusion:
+    mode: [text, image]      # text / image / decision / embedding
+  eval:
+    backend: local           # local | api
+    model: qwen3-vl-4b

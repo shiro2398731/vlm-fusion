@@ -412,3 +412,20 @@ python scripts/raw_workflow.py --elements snow_swe,wind_gale --outdir outputs/ch
 ## 许可
 
 MIT（见 `LICENSE`）。
+
+---
+
+## 多模态融合扩展（进行中）
+
+在现有「物理指数图 → Qwen」之上，按三路特征扩展：
+
+- **物理特征**：现有渲染图 + 窗口统计量（冻结为 baseline）
+- **视觉特征**：冻结 CNN（ResNet50 / DINOv2）→ 特征图/向量
+- **语义特征**：冻结 CLIP → 图像嵌入与类别文本相似度
+- 三路经融合层（A 文本级 / B 图像级 / C 决策级 / D 嵌入级）送入 Qwen 综合分析
+
+架构与接口见 [docs/architecture_fusion.md](docs/architecture_fusion.md)；
+配置样例见 [configs/fusion.example.yaml](configs/fusion.example.yaml)。
+
+当前状态：接口与骨架已建，提取器 `none` 可复现 baseline；
+ResNet50 已接入，DINOv2 与 CLIP 为占位实现，后续填充。
