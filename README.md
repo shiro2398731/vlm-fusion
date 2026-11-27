@@ -415,17 +415,70 @@ MIT（见 `LICENSE`）。
 
 ---
 
-## 多模态融合扩展（进行中）
+## 多模态三路特征融合（vlm-fusion）
 
-在现有「物理指数图 → Qwen」之上，按三路特征扩展：
+在「物理指数图 → Qwen」之上，按老师要求增加两路深度网络特征，
+三路特征**并发**作为输入交给 Qwen 做多模态协同分类：
 
-- **物理特征**：现有渲染图 + 窗口统计量（冻结为 baseline）
-- **视觉特征**：冻结 CNN（ResNet50 / DINOv2）→ 特征图/向量
-- **语义特征**：冻结 CLIP → 图像嵌入与类别文本相似度
-- 三路经融合层（A 文本级 / B 图像级 / C 决策级 / D 嵌入级）送入 Qwen 综合分析
+```
+物理：指数渲染图 + 每样本物理统计量（数值特征）
+视觉：ResNet50 / DINOv2 → 每样本视觉特征（分数 + 16 维向量摘要）
+语义：CLIP → 每样本语义特征（分数 + 16 维向量摘要）
+                ↓ 三路并发
+        Qwen3-VL 基座（权重不变）
+                ↓
+        结构化判读 JSON + LLM 研判 + 逆地理编码
+```
 
-架构与接口见 [docs/architecture_fusion.md](docs/architecture_fusion.md)；
-配置样例见 [configs/fusion.example.yaml](configs/fusion.example.yaml)。
+### 三路输入的形式
 
-当前状态：接口与骨架已建，提取器 `none` 可复现 baseline；
-ResNet50 已接入，DINOv2 与 CLIP 为占位实现，后续填充。
+| 路径 | 特征（分数） | 特征向量 | 默认 |
+|---|---|---|---|
+| 数值 | 每样本物理量（归一化） | 物理量向量 | 开 |
+| 视觉 | 每元素探针的类别概率 | PCA-16 摘要 | 开 |
+| 语义 | 每元素 CLIP 探针概率 | PCA-16 摘要 | 开 |
+
+三路的分数与向量都写进输入文本（`extra_text` 通道），与指数图一起送入 Qwen。
+开关：`include_vectors` / `include_visual_vectors` / `include_semantic_vectors`。
+
+### 融合模式
+
+| 模式 | 做法 | 结论 |
+|---|---|---|
+| A 文本级 | 三路分数写进 prompt | 部分元素会拖累，默认关闭 |
+| B 图像级 | 视觉特征图并排/叠加成图 | 会破坏挂件判读，默认关闭 |
+| C 决策级 | Qwen 判读 + 探针高置信覆盖（tau 0.6） | **采用**，32 元素 18 升 13 平 1 降 |
+| D 嵌入级 | projector → token | 未实现，列为后续 |
+
+### 验证结果速览
+
+- 同分布（32 个元素，2 张/类）：**18 升、13 平、1 降**
+- 训练集外日期：wave 2/8→3/8、earthquake_def 4/6→6/6、groundwater 4/6→4/6
+- snow_fsc 外部 baseline 8/8，融合会拉低 → 该元素关闭融合
+- CLIP 零样本对渲染图无效（coral 0%、snow_fsc 31%），改「嵌入 + 探针」后 93–94%
+
+### 配置与文档
+
+- 逐元素开关：[configs/fusion_selected.yaml](configs/fusion_selected.yaml)（35 元素中 21 个启用）
+- 配置样例：[configs/fusion.example.yaml](configs/fusion.example.yaml)
+- 架构说明：[docs/architecture_fusion.md](docs/architecture_fusion.md)
+- 实验记录：[docs/four_group_results.md](docs/four_group_results.md)
+- 逐元素汇总：[docs/decision_summary.md](docs/decision_summary.md)、[docs/probe_summary.md](docs/probe_summary.md)
+- 独立附件：[docs/附件_三路特征融合架构.md](docs/附件_三路特征融合架构.md) 与同名 docx
+
+### 复现命令
+
+```bash
+# 训练探针（逐元素）
+python scripts/train_clip_probe.py coral_dhw snow_swe
+python scripts/train_resnet_probe.py coral_dhw snow_swe
+python scripts/train_dinov2_probe.py coral_dhw snow_swe
+
+# 决策级融合评测
+$env:TAU="0.6"; python scripts/eval_decision_fusion.py coral_dhw
+
+# 四组对照（baseline / +视觉 / +语义 / +both）
+$env:VEC="1"; python scripts/eval_four_groups_element.py coral_dhw
+```
+
+基线（vlm）完全未改动，所有结果与旧版本可比。
