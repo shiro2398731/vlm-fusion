@@ -1,4 +1,5 @@
 # 三路特征融合配置示例：一个元素一份
+# 默认测试模型：视觉 ResNet50 探针 + 语义 CLIP 探针（可在注册表里换成 DINOv2 等）
 snow_fsc:
   physical:
     source: raw_workflow
@@ -11,16 +12,17 @@ snow_fsc:
     scale:
       mean_fsc: [0.0, 1.0]
 
-  # 视觉支路：冻结 CNN
+  # 视觉支路：冻结 CNN（默认 ResNet50 探针）
   visual:
-    extractor: none          # none | resnet50 | dinov2_small
-    output: map              # map | vector
+    extractor: resnet_probe
+    probe_path: outputs/probes/snow_fsc_resnet_probe.joblib
+    # 备选：none | resnet50 | dinov2_probe | dinov2_small
 
-  # 语义支路：冻结 CLIP（占位，后续填充）
+  # 语义支路：冻结 CLIP（默认测试模型）
   semantic:
-    extractor: none          # none | clip_vit_b32 | clip_vit_l14
-    labels: [no_snow, light, moderate, heavy]
-    prompt_template: "a satellite snow-cover map showing {label} snow"
+    extractor: clip_probe
+    probe_path: outputs/probes/snow_fsc_clip_probe.joblib
+    # 备选：none | clip_vit_b32 | clip_vit_l14
 
   fusion:
     mode: [text, image]
