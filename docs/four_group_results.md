@@ -225,3 +225,12 @@ tau 越低探针覆盖越多；0.6 在这四个元素上最稳。
 
 累计：同分布 16 元素 = 14 升 2 平 0 降；
 训练集外 3 元素 = 2 升 1 平；另有 snow_fsc 外部（baseline 全对）已关闭。
+
+## 第十三次：全部 32 元素决策融合验证（tau=0.6）
+
+见 [decision_summary.md](decision_summary.md)：升 18、平 13、降 1。
+
+显著提升：flood_precip_global +5、hurricane_rain +5、flare +4、haze +4、wildfire +4、
+gpm_nt +3、sea_ice_amsr2 +3、wildfire_smoke +3、earthquake_def +2、sea_ice_s2_arctic +2。
+唯一下降：green_tide 5/6→4/6（关闭融合）。
+持平的多是 baseline 本来就强的元素（enso/iod/flood_opt 等）。
