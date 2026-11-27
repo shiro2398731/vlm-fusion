@@ -22,17 +22,27 @@ for el in ELS:
     for r in recs:
         by.setdefault(r.get("label"), []).append(r)
     picked = [r for lab in sorted(by) for r in by[lab][:2]]
-    probe = os.path.join(PROBES, "%s_clip_probe.joblib" % el if SRC == "semantic"
-                         else "%s_resnet_probe.joblib" % el)
-    cfg = {
-        "element": el,
-        "numeric": {"extractor": "none"},
-        "visual": ({"extractor": "resnet_probe", "probe_path": probe}
-                   if SRC == "visual" else {"extractor": "none"}),
-        "semantic": ({"extractor": "clip_probe", "probe_path": probe}
-                     if SRC == "semantic" else {"extractor": "none"}),
-        "fusion": {"mode": ["decision"], "tau": TAU, "source": SRC},
-    }
+    if SRC == "dinov2":
+        probe = os.path.join(PROBES, "%s_dinov2_probe.joblib" % el)
+        cfg = {
+            "element": el,
+            "numeric": {"extractor": "none"},
+            "visual": {"extractor": "dinov2_probe", "probe_path": probe},
+            "semantic": {"extractor": "none"},
+            "fusion": {"mode": ["decision"], "tau": TAU, "source": "visual"},
+        }
+    else:
+        probe = os.path.join(PROBES, "%s_clip_probe.joblib" % el if SRC == "semantic"
+                             else "%s_resnet_probe.joblib" % el)
+        cfg = {
+            "element": el,
+            "numeric": {"extractor": "none"},
+            "visual": ({"extractor": "resnet_probe", "probe_path": probe}
+                       if SRC == "visual" else {"extractor": "none"}),
+            "semantic": ({"extractor": "clip_probe", "probe_path": probe}
+                         if SRC == "semantic" else {"extractor": "none"}),
+            "fusion": {"mode": ["decision"], "tau": TAU, "source": SRC},
+        }
     p = ElementPipeline(cfg)
     ok = 0; n = 0; used = 0
     for r in picked:

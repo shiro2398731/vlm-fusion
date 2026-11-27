@@ -234,3 +234,27 @@ tau 越低探针覆盖越多；0.6 在这四个元素上最稳。
 gpm_nt +3、sea_ice_amsr2 +3、wildfire_smoke +3、earthquake_def +2、sea_ice_s2_arctic +2。
 唯一下降：green_tide 5/6→4/6（关闭融合）。
 持平的多是 baseline 本来就强的元素（enso/iod/flood_opt 等）。
+
+## 第十四次：DINOv2 支路（timm 本地权重，518 输入）
+
+探针验证准确率（同分布）：
+
+| 元素 | ResNet50 | CLIP | DINOv2 |
+|---|--:|--:|--:|
+| snow_swe | 89.3 | 89.3 | 94.7 |
+| coral_dhw | 96.6 | 94.3 | 95.5 |
+| haze | 88.1 | 91.1 | 90.2 |
+| sanddust | 81.7 | 80.0 | 90.0 |
+| wind_gale | 79.5 | 76.9 | 73.1 |
+
+决策融合（DINOv2 探针，tau 0.6）：
+
+| 元素 | baseline | CLIP 融合 | DINOv2 融合 |
+|---|--:|--:|--:|
+| snow_swe | 3/8 | 5/8 | 5/8 |
+| sanddust | 4/6 | 5/6 | **6/6** |
+| haze | 2/6 | 6/6 | 6/6 |
+| coral_dhw | 5/6 | 6/6 | 6/6 |
+
+结论：DINOv2 在 sanddust 上优于 CLIP；其他元素持平。
+视觉支路现在有三种可选提取器：resnet50 / clip / dinov2，逐元素可配。

@@ -112,12 +112,74 @@ class ResNetProbeExtractor(ResNetExtractor):
 
 
 class DinoV2Extractor(FeatureExtractor):
-    """DINOv2（占位）：依赖 timm / torch.hub，后续填入。"""
+    """冻结 DINOv2（timm 本地权重）：CLS 嵌入。"""
 
     name = "dinov2_small"
+    REPO = "vit_small_patch14_dinov2.lvd142m"
+
+    def __init__(self, model_dir=None, device=None, **kw):
+        super().__init__(**kw)
+        self.model_dir = model_dir or os.environ.get(
+            "VLM_DINO_DIR", r"C:\vlmdisaster\models\dinov2-small")
+        self.device = device
+        self.model = None
+
+    def load(self):
+        import timm
+        import torch
+        from safetensors.torch import load_file
+        self.torch = torch
+        self.device = self.device or ("cuda" if torch.cuda.is_available() else "cpu")
+        m = timm.create_model(self.REPO, pretrained=False, num_classes=0)
+        sd = load_file(os.path.join(self.model_dir, "model.safetensors"))
+        m.load_state_dict(sd, strict=False)
+        self.model = m.eval().to(self.device)
+        from torchvision import transforms as T
+        self.tf = T.Compose([T.Resize((518, 518)), T.ToTensor(),
+                             T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
+
+    def embed(self, image_path):
+        if self.model is None:
+            self.load()
+        x = self.tf(_to_rgb(image_path)).unsqueeze(0).to(self.device)
+        with self.torch.no_grad():
+            f = self.model.forward_features(x)  # (1,1+N,384)
+        return f[:, 0].squeeze(0).cpu().numpy()
 
     def extract(self, bundle, labels=None):
-        bundle.meta["visual_status"] = "dinov2_not_implemented"
+        bundle.visual_vector = self.embed(bundle.image_path)
+        bundle.meta["visual"] = {"model": "dinov2_small"}
+        return bundle
+
+
+class DinoProbeExtractor(DinoV2Extractor):
+    """DINOv2 嵌入 + 线性探针，输出类别概率。"""
+
+    name = "dinov2_probe"
+
+    def __init__(self, probe_path=None, **kw):
+        super().__init__(**kw)
+        self.probe_path = probe_path
+        self.clf = None
+        self.labels_probe = None
+
+    def load(self):
+        super().load()
+        import joblib
+        if not self.probe_path or not os.path.exists(self.probe_path):
+            raise FileNotFoundError("dinov2 probe not found: %s" % self.probe_path)
+        z = joblib.load(self.probe_path)
+        self.clf = z["model"]
+        self.labels_probe = list(z["labels"])
+
+    def extract(self, bundle, labels=None):
+        if self.clf is None:
+            self.load()
+        v = self.embed(bundle.image_path)
+        bundle.visual_vector = v
+        probs = self.clf.predict_proba(v.reshape(1, -1))[0]
+        bundle.visual_scores = {str(l): float(p) for l, p in zip(self.labels_probe, probs)}
+        bundle.meta["visual"] = {"model": "dinov2_probe", "probe": self.probe_path}
         return bundle
 
 
@@ -216,6 +278,7 @@ REGISTRY = {
     "resnet50": ResNetExtractor,
     "resnet_probe": ResNetProbeExtractor,
     "dinov2_small": DinoV2Extractor,
+    "dinov2_probe": DinoProbeExtractor,
     "clip_vit_b32": ClipExtractor,
     "clip_probe": ClipProbeExtractor,
 }
