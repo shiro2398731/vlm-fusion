@@ -4,6 +4,7 @@ import glob, json, os, sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 D = r"C:\vlm-fusion\outputs\four_groups"
+OVERRIDES = {"sanddust": "dinov2"}
 P = r"C:\vlm-fusion\outputs\probes"
 
 base, dec = {}, {}
@@ -38,8 +39,9 @@ for el in sorted(base):
         en = "false"
         note = "%d" % delta
     rows.append((el, en, note))
-    lines.append("  %-22s {enabled: %-5s, note: \"%s\"}   # base %d/%d -> fused %d/%d" % (
-        el, en, note, base[el]["sev_ok"], base[el]["n"], dec[el]["sev_ok"], dec[el]["n"]))
+    extra = ", source: %s" % OVERRIDES[el] if el in OVERRIDES else ""
+    lines.append("  %-22s {enabled: %-5s, note: \"%s\"%s}   # base %d/%d -> fused %d/%d" % (
+        el, en, note, extra, base[el]["sev_ok"], base[el]["n"], dec[el]["sev_ok"], dec[el]["n"]))
 
 # 外部日期已单独验证为获益
 for el in ("wave", "earthquake_def"):
