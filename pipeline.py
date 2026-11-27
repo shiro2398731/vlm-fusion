@@ -32,16 +32,19 @@ def _composite(images: List[str]) -> str:
 class ElementPipeline:
     def __init__(self, cfg: Dict[str, Any]) -> None:
         self.cfg = cfg
+        self.element = cfg.get("element")
         num = cfg.get("numeric") or {}
         vis = cfg.get("visual") or {}
-        sem = cfg.get("semantic") or {}
+        sem = dict(cfg.get("semantic") or {})
         self.numeric = FE.build(num.get("extractor", "numeric"),
                                 scale=num.get("scale"), fields=num.get("fields"))
         self.visual = FE.build(vis.get("extractor", "none"),
                                output=vis.get("output", "map"))
-        self.semantic = FE.build(sem.get("extractor", "none"),
-                                 labels=sem.get("labels") or [])
-        self.labels = sem.get("labels") or []
+        sem_name = sem.pop("extractor", "none")
+        self.labels = sem.pop("labels", []) or []
+        if sem_name == "clip_probe":
+            sem.setdefault("element", self.element)
+        self.semantic = FE.build(sem_name, labels=self.labels, **sem)
         self.fusion = FL.build(cfg.get("fusion", {}).get("mode", ["text+image"]),
                                **dict(cfg.get("fusion") or {}))
 

@@ -20,12 +20,14 @@ for lab in ("none", "watch", "alert1", "alert2"):
 print("picked", len(picked), {k: len(v) for k, v in by.items()}, flush=True)
 
 def cfg(visual=False, semantic=False):
+    sem = ({"extractor": "clip_probe",
+            "probe_path": r"C:\vlm-fusion\outputs\probes\coral_dhw_clip_probe.joblib"}
+           if semantic else {"extractor": "none"})
     return {
+        "element": "coral_dhw",
         "numeric": {"extractor": "none"},
         "visual": {"extractor": "resnet50" if visual else "none", "output": "map"},
-        "semantic": {"extractor": "clip_vit_b32" if semantic else "none",
-                     "labels": ["no heat stress", "bleaching watch",
-                                "bleaching alert level 1", "bleaching alert level 2"]},
+        "semantic": sem,
         "fusion": {"mode": ["text", "image"], "include_numeric": False,
                    "include_visual": visual, "include_semantic": semantic},
     }

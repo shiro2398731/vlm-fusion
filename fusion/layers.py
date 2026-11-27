@@ -35,7 +35,8 @@ class TextImageFusion(Fusion):
 
     def __init__(self, include_numeric=True, include_visual=True,
                  include_semantic=True, image_layout="side",
-                 visual_weight=0.35, max_text_lines=6, **kw):
+                 visual_weight=0.35, max_text_lines=6,
+                 semantic_style="scores", **kw):
         super().__init__(**kw)
         self.include_numeric = include_numeric
         self.include_visual = include_visual
@@ -43,6 +44,8 @@ class TextImageFusion(Fusion):
         self.layout = image_layout
         self.visual_weight = visual_weight
         self.max_text_lines = max_text_lines
+        # scores: 只给分数，不给结论；hint: 追加“最相似类别”；both: 两者
+        self.semantic_style = semantic_style
 
     def _numeric_line(self, bundle):
         if not self.include_numeric:
@@ -62,8 +65,12 @@ class TextImageFusion(Fusion):
             return None
         top = sorted(bundle.semantic_scores.items(), key=lambda x: -x[1])
         s = ", ".join("%s=%.3f" % (k, v) for k, v in top[:4])
-        return ("Semantic similarity to class descriptions: " + s +
-                ". Most similar: %s; treat as a hint, not a label." % top[0][0])
+        head = "Semantic similarity scores: " + s + "."
+        if self.semantic_style == "scores":
+            return head + " Treat them as a weak prior; trust the image and physical values."
+        if self.semantic_style == "hint":
+            return head + " Most similar class: %s (hint only)." % top[0][0]
+        return head + " Most similar class: %s (hint only)." % top[0][0]
 
     def compose(self, bundle) -> FusionInput:
         images = [bundle.image_path]

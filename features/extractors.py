@@ -137,12 +137,56 @@ class ClipExtractor(FeatureExtractor):
         return bundle
 
 
+class ClipProbeExtractor(ClipExtractor):
+    """CLIP 嵌入 + 线性探针：把 CLIP 当特征提取器，分类头在本地训练。
+
+    这是语义支路的正式形态：零样本文本相似度对渲染图基本无效
+    （实测珊瑚 0%、积雪 31%），但嵌入+探针可达 90%+。
+    """
+
+    name = "clip_probe"
+
+    def __init__(self, probe_path=None, element=None, **kw):
+        super().__init__(**kw)
+        self.probe_path = probe_path
+        self.element = element
+        self.clf = None
+        self.labels_probe = None
+
+    def load(self):
+        super().load()
+        import joblib
+        if not self.probe_path or not os.path.exists(self.probe_path):
+            raise FileNotFoundError("probe not found: %s" % self.probe_path)
+        z = joblib.load(self.probe_path)
+        self.clf = z["model"]
+        self.labels_probe = list(z["labels"])
+
+    def extract(self, bundle, labels=None):
+        if self.clf is None:
+            self.load()
+        img = _to_rgb(bundle.image_path)
+        inp = self.proc(images=img, return_tensors="pt")
+        inp = {k: v.to(self.device) for k, v in inp.items()}
+        with self.torch.no_grad():
+            out = self.model.get_image_features(pixel_values=inp["pixel_values"])
+        vec = out.pooler_output[0].detach().cpu().numpy()
+        probs = self.clf.predict_proba(vec.reshape(1, -1))[0]
+        bundle.semantic_vector = vec
+        bundle.semantic_scores = {str(l): float(p) for l, p in zip(self.labels_probe, probs)}
+        bundle.meta["semantic"] = {"model": "clip_probe", "probe": self.probe_path,
+                                   "labels": self.labels_probe}
+        return bundle
+
+
+
 REGISTRY = {
     "none": NoneExtractor,
     "numeric": NumericExtractor,
     "resnet50": ResNetExtractor,
     "dinov2_small": DinoV2Extractor,
     "clip_vit_b32": ClipExtractor,
+    "clip_probe": ClipProbeExtractor,
 }
 
 
