@@ -29,10 +29,13 @@ elements:
   hurricane_rain         {enabled: true , note: "+5"}   # base 2/8 -> fused 7/8
   iod                    {enabled: false, note: "0"}   # base 6/6 -> fused 6/6
   marine_heatwave        {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
+  sanddust               {enabled: true , note: "+1", source: dinov2}   # base 4/6 -> fused 5/6
   sea_ice_amsr2          {enabled: true , note: "+3"}   # base 3/8 -> fused 6/8
   sea_ice_s2_arctic      {enabled: true , note: "+2"}   # base 2/4 -> fused 4/4
+  snow_swe               {enabled: true , note: "+2"}   # base 3/8 -> fused 5/8
   snowstorm              {enabled: false, note: "0"}   # base 7/8 -> fused 7/8
   uvai_dust              {enabled: true , note: "+1"}   # base 5/8 -> fused 6/8
+  volcano_so2            {enabled: true , note: "+2"}   # base 4/8 -> fused 6/8
   volcano_thermal        {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4
   waterlogging_pct       {enabled: false, note: "0"}   # base 4/6 -> fused 4/6
   wave                   {enabled: true , note: "+1"}   # base 2/8 -> fused 3/8
