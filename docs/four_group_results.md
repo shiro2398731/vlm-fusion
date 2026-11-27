@@ -283,3 +283,20 @@ gpm_nt +3、sea_ice_amsr2 +3、wildfire_smoke +3、earthquake_def +2、sea_ice_s
 说明：视觉/语义均为嵌入+探针的概率文本，不是特征图。
 结论：外部日期上 2 升 1 平，与决策级融合结论一致；
 按“文本注入”这条最弱的融合路径也能带来提升，说明探针本身有信息量。
+
+## 第十七次：带 det / 数值 MAE 的外部四组对照
+
+| 元素 | 组 | det | sev | MAE |
+|---|---|--:|--:|--:|
+| earthquake_def | baseline | 4/6 | 4/6 | – |
+| earthquake_def | +视觉 | 4/6 | 5/6 | – |
+| earthquake_def | +语义 | 4/6 | 5/6 | – |
+| earthquake_def | +both | 4/6 | 5/6 | – |
+| wave | baseline | 6/8 | 2/8 | 0.324 |
+| wave | +视觉 | 6/8 | 3/8 | 0.000 |
+| wave | +语义 | 6/8 | 3/8 | 0.000 |
+| wave | +both | 7/8 | 3/8 | 0.370 |
+
+结论：外部日期上 det 基本持平或小升，sev 2 升 1 平；
+wave 的 +both 把 det 从 6/8 提到 7/8，但数值 MAE 变差，说明融合对数值读数无帮助，
+数值应回到物理统计量直接判读。
