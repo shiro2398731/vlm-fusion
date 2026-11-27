@@ -300,3 +300,30 @@ gpm_nt +3、sea_ice_amsr2 +3、wildfire_smoke +3、earthquake_def +2、sea_ice_s
 结论：外部日期上 det 基本持平或小升，sev 2 升 1 平；
 wave 的 +both 把 det 从 6/8 提到 7/8，但数值 MAE 变差，说明融合对数值读数无帮助，
 数值应回到物理统计量直接判读。
+
+## 第十八次：原始特征向量摘要附加（include_vectors）
+
+做法：探针训练时对嵌入做 PCA 降到 16 维，推理时把该样本的 16 维摘要以数字形式写进
+输入文本（“Visual/Semantic feature vector (compressed 16 dims): [...]”），与概率一起给 Qwen。
+
+coral_dhw（6 张）：
+
+| 配置 | baseline | +视觉 | +语义 | +both |
+|---|--:|--:|--:|--:|
+| 不附向量（之前） | 5/6 | 5/6 | 6/6 | 5/6 |
+| 附两路向量 | 5/6 | 6/6 | 5/6 | 6/6 |
+| 只附视觉向量 | 5/6 | 6/6 | 6/6 | 6/6 |
+
+snow_swe（8 张）：
+
+| 配置 | baseline | +视觉 | +语义 | +both |
+|---|--:|--:|--:|--:|
+| 不附向量（之前） | 3/8 | 5/8 | 4/8 | 5/8 |
+| 附两路向量 | 3/8 | 5/8 | 2/8 | 5/8 |
+
+结论：
+1. 原始向量摘要“可以附”，链路已通（`include_vectors` / `include_visual_vectors` /
+   `include_semantic_vectors` 三个开关）
+2. 视觉向量对 coral 有帮助（+both 从 5/6 到 6/6）
+3. 语义向量反而干扰（snow_swe +语义 4/8→2/8），建议语义保持概率、不附向量
+4. 默认关闭；按元素验证后再开

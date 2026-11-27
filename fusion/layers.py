@@ -30,13 +30,18 @@ def _blend(index_path, vmap, weight):
     return Image.blend(base, vm, max(0.0, min(1.0, weight)))
 
 
+def _fmt_vec(v):
+    return "[" + ", ".join("%.3f" % x for x in v) + "]"
+
+
 class TextImageFusion(Fusion):
     mode = "text+image"
 
     def __init__(self, include_numeric=True, include_visual=True,
                  include_semantic=True, image_layout="side",
                  visual_weight=0.35, max_text_lines=6,
-                 semantic_style="scores", **kw):
+                 semantic_style="scores", include_vectors=False,
+                 include_visual_vectors=None, include_semantic_vectors=None, **kw):
         super().__init__(**kw)
         self.include_numeric = include_numeric
         self.include_visual = include_visual
@@ -46,6 +51,12 @@ class TextImageFusion(Fusion):
         self.max_text_lines = max_text_lines
         # scores: 只给分数，不给结论；hint: 追加“最相似类别”；both: 两者
         self.semantic_style = semantic_style
+        # 是否把特征向量的压缩摘要也附上（原始特征信息）
+        self.include_vectors = include_vectors
+        self.include_visual_vectors = (include_visual_vectors
+                                       if include_visual_vectors is not None else include_vectors)
+        self.include_semantic_vectors = (include_semantic_vectors
+                                         if include_semantic_vectors is not None else include_vectors)
 
     def _numeric_line(self, bundle):
         if not self.include_numeric:
@@ -80,6 +91,18 @@ class TextImageFusion(Fusion):
             return head + " Most similar class: %s (hint only)." % top[0][0]
         return head + " Most similar class: %s (hint only)." % top[0][0]
 
+    def _visual_vector_line(self, bundle):
+        if not (self.include_visual_vectors and bundle.visual_digest):
+            return None
+        return "Visual feature vector (compressed %d dims): %s" % (
+            len(bundle.visual_digest), _fmt_vec(bundle.visual_digest))
+
+    def _semantic_vector_line(self, bundle):
+        if not (self.include_semantic_vectors and bundle.semantic_digest):
+            return None
+        return "Semantic feature vector (compressed %d dims): %s" % (
+            len(bundle.semantic_digest), _fmt_vec(bundle.semantic_digest))
+
     def compose(self, bundle) -> FusionInput:
         images = [bundle.image_path]
         lines = []
@@ -98,7 +121,8 @@ class TextImageFusion(Fusion):
                 lines.append("Second image: deep-network visual feature map of the same window; "
                              "use it together with the physical index map.")
 
-        for fn in (self._numeric_line, self._visual_line, self._semantic_line):
+        for fn in (self._numeric_line, self._visual_line, self._visual_vector_line,
+                   self._semantic_line, self._semantic_vector_line):
             s = fn(bundle)
             if s:
                 lines.append(s)

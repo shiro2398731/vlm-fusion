@@ -37,11 +37,15 @@ def cfg(visual=False, semantic=False):
         "semantic": ({"extractor": "clip_probe", "probe_path": SEM_PROBE}
                      if semantic and SEM_PROBE else {"extractor": "none"}),
         "fusion": {"mode": ["text", "image"], "include_numeric": False,
+                   "include_vectors": VEC,
+                   "include_visual_vectors": os.environ.get("VVEC") == "1",
+                   "include_semantic_vectors": os.environ.get("SVEC") == "1",
                    "include_visual": visual, "include_semantic": semantic},
     }
 
 GROUPS = [("baseline", False, False), ("+visual", True, False),
           ("+semantic", False, True), ("+both", True, True)]
+VEC = os.environ.get("VEC") == "1"
 results = {}
 for name, vis, sem in GROUPS:
     p = ElementPipeline(cfg(vis, sem))

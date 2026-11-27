@@ -5,6 +5,7 @@ sys.path.insert(0, r"C:\vlm-fusion")
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 import numpy as np
 import joblib
+from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from features.extractors import DinoV2Extractor
@@ -37,5 +38,6 @@ for el in ELS:
     clf.fit(Xtr, ytr)
     acc = accuracy_score(yva, clf.predict(Xva))
     p = os.path.join(OUT, "%s_dinov2_probe.joblib" % el)
-    joblib.dump({"model": clf, "labels": list(clf.classes_)}, p)
+    pca = PCA(n_components=min(16, Xtr.shape[1]), random_state=0).fit(Xtr)
+    joblib.dump({"model": clf, "labels": list(clf.classes_), "pca": pca}, p)
     print("%-14s train %d val %d acc %.1f%% -> %s" % (el, len(Xtr), len(Xva), 100 * acc, p), flush=True)

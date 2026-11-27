@@ -100,6 +100,7 @@ class ResNetProbeExtractor(ResNetExtractor):
         z = joblib.load(self.probe_path)
         self.clf = z["model"]
         self.labels_probe = list(z["labels"])
+        self.pca = z.get("pca")
 
     def extract(self, bundle, labels=None):
         if self.clf is None:
@@ -107,6 +108,9 @@ class ResNetProbeExtractor(ResNetExtractor):
         bundle = super().extract(bundle)
         probs = self.clf.predict_proba(bundle.visual_vector.reshape(1, -1))[0]
         bundle.visual_scores = {str(l): float(p) for l, p in zip(self.labels_probe, probs)}
+        if getattr(self, "pca", None) is not None:
+            bundle.visual_digest = [round(float(x), 4) for x in
+                                    self.pca.transform(bundle.visual_vector.reshape(1, -1))[0]]
         bundle.meta["visual"] = {"model": "resnet_probe", "probe": self.probe_path}
         return bundle
 
@@ -171,6 +175,7 @@ class DinoProbeExtractor(DinoV2Extractor):
         z = joblib.load(self.probe_path)
         self.clf = z["model"]
         self.labels_probe = list(z["labels"])
+        self.pca = z.get("pca")
 
     def extract(self, bundle, labels=None):
         if self.clf is None:
@@ -179,6 +184,9 @@ class DinoProbeExtractor(DinoV2Extractor):
         bundle.visual_vector = v
         probs = self.clf.predict_proba(v.reshape(1, -1))[0]
         bundle.visual_scores = {str(l): float(p) for l, p in zip(self.labels_probe, probs)}
+        if getattr(self, "pca", None) is not None:
+            bundle.visual_digest = [round(float(x), 4) for x in
+                                    self.pca.transform(v.reshape(1, -1))[0]]
         bundle.meta["visual"] = {"model": "dinov2_probe", "probe": self.probe_path}
         return bundle
 
@@ -253,6 +261,7 @@ class ClipProbeExtractor(ClipExtractor):
         z = joblib.load(self.probe_path)
         self.clf = z["model"]
         self.labels_probe = list(z["labels"])
+        self.pca = z.get("pca")
 
     def extract(self, bundle, labels=None):
         if self.clf is None:
@@ -266,6 +275,9 @@ class ClipProbeExtractor(ClipExtractor):
         probs = self.clf.predict_proba(vec.reshape(1, -1))[0]
         bundle.semantic_vector = vec
         bundle.semantic_scores = {str(l): float(p) for l, p in zip(self.labels_probe, probs)}
+        if getattr(self, "pca", None) is not None:
+            bundle.semantic_digest = [round(float(x), 4) for x in
+                                      self.pca.transform(vec.reshape(1, -1))[0]]
         bundle.meta["semantic"] = {"model": "clip_probe", "probe": self.probe_path,
                                    "labels": self.labels_probe}
         return bundle
