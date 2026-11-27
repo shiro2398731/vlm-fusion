@@ -16,7 +16,8 @@ ELS = sys.argv[1:] or ["snow_swe", "coral_dhw", "sanddust", "volcano_so2"]
 
 for el in ELS:
     vap = os.path.join(VAL, "train_%s_json_val.json" % el)
-    recs = [r for r in json.load(open(vap, encoding="utf-8")) if os.path.exists(r.get("image", ""))]
+    recs = [r for r in json.load(open(vap, encoding="utf-8"))
+            if os.path.exists(r.get("image") or (r.get("images") or [""])[0])]
     by = {}
     for r in recs:
         by.setdefault(r.get("label"), []).append(r)
@@ -36,7 +37,7 @@ for el in ELS:
     ok = 0; n = 0; used = 0
     for r in picked:
         try:
-            out = p.run(r["image"], API, el, {})
+            out = p.run(r.get("image") or r["images"][0], API, el, {})
         except Exception as e:
             print(el, "ERR", str(e)[:60], flush=True); continue
         pred = out["prediction"]
@@ -46,7 +47,7 @@ for el in ELS:
         if pred.get("severity_source") == "probe":
             used += 1
         print("%-12s %-30s truth %-10s final %-10s src %s" % (
-            el, os.path.basename(r["image"]), r.get("label"),
+            el, os.path.basename(r.get("image") or r["images"][0]), r.get("label"),
             pred.get("severity"), pred.get("severity_source")), flush=True)
     print("%-12s tau %.2f %s: sev %d/%d (probe覆盖 %d)" % (el, TAU, SRC, ok, n, used), flush=True)
     json.dump({"element": el, "tau": TAU, "source": SRC, "n": n, "sev_ok": ok},

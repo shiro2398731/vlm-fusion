@@ -1,0 +1,32 @@
+# 候选融合元素（按探针相对 baseline sev 的增益排序）
+# 仅候选：需决策融合实测确认后才可开启
+
+snow_fsc               gap=+34.5  baseline_sev= 58.6  best_probe= 93.1 (clip)
+gpm_nt                 gap=+34.5  baseline_sev= 65.5  best_probe=100.0 (resnet)
+snowstorm              gap=+33.3  baseline_sev= 62.5  best_probe= 95.8 (clip)
+wind_gale              gap=+30.8  baseline_sev= 48.7  best_probe= 79.5 (resnet)
+wildfire_smoke         gap=+29.2  baseline_sev= 67.1  best_probe= 96.3 (clip)
+sea_ice_amsr2          gap=+28.8  baseline_sev= 65.9  best_probe= 94.7 (clip)
+earthquake_def         gap=+25.0  baseline_sev= 67.6  best_probe= 92.6 (clip)
+wave                   gap=+25.0  baseline_sev= 53.6  best_probe= 78.6 (resnet)
+volcano_so2            gap=+22.4  baseline_sev= 65.8  best_probe= 88.2 (clip)
+sanddust               gap=+21.7  baseline_sev= 60.0  best_probe= 81.7 (resnet)
+uvai_dust              gap=+20.6  baseline_sev= 74.2  best_probe= 94.8 (clip)
+flood_water            gap=+19.0  baseline_sev= 81.0  best_probe=100.0 (clip)
+heatwave_lst           gap=+18.8  baseline_sev= 81.2  best_probe=100.0 (clip)
+sea_ice_s2_arctic      gap=+18.5  baseline_sev= 81.5  best_probe=100.0 (clip)
+ground_subsidence      gap=+18.2  baseline_sev= 81.0  best_probe= 99.2 (clip)
+coral_dhw              gap=+17.1  baseline_sev= 79.5  best_probe= 96.6 (resnet)
+geomagnetic            gap=+17.1  baseline_sev= 74.3  best_probe= 91.4 (resnet)
+haze                   gap=+11.6  baseline_sev= 79.5  best_probe= 91.1 (clip)
+hurricane_rain         gap=+11.4  baseline_sev= 84.5  best_probe= 95.9 (clip)
+waterlogging_pct       gap=+11.2  baseline_sev= 70.0  best_probe= 81.2 (clip)
+snow_swe               gap=+10.6  baseline_sev= 78.7  best_probe= 89.3 (clip)
+coastal_nt             gap=+10.2  baseline_sev= 89.5  best_probe= 99.7 (clip)
+groundwater_overuse    gap= +9.4  baseline_sev= 70.5  best_probe= 79.9 (clip)
+bloom_chla             gap= +6.5  baseline_sev= 90.3  best_probe= 96.8 (resnet)
+volcano_thermal        gap= +5.4  baseline_sev= 93.3  best_probe= 98.7 (resnet)
+coastal_sla            gap= +5.3  baseline_sev= 85.1  best_probe= 90.4 (clip)
+groundwater_grace      gap= +5.0  baseline_sev= 95.0  best_probe=100.0 (clip)
+
+合计 27 个候选

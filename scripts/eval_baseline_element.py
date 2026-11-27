@@ -11,7 +11,7 @@ OUT = r"C:\vlm-fusion\outputs\four_groups"
 
 for el in sys.argv[1:]:
     recs = [r for r in json.load(open(os.path.join(VAL, "train_%s_json_val.json" % el), encoding="utf-8"))
-            if os.path.exists(r.get("image", ""))]
+            if os.path.exists(r.get("image") or (r.get("images") or [""])[0])]
     by = {}
     for r in recs:
         by.setdefault(r.get("label"), []).append(r)
@@ -22,7 +22,7 @@ for el in sys.argv[1:]:
     ok = 0; n = 0
     for r in picked:
         try:
-            out = p.run(r["image"], API, el, {})
+            out = p.run(r.get("image") or r["images"][0], API, el, {})
         except Exception as e:
             continue
         pred = out["prediction"].get("prediction") or out["prediction"]
