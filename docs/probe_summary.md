@@ -1,0 +1,45 @@
+# 38 元素探针与 baseline 对照
+
+| 元素 | baseline sev | CLIP 探针 | ResNet 探针 |
+|---|--:|--:|--:|
+| bloom_chla | 90.3 | 95.2% | 96.8% |
+| coastal_nt | 89.5 | 99.7% | 99.7% |
+| coastal_sla | 85.1 | 90.4% | 87.2% |
+| coral_dhw | 79.5 | 94.3% | 96.6% |
+| drought_grace | 100.0 | 100.0% | 100.0% |
+| drought_ndvi_clim | 99.2 | 99.2% | 100.0% |
+| earthquake_def | 67.6 | 92.6% | 92.6% |
+| enso | 100.0 | 100.0% | 95.9% |
+| flare | 97.0 | 81.7% | 82.5% |
+| flood_opt | 100.0 | 99.6% | 75.9% |
+| flood_precip_global | 92.2 | 93.8% | 87.5% |
+| flood_water | 81.0 | 100.0% | 100.0% |
+| geomagnetic | 74.3 | 88.6% | 91.4% |
+| gpm_nt | 65.5 | 99.6% | 100.0% |
+| green_tide | 79.6 | 83.7% | 79.6% |
+| ground_subsidence | 81.0 | 99.2% | 86.4% |
+| groundwater_grace | 95.0 | 100.0% | 100.0% |
+| groundwater_overuse | 70.5 | 79.9% | 79.7% |
+| haze | 79.5 | 91.1% | 88.1% |
+| heatwave_lst | 81.2 | 100.0% | 100.0% |
+| hurricane_opt | 77.1 | 80.0% | 77.1% |
+| hurricane_rain | 84.5 | 95.9% | 79.7% |
+| iod | 99.5 | 99.1% | 85.8% |
+| marine_heatwave | 100.0 | 100.0% | 96.3% |
+| sanddust | 60.0 | 80.0% | 81.7% |
+| sea_ice_amsr2 | 65.9 | 94.7% | 93.2% |
+| sea_ice_s2_arctic | 81.5 | 100.0% | 100.0% |
+| snow_fsc | 58.6 | 93.1% | 93.1% |
+| snow_swe | 78.7 | 89.3% | 89.3% |
+| snowstorm | 62.5 | 95.8% | 93.7% |
+| uvai_dust | 74.2 | 94.8% | 94.8% |
+| volcano_so2 | 65.8 | 88.2% | 80.3% |
+| volcano_thermal | 93.3 | 96.0% | 98.7% |
+| waterlogging_pct | 70.0 | 81.2% | 76.2% |
+| wave | 53.6 | 64.3% | 78.6% |
+| wildfire | 100.0 | 100.0% | 98.3% |
+| wildfire_smoke | 67.1 | 96.3% | 92.7% |
+| wind_gale | 48.7 | 76.9% | 79.5% |
+
+说明：baseline sev 为 vlm 同分布验证准确率；探针为该元素验证集上的准确率。
+注意：多数元素的验证集与训练集同日期，探针数字不代表跨日期泛化。
