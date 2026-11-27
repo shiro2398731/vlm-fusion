@@ -258,3 +258,16 @@ gpm_nt +3、sea_ice_amsr2 +3、wildfire_smoke +3、earthquake_def +2、sea_ice_s
 
 结论：DINOv2 在 sanddust 上优于 CLIP；其他元素持平。
 视觉支路现在有三种可选提取器：resnet50 / clip / dinov2，逐元素可配。
+
+## 第十五次：tau 扫描（haze/gpm_nt/flood_precip_global/hurricane_rain/flare/wildfire）
+
+| 元素 | tau0.5 | tau0.6 | tau0.7 |
+|---|--:|--:|--:|
+| haze | 6/6 | 6/6 | 6/6 |
+| gpm_nt | 6/6 | 6/6 | 6/6 |
+| flood_precip_global | 7/8 | 7/8 | 7/8 |
+| hurricane_rain | 7/8 | 7/8 | 7/8 |
+| flare | 6/8 | 6/8 | 4/8 |
+| wildfire | 4/4 | 4/4 | 4/4 |
+
+结论：0.6 稳定；flare 对高阈值敏感，保持 0.6 即可。
