@@ -1,0 +1,22 @@
+# 逐元素融合开关（由同分布验证结果决定）
+# enabled: true  → Qwen 判读 + 探针高置信覆盖（决策级融合，tau 0.6）
+# enabled: false → 保持 vlm baseline 不变
+#
+# 依据：9 元素对比（8 升 1 平）+ snow_fsc 训练集外复核（baseline 已 8/8，融合会拉低）
+
+defaults:
+  mode: decision
+  tau: 0.6
+  source: semantic          # semantic(CLIP) | visual(ResNet)
+
+elements:
+  snow_swe:   {enabled: true,  semantic_probe: snow_swe_clip_probe.joblib}
+  coral_dhw:  {enabled: true,  semantic_probe: coral_dhw_clip_probe.joblib}
+  sanddust:   {enabled: true,  semantic_probe: sanddust_clip_probe.joblib}
+  volcano_so2:{enabled: true,  semantic_probe: volcano_so2_clip_probe.joblib}
+  uvai_dust:  {enabled: true,  semantic_probe: uvai_dust_clip_probe.joblib}
+  gpm_nt:     {enabled: true,  semantic_probe: gpm_nt_clip_probe.joblib}
+  haze:       {enabled: true,  semantic_probe: haze_clip_probe.joblib}
+  wind_gale:  {enabled: true,  semantic_probe: wind_gale_clip_probe.joblib}
+  waterlogging_pct: {enabled: false}   # 4/6 vs 4/6，无增益
+  snow_fsc:   {enabled: false}         # 外部日期 baseline 8/8，融合会拉低
