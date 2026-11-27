@@ -20,3 +20,8 @@ elements:
   wind_gale:  {enabled: true,  semantic_probe: wind_gale_clip_probe.joblib}
   waterlogging_pct: {enabled: false}   # 4/6 vs 4/6，无增益
   snow_fsc:   {enabled: false}         # 外部日期 baseline 8/8，融合会拉低
+
+  # 外部日期复核（验证集本身即训练集外日期）
+  wave:            {enabled: true,  semantic_probe: wave_clip_probe.joblib}
+  earthquake_def:  {enabled: true,  semantic_probe: earthquake_def_clip_probe.joblib}
+  groundwater_overuse: {enabled: false}  # 4/6 vs 4/6，无增益
