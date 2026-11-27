@@ -1,0 +1,461 @@
+# 全部元素默认配置（由脚本生成）
+# 语义默认 CLIP 探针，视觉默认 ResNet50 探针，数值现算。
+# 逐元素开关见 fusion_selected.yaml；本文件用于完整链路默认跑通。
+
+bloom_chla:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/bloom_chla_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/bloom_chla_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+coastal_nt:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/coastal_nt_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/coastal_nt_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+coastal_sla:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/coastal_sla_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/coastal_sla_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+coral_dhw:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/coral_dhw_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/coral_dhw_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+drought_grace:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/drought_grace_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/drought_grace_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+drought_ndvi_clim:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/drought_ndvi_clim_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/drought_ndvi_clim_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+earthquake_def:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/earthquake_def_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/earthquake_def_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+enso:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/enso_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/enso_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+flare:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/flare_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/flare_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+flood_opt:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/flood_opt_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/flood_opt_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+flood_precip_global:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/flood_precip_global_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/flood_precip_global_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+flood_water:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/flood_water_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/flood_water_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+geomagnetic:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/geomagnetic_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/geomagnetic_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+gpm_nt:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/gpm_nt_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/gpm_nt_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+green_tide:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/green_tide_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/green_tide_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+ground_subsidence:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/ground_subsidence_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/ground_subsidence_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+groundwater_grace:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/groundwater_grace_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/groundwater_grace_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+groundwater_overuse:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/groundwater_overuse_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/groundwater_overuse_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+haze:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/haze_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/haze_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+heatwave_lst:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/heatwave_lst_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/heatwave_lst_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+hurricane_opt:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/hurricane_opt_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/hurricane_opt_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+hurricane_rain:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/hurricane_rain_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/hurricane_rain_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+iod:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/iod_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/iod_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+marine_heatwave:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/marine_heatwave_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/marine_heatwave_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+sanddust:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/sanddust_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/sanddust_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+sea_ice_amsr2:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/sea_ice_amsr2_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/sea_ice_amsr2_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+sea_ice_s2_arctic:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/sea_ice_s2_arctic_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/sea_ice_s2_arctic_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+snow_fsc:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/snow_fsc_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/snow_fsc_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+snow_swe:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/snow_swe_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/snow_swe_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+snowstorm:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/snowstorm_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/snowstorm_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+uvai_dust:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/uvai_dust_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/uvai_dust_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+volcano_so2:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/volcano_so2_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/volcano_so2_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+volcano_thermal:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/volcano_thermal_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/volcano_thermal_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+waterlogging_pct:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/waterlogging_pct_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/waterlogging_pct_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+wave:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/wave_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/wave_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+wildfire:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/wildfire_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/wildfire_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+wildfire_smoke:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/wildfire_smoke_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/wildfire_smoke_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+wind_gale:
+  numeric: {extractor: numeric}
+  visual: {extractor: resnet_probe, probe_path: C:/vlm-fusion/outputs/probes/wind_gale_resnet_probe.joblib}
+  semantic: {extractor: clip_probe, probe_path: C:/vlm-fusion/outputs/probes/wind_gale_clip_probe.joblib}
+  fusion:
+    mode: [text, image]
+    include_numeric: true
+    include_visual: true
+    include_semantic: true
+    include_vectors: true
+  eval: {backend: local}
+
+# 元素数：38
