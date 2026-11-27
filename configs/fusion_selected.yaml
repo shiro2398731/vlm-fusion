@@ -1,36 +1,42 @@
-# 逐元素融合开关（由同分布验证结果决定）
-# enabled: true  → Qwen 判读 + 探针高置信覆盖（决策级融合，tau 0.6）
-# enabled: false → 保持 vlm baseline 不变
-#
-# 依据：9 元素对比（8 升 1 平）+ snow_fsc 训练集外复核（baseline 已 8/8，融合会拉低）
+# 逐元素融合开关（由实测生成）
+# enabled: true → Qwen 判读 + 探针高置信覆盖（tau 0.6）；false → 保持 baseline
 
 defaults:
   mode: decision
   tau: 0.6
-  source: semantic          # semantic(CLIP) | visual(ResNet)
+  source: semantic
 
 elements:
-  snow_swe:   {enabled: true,  semantic_probe: snow_swe_clip_probe.joblib}
-  coral_dhw:  {enabled: true,  semantic_probe: coral_dhw_clip_probe.joblib}
-  sanddust:   {enabled: true,  semantic_probe: sanddust_clip_probe.joblib}
-  volcano_so2:{enabled: true,  semantic_probe: volcano_so2_clip_probe.joblib}
-  uvai_dust:  {enabled: true,  semantic_probe: uvai_dust_clip_probe.joblib}
-  gpm_nt:     {enabled: true,  semantic_probe: gpm_nt_clip_probe.joblib}
-  haze:       {enabled: true,  semantic_probe: haze_clip_probe.joblib}
-  wind_gale:  {enabled: true,  semantic_probe: wind_gale_clip_probe.joblib}
-  waterlogging_pct: {enabled: false}   # 4/6 vs 4/6，无增益
-  snow_fsc:   {enabled: false}         # 外部日期 baseline 8/8，融合会拉低
-
-  # 外部日期复核（验证集本身即训练集外日期）
-  wave:            {enabled: true,  semantic_probe: wave_clip_probe.joblib}
-  earthquake_def:  {enabled: true,  semantic_probe: earthquake_def_clip_probe.joblib}
-  groundwater_overuse: {enabled: false}  # 4/6 vs 4/6，无增益
-
-  # 第二批决策融合验证（同分布，2张/类）
-  wildfire_smoke:   {enabled: true,  semantic_probe: wildfire_smoke_clip_probe.joblib}
-  sea_ice_amsr2:    {enabled: true,  semantic_probe: sea_ice_amsr2_clip_probe.joblib}
-  coastal_nt:       {enabled: true,  semantic_probe: coastal_nt_clip_probe.joblib}
-  flood_water:      {enabled: true,  semantic_probe: flood_water_clip_probe.joblib}
-  heatwave_lst:     {enabled: true,  semantic_probe: heatwave_lst_clip_probe.joblib}
-  volcano_thermal:  {enabled: true,  semantic_probe: volcano_thermal_clip_probe.joblib}
-  snowstorm:        {enabled: false}   # 7/8 vs 7/8，无增益
+  bloom_chla             {enabled: false, note: "0"}   # base 4/6 -> fused 4/6
+  coastal_nt             {enabled: true , note: "+1"}   # base 5/6 -> fused 6/6
+  drought_grace          {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
+  drought_ndvi_clim      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
+  earthquake_def         {enabled: true , note: "+2"}   # base 4/6 -> fused 6/6
+  enso                   {enabled: false, note: "0"}   # base 6/6 -> fused 6/6
+  flare                  {enabled: true , note: "+4"}   # base 2/8 -> fused 6/8
+  flood_opt              {enabled: false, note: "0"}   # base 6/6 -> fused 6/6
+  flood_precip_global    {enabled: true , note: "+5"}   # base 2/8 -> fused 7/8
+  flood_water            {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4
+  geomagnetic            {enabled: false, note: "0"}   # base 4/7 -> fused 4/7
+  gpm_nt                 {enabled: true , note: "+3"}   # base 3/6 -> fused 6/6
+  green_tide             {enabled: false, note: "-1"}   # base 5/6 -> fused 4/6
+  ground_subsidence      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
+  groundwater_grace      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
+  groundwater_overuse    {enabled: false, note: "0"}   # base 4/6 -> fused 4/6
+  haze                   {enabled: true , note: "+4"}   # base 2/6 -> fused 6/6
+  heatwave_lst           {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4
+  hurricane_opt          {enabled: true , note: "+1"}   # base 3/6 -> fused 4/6
+  hurricane_rain         {enabled: true , note: "+5"}   # base 2/8 -> fused 7/8
+  iod                    {enabled: false, note: "0"}   # base 6/6 -> fused 6/6
+  marine_heatwave        {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
+  sea_ice_amsr2          {enabled: true , note: "+3"}   # base 3/8 -> fused 6/8
+  sea_ice_s2_arctic      {enabled: true , note: "+2"}   # base 2/4 -> fused 4/4
+  snowstorm              {enabled: false, note: "0"}   # base 7/8 -> fused 7/8
+  uvai_dust              {enabled: true , note: "+1"}   # base 5/8 -> fused 6/8
+  volcano_thermal        {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4
+  waterlogging_pct       {enabled: false, note: "0"}   # base 4/6 -> fused 4/6
+  wave                   {enabled: true , note: "+1"}   # base 2/8 -> fused 3/8
+  wildfire               {enabled: true , note: "+4"}   # base 0/4 -> fused 4/4
+  wildfire_smoke         {enabled: true , note: "+3"}   # base 3/8 -> fused 6/8
+  wind_gale              {enabled: true , note: "+1"}   # base 3/6 -> fused 4/6
+  snow_fsc              {enabled: false}  # 外部日期 baseline 8/8，融合会拉低
