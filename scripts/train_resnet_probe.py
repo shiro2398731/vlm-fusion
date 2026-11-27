@@ -27,7 +27,7 @@ tf = T.Compose([T.Resize((224, 224)), T.ToTensor(),
 def embed(recs):
     X, y = [], []
     for r in recs:
-        img = r.get("image")
+        img = r.get("image") or (r.get("images") or [None])[0]
         if not img or not os.path.exists(img):
             continue
         x = tf(Image.open(img).convert("RGB")).unsqueeze(0).to(dev)
@@ -44,6 +44,9 @@ for el in ELEMENTS:
         print(el, "missing"); continue
     Xtr, ytr = embed(json.load(open(trp, encoding="utf-8")))
     Xva, yva = embed(json.load(open(vap, encoding="utf-8")))
+    if len(Xtr) == 0 or len(Xva) == 0:
+        print("%-16s skip: no images (%d/%d)" % (el, len(Xtr), len(Xva)), flush=True)
+        continue
     clf = LogisticRegression(max_iter=3000)
     clf.fit(Xtr, ytr)
     acc = accuracy_score(yva, clf.predict(Xva))

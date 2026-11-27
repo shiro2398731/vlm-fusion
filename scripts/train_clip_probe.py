@@ -21,7 +21,7 @@ ext = ClipExtractor(); ext.load()
 def embed(recs):
     X, y = [], []
     for r in recs:
-        img = r.get("image")
+        img = r.get("image") or (r.get("images") or [None])[0]
         if not img or not os.path.exists(img):
             continue
         im = Image.open(img).convert("RGB")
@@ -42,6 +42,9 @@ for el in ELEMENTS:
     va = json.load(open(vap, encoding="utf-8"))
     Xtr, ytr = embed(tr)
     Xva, yva = embed(va)
+    if len(Xtr) == 0 or len(Xva) == 0:
+        print("%-16s skip: no images (%d/%d)" % (el, len(Xtr), len(Xva)), flush=True)
+        continue
     clf = LogisticRegression(max_iter=3000)
     clf.fit(Xtr, ytr)
     acc = accuracy_score(yva, clf.predict(Xva))
