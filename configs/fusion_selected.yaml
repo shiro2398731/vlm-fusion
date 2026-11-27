@@ -25,3 +25,12 @@ elements:
   wave:            {enabled: true,  semantic_probe: wave_clip_probe.joblib}
   earthquake_def:  {enabled: true,  semantic_probe: earthquake_def_clip_probe.joblib}
   groundwater_overuse: {enabled: false}  # 4/6 vs 4/6，无增益
+
+  # 第二批决策融合验证（同分布，2张/类）
+  wildfire_smoke:   {enabled: true,  semantic_probe: wildfire_smoke_clip_probe.joblib}
+  sea_ice_amsr2:    {enabled: true,  semantic_probe: sea_ice_amsr2_clip_probe.joblib}
+  coastal_nt:       {enabled: true,  semantic_probe: coastal_nt_clip_probe.joblib}
+  flood_water:      {enabled: true,  semantic_probe: flood_water_clip_probe.joblib}
+  heatwave_lst:     {enabled: true,  semantic_probe: heatwave_lst_clip_probe.joblib}
+  volcano_thermal:  {enabled: true,  semantic_probe: volcano_thermal_clip_probe.joblib}
+  snowstorm:        {enabled: false}   # 7/8 vs 7/8，无增益
