@@ -21,6 +21,7 @@ class FeatureBundle:
     physical_stats: Dict[str, float] = field(default_factory=dict)
     visual_map: Optional[np.ndarray] = None      # HxWx3 uint8
     visual_vector: Optional[np.ndarray] = None    # 1D
+    visual_scores: Optional[Dict[str, float]] = None  # 视觉探针的类别概率
     semantic_scores: Optional[Dict[str, float]] = None
     semantic_vector: Optional[np.ndarray] = None
     meta: Dict[str, Any] = field(default_factory=dict)

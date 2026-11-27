@@ -81,6 +81,36 @@ class ResNetExtractor(FeatureExtractor):
         return bundle
 
 
+class ResNetProbeExtractor(ResNetExtractor):
+    """ResNet50 嵌入 + 线性探针：视觉支路的概率输出（不注入特征图）。"""
+
+    name = "resnet_probe"
+
+    def __init__(self, probe_path=None, output=None, **kw):
+        super().__init__(output="vector", **kw)
+        self.probe_path = probe_path
+        self.clf = None
+        self.labels_probe = None
+
+    def load(self):
+        super().load()
+        import joblib
+        if not self.probe_path or not os.path.exists(self.probe_path):
+            raise FileNotFoundError("resnet probe not found: %s" % self.probe_path)
+        z = joblib.load(self.probe_path)
+        self.clf = z["model"]
+        self.labels_probe = list(z["labels"])
+
+    def extract(self, bundle, labels=None):
+        if self.clf is None:
+            self.load()
+        bundle = super().extract(bundle)
+        probs = self.clf.predict_proba(bundle.visual_vector.reshape(1, -1))[0]
+        bundle.visual_scores = {str(l): float(p) for l, p in zip(self.labels_probe, probs)}
+        bundle.meta["visual"] = {"model": "resnet_probe", "probe": self.probe_path}
+        return bundle
+
+
 class DinoV2Extractor(FeatureExtractor):
     """DINOv2（占位）：依赖 timm / torch.hub，后续填入。"""
 
@@ -184,6 +214,7 @@ REGISTRY = {
     "none": NoneExtractor,
     "numeric": NumericExtractor,
     "resnet50": ResNetExtractor,
+    "resnet_probe": ResNetProbeExtractor,
     "dinov2_small": DinoV2Extractor,
     "clip_vit_b32": ClipExtractor,
     "clip_probe": ClipProbeExtractor,

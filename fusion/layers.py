@@ -60,6 +60,14 @@ class TextImageFusion(Fusion):
                 "%s=%.4g" % kv for kv in bundle.physical_stats.items()) + "."
         return None
 
+    def _visual_line(self, bundle):
+        if not (self.include_visual and bundle.visual_scores):
+            return None
+        top = sorted(bundle.visual_scores.items(), key=lambda x: -x[1])
+        s = ", ".join("%s=%.3f" % (k, v) for k, v in top[:4])
+        return "Visual model scores (deep network, not zero-shot): " + s + \
+               ". Treat them as supporting evidence, not a label."
+
     def _semantic_line(self, bundle):
         if not (self.include_semantic and bundle.semantic_scores):
             return None
@@ -90,7 +98,7 @@ class TextImageFusion(Fusion):
                 lines.append("Second image: deep-network visual feature map of the same window; "
                              "use it together with the physical index map.")
 
-        for fn in (self._numeric_line, self._semantic_line):
+        for fn in (self._numeric_line, self._visual_line, self._semantic_line):
             s = fn(bundle)
             if s:
                 lines.append(s)
@@ -99,7 +107,9 @@ class TextImageFusion(Fusion):
         return FusionInput(images=images, text="\n".join(lines),
                            meta={"mode": self.mode,
                                  "streams": {"numeric": bool(self._numeric_line(bundle)),
-                                             "visual": self.include_visual and bundle.visual_map is not None,
+                                             "visual": self.include_visual and (
+                                                 bundle.visual_map is not None or
+                                                 bool(bundle.visual_scores)),
                                              "semantic": bool(bundle.semantic_scores)}})
 
 

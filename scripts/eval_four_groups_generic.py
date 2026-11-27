@@ -25,7 +25,9 @@ def cfg(visual=False, semantic=False):
     return {
         "element": EL,
         "numeric": {"extractor": "none"},
-        "visual": {"extractor": "resnet50" if visual else "none", "output": "map"},
+        "visual": ({"extractor": "resnet_probe",
+                    "probe_path": r"C:\vlm-fusion\outputs\probes\snow_swe_resnet_probe.joblib"}
+                   if visual else {"extractor": "none"}),
         "semantic": ({"extractor": "clip_probe", "probe_path": PROBE}
                      if semantic else {"extractor": "none"}),
         "fusion": {"mode": ["text", "image"], "include_numeric": False,

@@ -34,12 +34,12 @@ class ElementPipeline:
         self.cfg = cfg
         self.element = cfg.get("element")
         num = cfg.get("numeric") or {}
-        vis = cfg.get("visual") or {}
+        vis = dict(cfg.get("visual") or {})
+        vis_name = vis.pop("extractor", "none")
         sem = dict(cfg.get("semantic") or {})
         self.numeric = FE.build(num.get("extractor", "numeric"),
                                 scale=num.get("scale"), fields=num.get("fields"))
-        self.visual = FE.build(vis.get("extractor", "none"),
-                               output=vis.get("output", "map"))
+        self.visual = FE.build(vis_name, **vis)
         sem_name = sem.pop("extractor", "none")
         self.labels = sem.pop("labels", []) or []
         if sem_name == "clip_probe":
