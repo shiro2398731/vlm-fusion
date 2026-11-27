@@ -54,6 +54,26 @@ class ElementPipeline:
         bundle = self.numeric.extract(bundle)
         bundle = self.visual.extract(bundle)
         bundle = self.semantic.extract(bundle, labels=self.labels)
+
+        if getattr(self.fusion, "mode", "") == "decision":
+            pred = self._predict(api, element, image_path, "")
+            base = dict(pred.get("prediction") or pred)
+            fc = dict(self.cfg.get("fusion") or {})
+            tau = float(fc.get("tau", 0.8))
+            src = fc.get("source", "semantic")
+            scores = bundle.semantic_scores if src == "semantic" else bundle.visual_scores
+            if scores:
+                top = max(scores, key=scores.get)
+                if scores[top] >= tau:
+                    base["base_severity"] = base.get("severity")
+                    base["severity"] = top
+                    base["severity_source"] = "probe"
+                    base["probe_conf"] = round(float(scores[top]), 3)
+                else:
+                    base["severity_source"] = "qwen"
+                    base["probe_conf"] = round(float(scores[top]), 3)
+            return {"fusion": "", "meta": bundle.meta, "prediction": base}
+
         fused = self.fusion.compose(bundle)
         img = _composite(fused.images)
         pred = self._predict(api, element, img, fused.text)
