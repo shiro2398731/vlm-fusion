@@ -39,8 +39,8 @@ class TextImageFusion(Fusion):
 
     def __init__(self, include_numeric=True, include_visual=True,
                  include_semantic=True, image_layout="side",
-                 visual_weight=0.35, max_text_lines=6,
-                 semantic_style="scores", include_vectors=False,
+                 visual_weight=0.35, max_text_lines=10,
+                 semantic_style="scores", include_vectors=True,
                  include_visual_vectors=None, include_semantic_vectors=None, **kw):
         super().__init__(**kw)
         self.include_numeric = include_numeric
