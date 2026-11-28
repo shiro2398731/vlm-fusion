@@ -4,7 +4,7 @@ import glob, json, os, sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 D = r"C:\vlm-fusion\outputs\four_groups"
-OVERRIDES = {"sanddust": "dinov2"}
+OVERRIDES = {"sanddust": "dinov2", "wind_gale": "dinov2", "wave": "dinov2"}
 P = r"C:\vlm-fusion\outputs\probes"
 
 base, dec = {}, {}

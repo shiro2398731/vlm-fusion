@@ -13,7 +13,7 @@ elements:
   drought_ndvi_clim      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
   earthquake_def         {enabled: true , note: "+2"}   # base 4/6 -> fused 6/6
   enso                   {enabled: false, note: "0"}   # base 6/6 -> fused 6/6
-  flare                  {enabled: true , note: "+4"}   # base 2/8 -> fused 6/8
+  flare                  {enabled: true , note: "+2"}   # base 2/8 -> fused 4/8
   flood_opt              {enabled: false, note: "0"}   # base 6/6 -> fused 6/6
   flood_precip_global    {enabled: true , note: "+5"}   # base 2/8 -> fused 7/8
   flood_water            {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4
@@ -38,8 +38,8 @@ elements:
   volcano_so2            {enabled: true , note: "+2"}   # base 4/8 -> fused 6/8
   volcano_thermal        {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4
   waterlogging_pct       {enabled: false, note: "0"}   # base 4/6 -> fused 4/6
-  wave                   {enabled: true , note: "+1"}   # base 2/8 -> fused 3/8
+  wave                   {enabled: true , note: "+1", source: dinov2}   # base 2/8 -> fused 3/8
   wildfire               {enabled: true , note: "+4"}   # base 0/4 -> fused 4/4
   wildfire_smoke         {enabled: true , note: "+3"}   # base 3/8 -> fused 6/8
-  wind_gale              {enabled: true , note: "+1"}   # base 3/6 -> fused 4/6
+  wind_gale              {enabled: true , note: "+1", source: dinov2}   # base 3/6 -> fused 4/6
   snow_fsc              {enabled: false}  # 外部日期 baseline 8/8，融合会拉低
