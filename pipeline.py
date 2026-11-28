@@ -30,6 +30,17 @@ def _composite(images: List[str]) -> str:
 
 
 class ElementPipeline:
+    @classmethod
+    def from_yaml(cls, path: str, element: str) -> "ElementPipeline":
+        """从 YAML 配置构造：文件里按元素分节。"""
+        import yaml
+        cfg_all = yaml.safe_load(open(path, encoding="utf-8")) or {}
+        if element not in cfg_all:
+            raise KeyError("element not in config: %s" % element)
+        cfg = dict(cfg_all[element])
+        cfg["element"] = element
+        return cls(cfg)
+
     def __init__(self, cfg: Dict[str, Any]) -> None:
         self.cfg = cfg
         self.element = cfg.get("element")

@@ -1,0 +1,306 @@
+[
+ {
+  "element": "bloom_chla",
+  "status": "ok",
+  "severity": "moderate",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "coastal_nt",
+  "status": "ok",
+  "severity": "high_water",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "coastal_sla",
+  "status": "ok",
+  "severity": "light",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "coral_dhw",
+  "status": "ok",
+  "severity": "alert1",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "drought_grace",
+  "status": "ok",
+  "severity": "drought",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "drought_ndvi_clim",
+  "status": "ok",
+  "severity": "drought",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "earthquake_def",
+  "status": "ok",
+  "severity": "slight_deform",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "enso",
+  "status": "ok",
+  "severity": "neutral",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "flare",
+  "status": "ok",
+  "severity": "flare",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "flood_opt",
+  "status": "ok",
+  "severity": "waterlogging",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "flood_precip_global",
+  "status": "ok",
+  "severity": "flood",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "flood_water",
+  "status": "ok",
+  "severity": "water",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "geomagnetic",
+  "status": "ok",
+  "severity": "weak_storm",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "gpm_nt",
+  "status": "ok",
+  "severity": "heavy_rain",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "green_tide",
+  "status": "ok",
+  "severity": "green_tide",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "ground_subsidence",
+  "status": "ok",
+  "severity": "subsidence",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "groundwater_grace",
+  "status": "ok",
+  "severity": "depleted",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "groundwater_overuse",
+  "status": "ok",
+  "severity": "stable",
+  "detected": false,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "haze",
+  "status": "ok",
+  "severity": "haze",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "heatwave_lst",
+  "status": "ok",
+  "severity": "heatwave",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "hurricane_opt",
+  "status": "ok",
+  "severity": "developing",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "hurricane_rain",
+  "status": "ok",
+  "severity": "rainstorm",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "iod",
+  "status": "ok",
+  "severity": "negative_iod",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "marine_heatwave",
+  "status": "ok",
+  "severity": "marine_heatwave",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "sanddust",
+  "status": "ok",
+  "severity": "dust",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "sea_ice_amsr2",
+  "status": "ok",
+  "severity": "heavy",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "sea_ice_s2_arctic",
+  "status": "ok",
+  "severity": "open_water",
+  "detected": false,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "snow_fsc",
+  "status": "ok",
+  "severity": "moderate",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "snow_swe",
+  "status": "ok",
+  "severity": "moderate",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "snowstorm",
+  "status": "ok",
+  "severity": "moderate",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "uvai_dust",
+  "status": "ok",
+  "severity": "heavy",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "volcano_so2",
+  "status": "ok",
+  "severity": "moderate",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "volcano_thermal",
+  "status": "ok",
+  "severity": "no",
+  "detected": false,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "waterlogging_pct",
+  "status": "ok",
+  "severity": "light",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "wave",
+  "status": "ok",
+  "severity": "red",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "wildfire",
+  "status": "ok",
+  "severity": "severe",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "wildfire_smoke",
+  "status": "ok",
+  "severity": "heavy",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ },
+ {
+  "element": "wind_gale",
+  "status": "ok",
+  "severity": "gale",
+  "detected": true,
+  "input_lines": 4,
+  "vector_attached": true
+ }
+]
