@@ -628,3 +628,15 @@ gpm_nt 3/6→6/6、haze 3/6→6/6、uvai_dust 5/8→8/8。
 
 注意：其中部分元素的 hold 与训练同日期（仅 flare/enso/iod/marine 日期干净），
 因此这组结果应表述为“留出样本复核”，不等同跨日期泛化。
+
+## 第四十二次：未启用元素的 hold 候选测试（9 元素）
+
+| 元素 | baseline | 候选融合 | 结论 |
+|---|--:|--:|---|
+| ground_subsidence | 2/4 | 4/4 | hold 有增益，但原始链路仍 2/4（明显沉降→stable），保持关闭 |
+| snow_fsc | 4/6 | 6/6 | hold 有增益，但训练集外日期 baseline 8/8 → 拉低，保持关闭 |
+| green_tide | 4/6 | 5/6 | same-dist -1、原始链路 2/2，保持关闭 |
+| bloom_chla / enso / flood_opt / iod / marine_heatwave / snowstorm | 持平 | 持平 | 保持关闭 |
+
+结论：hold 增益不能单独作为开启依据，必须同时过“外部日期/原始链路”复核；
+否则会出现 snow_fsc（外部全对）、ground_subsidence（原始链路数值不可读）这类反例。

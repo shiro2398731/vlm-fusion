@@ -1,0 +1,56 @@
+{
+ "bloom_chla": {
+  "n": 4,
+  "baseline": 4,
+  "candidate": 4,
+  "source": "semantic"
+ },
+ "enso": {
+  "n": 6,
+  "baseline": 6,
+  "candidate": 6,
+  "source": "semantic"
+ },
+ "flood_opt": {
+  "n": 6,
+  "baseline": 6,
+  "candidate": 6,
+  "source": "semantic"
+ },
+ "green_tide": {
+  "n": 6,
+  "baseline": 4,
+  "candidate": 5,
+  "source": "semantic"
+ },
+ "ground_subsidence": {
+  "n": 4,
+  "baseline": 2,
+  "candidate": 4,
+  "source": "semantic"
+ },
+ "iod": {
+  "n": 6,
+  "baseline": 5,
+  "candidate": 5,
+  "source": "semantic"
+ },
+ "marine_heatwave": {
+  "n": 4,
+  "baseline": 4,
+  "candidate": 4,
+  "source": "semantic"
+ },
+ "snow_fsc": {
+  "n": 6,
+  "baseline": 4,
+  "candidate": 6,
+  "source": "semantic"
+ },
+ "snowstorm": {
+  "n": 8,
+  "baseline": 8,
+  "candidate": 8,
+  "source": "semantic"
+ }
+}
