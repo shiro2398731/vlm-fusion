@@ -516,3 +516,11 @@ obvious_deform 窗口保持正确。
 | green_tide | 2/2 | 2/2 |
 
 green_tide 在 fusion_best 中关闭（同分布融合会下降），原始链路保持 baseline 全对。
+
+## 第三十三次：原始链路端到端（coral_dhw）
+
+| 指标 | raw baseline | raw + 决策融合 |
+|---|--:|--:|
+| coral_dhw | 2/2 | 2/2 |
+
+ERDDAP 截取的 DHW 网格渲染两窗口，均无热胁迫，融合保持 none。
