@@ -23,3 +23,12 @@
 - 需要改 transformers 前向（视觉 token 与文本 token 合并时机）
 - 8GB 下 batch 只能 1，训练时间长
 - 语义支路文本注入已被证明会拖累，projector 是否真能更好需实验验证
+
+## 实测补充（2026-11-28 深夜）
+
+- 服务运行中再加载一份 4bit 基座：成功，剩余 1.68GB（`scripts/projector_memtest.py`）
+- 对该第二份模型做一次前向+反向（文本样本）：峰值显存 5.28GB，
+  同时服务在跑时 free 变成 0.00GB，处于临界
+- 结论：**projector 训练必须先停 8078 服务**；单独运行时 5.28GB 峰值在 8GB 内可行
+- 训练链路仍未实现，预计单元素（coral）原型需要：
+  停服 → 加载 4bit → 构造 projector 与 token 拼接 → 数十步 SFT → 恢复服务
