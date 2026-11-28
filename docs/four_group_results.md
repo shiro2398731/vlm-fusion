@@ -487,3 +487,14 @@ ARIA GUNW 渲染 2 个窗口：
 明细：stable 窗口基线误判 slight_deform，探针覆盖为 stable 修正；
 obvious_deform 窗口保持正确。
 该元素（fusion_best 中 source=visual/DINOv2）在原始链路上验证通过。
+
+## 第三十次：原始链路端到端（InSAR 两元素，配置为关闭）
+
+| 元素 | raw baseline | raw + 配置（关闭） |
+|---|--:|--:|
+| ground_subsidence | 2/4 | 2/4 |
+| groundwater_overuse | 2/4 | 2/4 |
+
+两元素在 fusion_best 中 enabled=false，验证了“关闭即保持 baseline”：
+结果与 raw baseline 完全一致。稳定窗口判对，明显沉降窗口被低估为 stable，
+属于数值判读问题，需要阈值/挂件层面处理，而非融合能解决。
