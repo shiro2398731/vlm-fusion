@@ -1,0 +1,168 @@
+# 逐元素最优探针配置（由实测自动生成）
+# 默认 tau 0.6；enabled=false 表示保持 baseline
+
+bloom_chla:
+  enabled: false
+
+coastal_nt:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/coastal_nt_dinov2_probe.joblib}
+
+coastal_sla:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/coastal_sla_dinov2_probe.joblib}
+
+coral_dhw:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/coral_dhw_dinov2_probe.joblib}
+
+drought_grace:
+  enabled: false
+
+drought_ndvi_clim:
+  enabled: false
+
+earthquake_def:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/earthquake_def_dinov2_probe.joblib}
+
+enso:
+  enabled: false
+
+flare:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/flare_dinov2_probe.joblib}
+
+flood_opt:
+  enabled: false
+
+flood_precip_global:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/flood_precip_global_dinov2_probe.joblib}
+
+flood_water:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/flood_water_dinov2_probe.joblib}
+
+geomagnetic:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/geomagnetic_dinov2_probe.joblib}
+
+gpm_nt:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/gpm_nt_dinov2_probe.joblib}
+
+green_tide:
+  enabled: false
+
+ground_subsidence:
+  enabled: false
+
+groundwater_grace:
+  enabled: false
+
+groundwater_overuse:
+  enabled: false
+
+haze:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/haze_dinov2_probe.joblib}
+
+heatwave_lst:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/heatwave_lst_dinov2_probe.joblib}
+
+hurricane_opt:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/hurricane_opt_dinov2_probe.joblib}
+
+hurricane_rain:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: semantic}
+  semantic: {extractor: clip_probe, probe_path: outputs/probes/hurricane_rain_clip_probe.joblib}
+
+iod:
+  enabled: false
+
+marine_heatwave:
+  enabled: false
+
+sanddust:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/sanddust_dinov2_probe.joblib}
+
+sea_ice_amsr2:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/sea_ice_amsr2_dinov2_probe.joblib}
+
+sea_ice_s2_arctic:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/sea_ice_s2_arctic_dinov2_probe.joblib}
+
+snow_fsc:
+  enabled: false
+
+snow_swe:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/snow_swe_dinov2_probe.joblib}
+
+snowstorm:
+  enabled: false
+
+uvai_dust:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/uvai_dust_dinov2_probe.joblib}
+
+volcano_so2:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: semantic}
+  semantic: {extractor: clip_probe, probe_path: outputs/probes/volcano_so2_clip_probe.joblib}
+
+volcano_thermal:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/volcano_thermal_dinov2_probe.joblib}
+
+waterlogging_pct:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/waterlogging_pct_dinov2_probe.joblib}
+
+wave:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/wave_dinov2_probe.joblib}
+
+wildfire:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/wildfire_dinov2_probe.joblib}
+
+wildfire_smoke:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/wildfire_smoke_dinov2_probe.joblib}
+
+wind_gale:
+  enabled: true
+  fusion: {mode: [decision], tau: 0.6, source: visual}
+  visual: {extractor: dinov2_probe, probe_path: outputs/probes/wind_gale_dinov2_probe.joblib}
+
+# enabled: 25 / 38

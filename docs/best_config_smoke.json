@@ -1,0 +1,158 @@
+[
+ {
+  "element": "coastal_nt",
+  "status": "ok",
+  "severity": "normal",
+  "source": "probe"
+ },
+ {
+  "element": "coastal_sla",
+  "status": "ok",
+  "severity": "light",
+  "source": "probe"
+ },
+ {
+  "element": "coral_dhw",
+  "status": "ok",
+  "severity": "alert1",
+  "source": "probe"
+ },
+ {
+  "element": "earthquake_def",
+  "status": "ok",
+  "severity": "stable",
+  "source": "probe"
+ },
+ {
+  "element": "flare",
+  "status": "ok",
+  "severity": "c_flare",
+  "source": "probe"
+ },
+ {
+  "element": "flood_precip_global",
+  "status": "ok",
+  "severity": "heavy",
+  "source": "probe"
+ },
+ {
+  "element": "flood_water",
+  "status": "ok",
+  "severity": "water",
+  "source": "probe"
+ },
+ {
+  "element": "geomagnetic",
+  "status": "ok",
+  "severity": "weak_storm",
+  "source": "probe"
+ },
+ {
+  "element": "gpm_nt",
+  "status": "ok",
+  "severity": "heavy_rain",
+  "source": "probe"
+ },
+ {
+  "element": "haze",
+  "status": "ok",
+  "severity": "clear",
+  "source": "probe"
+ },
+ {
+  "element": "heatwave_lst",
+  "status": "ok",
+  "severity": "heatwave",
+  "source": "probe"
+ },
+ {
+  "element": "hurricane_opt",
+  "status": "ok",
+  "severity": "weak",
+  "source": "probe"
+ },
+ {
+  "element": "hurricane_rain",
+  "status": "ok",
+  "severity": "rainstorm",
+  "source": "qwen"
+ },
+ {
+  "element": "sanddust",
+  "status": "ok",
+  "severity": "clear",
+  "source": "probe"
+ },
+ {
+  "element": "sea_ice_amsr2",
+  "status": "ok",
+  "severity": "heavy",
+  "source": "probe"
+ },
+ {
+  "element": "sea_ice_s2_arctic",
+  "status": "ok",
+  "severity": "open_water",
+  "source": "probe"
+ },
+ {
+  "element": "snow_fsc",
+  "status": "ok",
+  "severity": "moderate",
+  "source": "probe"
+ },
+ {
+  "element": "snow_swe",
+  "status": "ok",
+  "severity": "moderate",
+  "source": "probe"
+ },
+ {
+  "element": "uvai_dust",
+  "status": "ok",
+  "severity": "heavy",
+  "source": "probe"
+ },
+ {
+  "element": "volcano_so2",
+  "status": "ok",
+  "severity": "heavy",
+  "source": "probe"
+ },
+ {
+  "element": "volcano_thermal",
+  "status": "ok",
+  "severity": "no",
+  "source": "probe"
+ },
+ {
+  "element": "waterlogging_pct",
+  "status": "ok",
+  "severity": "light",
+  "source": "probe"
+ },
+ {
+  "element": "wave",
+  "status": "ok",
+  "severity": "red",
+  "source": "probe"
+ },
+ {
+  "element": "wildfire",
+  "status": "ok",
+  "severity": "active_fire",
+  "source": "probe"
+ },
+ {
+  "element": "wildfire_smoke",
+  "status": "ok",
+  "severity": "heavy",
+  "source": "probe"
+ },
+ {
+  "element": "wind_gale",
+  "status": "ok",
+  "severity": "gale",
+  "source": "probe"
+ }
+]
