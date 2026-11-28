@@ -162,7 +162,7 @@ wildfire_smoke:
 
 wind_gale:
   enabled: true
-  fusion: {mode: [decision], tau: 0.6, source: visual}
-  visual: {extractor: dinov2_probe, probe_path: outputs/probes/wind_gale_dinov2_probe.joblib}
+  fusion: {mode: [decision], tau: 0.6, source: semantic}
+  semantic: {extractor: clip_probe, probe_path: outputs/probes/wind_gale_clip_probe.joblib}
 
 # enabled: 25 / 38

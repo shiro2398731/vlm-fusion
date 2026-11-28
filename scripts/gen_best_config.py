@@ -34,6 +34,10 @@ for el in sorted(base):
     if el == "snow_fsc":
         enabled = False   # 外部日期 baseline 8/8，融合会拉低
     src = best["src"] if best else "semantic"
+    # 外部日期/原始链路证据优先：wind_gale 的 DINOv2 在外部 storm 上高置信误判，
+    # CLIP 探针 4/4，改为 semanitic。
+    if el == "wind_gale":
+        src = "semantic"
     lines.append("%s:" % el)
     if not enabled:
         lines.append("  enabled: false")

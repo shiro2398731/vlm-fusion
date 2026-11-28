@@ -462,3 +462,16 @@ wind_gale 的探针把 storm 判成 gale，属于等级边界与类别定义问�
 补充：wind_gale 覆盖阈值调到 0.8/0.9 仍为 2/4，说明探针在外部日期上
 “高置信地判错”（storm→gale），不是阈值问题，而是类别边界/标签映射问题；
 该元素在 fusion_best 中应改为 semantic 或暂时关闭，待重新校准。
+
+## 第二十八次：wind_gale 外部复核后改回 CLIP 探针
+
+原始链路 4 张（2 storm、2 normal）对比：
+
+| 探针 | raw sev |
+|---|--:|
+| DINOv2 | 2/4（storm 高置信误判为 gale） |
+| CLIP | **4/4** |
+
+已把 `fusion_best.yaml` 中 wind_gale 的 source 改回 semantic（CLIP 探针），
+重新验证 4/4。说明：逐元素探针选择不能只看同分布 2 张/类的数字，
+必须结合训练集外/原始链路复核。
