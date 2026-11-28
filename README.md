@@ -467,7 +467,7 @@ MIT（见 `LICENSE`）。
 
 - 四问验收状态：[docs/四问完成情况.md](docs/四问完成情况.md)
 - 全部元素默认配置：[configs/fusion_all.yaml](configs/fusion_all.yaml)（38 元素，语义默认 CLIP 探针）
-- 逐元素开关：[configs/fusion_selected.yaml](configs/fusion_selected.yaml)（38 元素中 25 个启用）
+- 逐元素开关：[configs/fusion_selected.yaml](configs/fusion_selected.yaml)（38 元素中 24 个启用）
 - 可执行最优探针配置：[configs/fusion_best.yaml](configs/fusion_best.yaml)
 - 配置样例：[configs/fusion.example.yaml](configs/fusion.example.yaml)
 - 架构说明：[docs/architecture_fusion.md](docs/architecture_fusion.md)
