@@ -606,3 +606,13 @@ hold 集本身是训练集外日期（切分核查 verdict=干净）：
 - 强元素上探针跨日期保持稳定（98.5–100%），与 baseline holdout 持平
 - flare 外部日期 78.0%，明显低于同分布（81.7%）也低于 baseline 同分布 97%，
   再次说明探针在分布外会退化；该元素融合需谨慎（当前 enabled 状态需复核）
+
+## 第四十次：flare hold 集（外部日期）baseline vs 融合
+
+| 指标 | baseline | 融合 |
+|---|--:|--:|
+| flare hold（2 张/类，6 张） | **0/6** | **5/6** |
+
+明细：baseline 全判成通用 "flare"，探针能区分 c_flare / m_flare / x_flare。
+结论：flare 探针虽然跨日期绝对准确率降到 78%，但在外部日期上仍显著优于 baseline；
+该元素保持启用（与同分布结论一致）。
