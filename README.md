@@ -447,12 +447,12 @@ MIT（见 `LICENSE`）。
 |---|---|---|
 | A 文本级 | 三路分数写进 prompt | 部分元素会拖累，默认关闭 |
 | B 图像级 | 视觉特征图并排/叠加成图 | 会破坏挂件判读，默认关闭 |
-| C 决策级 | Qwen 判读 + 探针高置信覆盖（tau 0.6） | **采用**，32 元素 18 升 13 平 1 降 |
+| C 决策级 | Qwen 判读 + 探针高置信覆盖（tau 0.6） | **采用**，38 元素 26 升 12 平 0 降 |
 | D 嵌入级 | projector → token | 未实现，列为后续 |
 
 ### 验证结果速览
 
-- 同分布（32 个元素，2 张/类）：**18 升、13 平、1 降**
+- 同分布（38 个元素，2 张/类，最优探针）：**26 升、12 平、0 降**
 - 训练集外日期：wave 2/8→3/8、earthquake_def 4/6→6/6、groundwater 4/6→4/6
 - snow_fsc 外部 baseline 8/8，融合会拉低 → 该元素关闭融合
 - CLIP 零样本对渲染图无效（coral 0%、snow_fsc 31%），改「嵌入 + 探针」后 93–94%
@@ -461,7 +461,8 @@ MIT（见 `LICENSE`）。
 
 - 四问验收状态：[docs/四问完成情况.md](docs/四问完成情况.md)
 - 全部元素默认配置：[configs/fusion_all.yaml](configs/fusion_all.yaml)（38 元素，语义默认 CLIP 探针）
-- 逐元素开关：[configs/fusion_selected.yaml](configs/fusion_selected.yaml)（35 元素中 21 个启用）
+- 逐元素开关：[configs/fusion_selected.yaml](configs/fusion_selected.yaml)（38 元素中 25 个启用）
+- 可执行最优探针配置：[configs/fusion_best.yaml](configs/fusion_best.yaml)
 - 配置样例：[configs/fusion.example.yaml](configs/fusion.example.yaml)
 - 架构说明：[docs/architecture_fusion.md](docs/architecture_fusion.md)
 - 实验记录：[docs/four_group_results.md](docs/four_group_results.md)
