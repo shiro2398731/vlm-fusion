@@ -590,3 +590,19 @@ hurricane_rain 2/8→7/8、gpm_nt 3/6→6/6、sanddust 4/6→6/6。
 说明：这是同分布部署口径；训练集外/原始链路的复核见第 5 节与弱元素记录，
 wind_gale/wave/hurricane_opt 已按外部证据改回 CLIP 探针。
 明细：`docs/config_eval.json`，脚本 `scripts/eval_config_deployment.py`。
+
+## 第三十九次：日期干净元素的 hold 集外部验证（探针）
+
+hold 集本身是训练集外日期（切分核查 verdict=干净）：
+
+| 元素 | hold 样本 | CLIP 探针 | baseline holdout sev |
+|---|--:|--:|--:|
+| enso | 730 | 98.9% | 99.5 |
+| iod | 730 | 99.0% | 98.5 |
+| marine_heatwave | 730 | 100.0% | 100.0 |
+| flare | 1601 | 78.0% | -（能力表无 holdout sev） |
+
+结论：
+- 强元素上探针跨日期保持稳定（98.5–100%），与 baseline holdout 持平
+- flare 外部日期 78.0%，明显低于同分布（81.7%）也低于 baseline 同分布 97%，
+  再次说明探针在分布外会退化；该元素融合需谨慎（当前 enabled 状态需复核）
