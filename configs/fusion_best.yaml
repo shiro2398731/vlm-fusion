@@ -83,8 +83,8 @@ heatwave_lst:
 
 hurricane_opt:
   enabled: true
-  fusion: {mode: [decision], tau: 0.6, source: visual}
-  visual: {extractor: dinov2_probe, probe_path: outputs/probes/hurricane_opt_dinov2_probe.joblib}
+  fusion: {mode: [decision], tau: 0.6, source: semantic}
+  semantic: {extractor: clip_probe, probe_path: outputs/probes/hurricane_opt_clip_probe.joblib}
 
 hurricane_rain:
   enabled: true

@@ -106,11 +106,10 @@ elements:
     enabled: true
     note: "+1"
     source: visual
-  # base 3/6 -> fused 5/6 (dinov2)
+  # base 3/6 -> fused 5/6 (semantic)
   hurricane_opt:
     enabled: true
     note: "+2"
-    source: visual
   # base 2/8 -> fused 7/8 (semantic)
   hurricane_rain:
     enabled: true

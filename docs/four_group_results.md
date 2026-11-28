@@ -546,3 +546,13 @@ ERDDAP 截取的 DHW 网格渲染两窗口，均无热胁迫，融合保持 none
 两种探针在 GDACS 回退窗口上均高置信误覆盖（flood→none），
 raw baseline 本身 2/2。已把 flood_precip_global 设为强制关闭（与 snow_fsc 同）。
 说明同分布小样本（2 张/类）选出的探针不能盲信，必须过原始链路复核。
+
+## 第三十六次：hurricane_opt 原始链路复核
+
+| 探针 | raw hurricane sev |
+|---|--:|
+| DINOv2 | 1/2 |
+| CLIP | **2/2** |
+
+按外部证据把 hurricane_opt 也改回 semantic（CLIP 探针）。
+至此按原始链路复核改回 CLIP 的元素：wind_gale、wave、hurricane_opt。

@@ -53,7 +53,7 @@ for el in sorted(base):
         note = "%d" % delta
     rows.append((el, en, note))
     src = DEC_SRC.get(el, "semantic")
-    if el in ("wind_gale", "wave"):
+    if el in ("wind_gale", "wave", "hurricane_opt"):
         src = "semantic"   # 原始链路外部复核：DINOv2 高置信误判，改回 CLIP
     lines.append("  # base %d/%d -> fused %d/%d (%s)" % (
         base[el]["sev_ok"], base[el]["n"], dec[el]["sev_ok"], dec[el]["n"], src))
