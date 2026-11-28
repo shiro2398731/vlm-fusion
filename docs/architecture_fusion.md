@@ -175,3 +175,16 @@ snow_fsc:
 不需要重训 Qwen，baseline 完全不动。
 
 后续：需要“特征接入模型内部”的端到端版本时，再训练 projector（8GB 可行但周期长）。
+
+## 9. 可配置后端（本地 / API）
+
+| 组件 | 本地 | 远程 |
+|---|---|---|
+| 语义支路 | `clip_probe`：CLIP 嵌入 + 每元素线性探针 | `clip_api`：POST 图片 base64，返回 `{embedding}` 或 `{scores}` |
+| 判读 LLM | `llm.backend: local`：本机 serve 的 Qwen3-VL | `llm.backend: api`：OpenAI 兼容视觉接口，图片走 data URL |
+
+配置字段：`semantic.extractor`、`semantic.base_url/api_key/model`、
+`llm.backend/base_url/api_key/model`。环境变量：`SEMANTIC_API_URL`、
+`SEMANTIC_API_KEY`、`LLM_API_KEY`。
+
+验证脚本：`scripts/test_clip_api.py`、`scripts/test_llm_api.py`（mock 服务）。
