@@ -42,26 +42,35 @@ class LLMClient:
         if self._model is not None:
             return
         import torch
-        from transformers import AutoModelForCausalLM, AutoTokenizer
         path = self.cfg.get("model_path")
         if not path:
             raise ValueError("local backend requires model_path")
         device = self.cfg.get("device", "cuda" if torch.cuda.is_available() else "cpu")
-        self._tok = AutoTokenizer.from_pretrained(path)
-        self._model = AutoModelForCausalLM.from_pretrained(
-            path, torch_dtype="auto", device_map=device)
+        try:
+            # Qwen3-VL 等视觉语言模型
+            from transformers import AutoProcessor, AutoModelForImageTextToText
+            self._tok = AutoProcessor.from_pretrained(path)
+            self._model = AutoModelForImageTextToText.from_pretrained(
+                path, torch_dtype="auto", device_map=device)
+        except Exception:
+            # 纯文本因果模型
+            from transformers import AutoModelForCausalLM, AutoTokenizer
+            self._tok = AutoTokenizer.from_pretrained(path)
+            self._model = AutoModelForCausalLM.from_pretrained(
+                path, torch_dtype="auto", device_map=device)
         self._model.eval()
 
     def _chat_local(self, messages: List[dict], temperature: float, max_tokens: int) -> str:
         self._load_local()
         import torch
-        text = self._tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-        inp = self._tok(text, return_tensors="pt").to(self._model.device)
+        tok = getattr(self._tok, "tokenizer", self._tok)
+        text = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        inp = tok(text, return_tensors="pt").to(self._model.device)
         with torch.no_grad():
             out = self._model.generate(**inp, max_new_tokens=max_tokens,
                                        do_sample=temperature > 0,
                                        temperature=max(temperature, 1e-5))
-        return self._tok.decode(out[0][inp["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+        return tok.decode(out[0][inp["input_ids"].shape[1]:], skip_special_tokens=True).strip()
 
     # ---------- 统一 ----------
     def chat(self, prompt: str, system: Optional[str] = None,
