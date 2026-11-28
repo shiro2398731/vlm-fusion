@@ -327,3 +327,24 @@ snow_swe（8 张）：
 2. 视觉向量对 coral 有帮助（+both 从 5/6 到 6/6）
 3. 语义向量反而干扰（snow_swe +语义 4/8→2/8），建议语义保持概率、不附向量
 4. 默认关闭；按元素验证后再开
+
+## 第十九次：DINOv2 决策融合复验（tau0.6，9 元素）
+
+| 元素 | baseline | CLIP 融合 | DINOv2 融合 |
+|---|--:|--:|--:|
+| snow_swe | 3/8 | 5/8 | 5/8 |
+| coral_dhw | 5/6 | 6/6 | 6/6 |
+| sanddust | 4/6 | 5/6 | **6/6** |
+| volcano_so2 | 4/8 | 6/8 | 5/8 |
+| haze | 2/6 | 6/6 | 6/6 |
+| wind_gale | 3/6 | 4/6 | **5/6** |
+| earthquake_def | 4/6 | 6/6 | 6/6 |
+| wave | 2/8 | 3/8 | **5/8** |
+| gpm_nt | 3/6 | 6/6 | 6/6 |
+
+结论：
+- DINOv2 在 sanddust、wind_gale、wave 上优于 CLIP（wave 外部日期 3/8→5/8）
+- volcano_so2 上不如 CLIP（6/8→5/8）
+- 其余持平
+
+因此逐元素开关按“更优探针”选择：sanddust/wind_gale/wave 用 DINOv2，其余默认 CLIP。
