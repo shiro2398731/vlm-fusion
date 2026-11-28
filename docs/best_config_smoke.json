@@ -96,12 +96,6 @@
   "source": "probe"
  },
  {
-  "element": "snow_fsc",
-  "status": "ok",
-  "severity": "moderate",
-  "source": "probe"
- },
- {
   "element": "snow_swe",
   "status": "ok",
   "severity": "moderate",
