@@ -459,6 +459,9 @@ MIT（见 `LICENSE`）。
 - 三路向量四组对照（弱元素）：视觉向量在 sea_ice_amsr2 3/8→6/8、wildfire_smoke 3/8→5/8；
   语义向量仍不稳定，故默认保留但按元素可关
 - 四组全量汇总：[docs/four_group_all.md](docs/four_group_all.md)（由脚本生成）
+- 原始链路端到端（raw_workflow → 三路特征 → 决策融合）：
+  sea_ice_s2_arctic 2/2、wildfire 12/12、earthquake_def 1/2→2/2、uvai_dust 1/2→2/2、
+  wind_gale 4/4（改用 CLIP 后）、snow_swe 2/6（持平）、InSAR 两元素关闭保持 2/4
 
 ### 配置与文档
 
