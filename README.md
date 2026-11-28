@@ -477,6 +477,9 @@ MIT（见 `LICENSE`）。
 - 逐元素汇总：[docs/decision_summary.md](docs/decision_summary.md)、[docs/probe_summary.md](docs/probe_summary.md)
 - 独立附件：[docs/附件_三路特征融合架构.md](docs/附件_三路特征融合架构.md) 与同名 docx
 - 全元素结果矩阵附件：[docs/附件二_全元素结果矩阵.md](docs/附件二_全元素结果矩阵.md)（docx/pdf 同名）
+- 环境与素材：[docs/环境与素材清单.md](docs/环境与素材清单.md)
+- 训练数据与模型进度：[docs/训练数据与模型进度.md](docs/训练数据与模型进度.md)
+- 全链路验收报告：[docs/附件三_全链路验收报告.md](docs/附件三_全链路验收报告.md)（docx/pdf 同名）
 
 ### 复现命令
 
