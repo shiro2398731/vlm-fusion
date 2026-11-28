@@ -18,11 +18,21 @@ snow_fsc:
     probe_path: outputs/probes/snow_fsc_resnet_probe.joblib
     # 备选：none | resnet50 | dinov2_probe | dinov2_small
 
-  # 语义支路：冻结 CLIP（默认测试模型）
+  # 语义支路：本地 CLIP 探针（clip_probe）或远程语义模型（clip_api）
   semantic:
     extractor: clip_probe
     probe_path: outputs/probes/snow_fsc_clip_probe.joblib
-    # 备选：none | clip_vit_b32 | clip_vit_l14
+    # 远程形态：extractor: clip_api
+    # base_url: https://your-semantic-api/clip
+    # api_key: ""
+    # model: clip
+
+  # 判读 LLM：local（本机 serve）或 api（OpenAI 兼容视觉接口）
+  llm:
+    backend: local           # local | api
+    # base_url: https://api.example.com/v1
+    # api_key: ""
+    # model: qwen3-vl-4b
 
   fusion:
     mode: [text, image]

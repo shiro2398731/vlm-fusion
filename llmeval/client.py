@@ -85,6 +85,46 @@ class LLMClient:
             return self._chat_local(messages, temperature, max_tokens)
         raise ValueError("unknown backend: %s" % self.backend)
 
+    # ---------- 视觉输入 ----------
+    def chat_image(self, prompt: str, image_path: str, system: Optional[str] = None,
+                   temperature: float = 0.0, max_tokens: int = 512) -> str:
+        """带一张图的对话；API 走 image_url(base64)，本地走 Qwen3-VL 处理器。"""
+        if self.backend == "api":
+            import base64
+            b64 = base64.b64encode(open(image_path, "rb").read()).decode()
+            content = [{"type": "text", "text": prompt},
+                       {"type": "image_url",
+                        "image_url": {"url": "data:image/png;base64," + b64}}]
+            messages = []
+            if system:
+                messages.append({"role": "system", "content": system})
+            messages.append({"role": "user", "content": content})
+            return self._chat_api(messages, temperature, max_tokens)
+
+        if self.backend == "local":
+            from PIL import Image
+            self._load_local()
+            import torch
+            msgs = [{"role": "user", "content": [
+                {"type": "image", "image": image_path},
+                {"type": "text", "text": prompt}]}]
+            tok = getattr(self._tok, "tokenizer", self._tok)
+            text = tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
+            proc = self._tok
+            if hasattr(proc, "image_processor"):
+                inp = proc(text=[text], images=[Image.open(image_path).convert("RGB")],
+                           return_tensors="pt")
+            else:
+                inp = tok(text, return_tensors="pt")
+            inp = {k: v.to(self._model.device) for k, v in inp.items()}
+            with torch.no_grad():
+                out = self._model.generate(**inp, max_new_tokens=max_tokens,
+                                           do_sample=temperature > 0,
+                                           temperature=max(temperature, 1e-5))
+            return tok.decode(out[0][inp["input_ids"].shape[1]:],
+                              skip_special_tokens=True).strip()
+        raise ValueError("unknown backend: %s" % self.backend)
+
     @classmethod
     def from_config(cls, path: str) -> "LLMClient":
         import yaml

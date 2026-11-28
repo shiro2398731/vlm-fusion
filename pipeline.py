@@ -2,6 +2,7 @@
 """元素级多模态管线：物理 + 视觉 + 语义 → 融合 → Qwen 判读。"""
 from __future__ import annotations
 
+import json
 import os
 import tempfile
 from typing import Any, Dict, List
@@ -11,6 +12,24 @@ from PIL import Image
 from features import extractors as FE
 from features.base import FeatureBundle
 from fusion import layers as FL
+
+PROMPT_DIR = os.environ.get("VLM_LF_DATA", r"C:\vlmdisaster\LLaMA-Factory\data")
+
+
+def load_prompt(element: str) -> str:
+    """从元素训练集文件里取判读提示词（去掉 <image> 标记）。"""
+    path = os.path.join(PROMPT_DIR, "train_%s_json.json" % element)
+    if os.path.exists(path):
+        try:
+            import json
+            rows = json.load(open(path, encoding="utf-8"))
+            txt = rows[0]["conversations"][0]["value"]
+            return txt.replace("<image>", "").strip()
+        except Exception:
+            pass
+    return ("Classify this remote-sensing disaster map for element %s. "
+            "Output a JSON object with disaster_type, detected, source, "
+            "physical_quantity, severity, numeric fields and criterion." % element)
 
 
 def _composite(images: List[str]) -> str:
@@ -58,6 +77,30 @@ class ElementPipeline:
         self.semantic = FE.build(sem_name, labels=self.labels, **sem)
         self.fusion = FL.build(cfg.get("fusion", {}).get("mode", ["text+image"]),
                                **dict(cfg.get("fusion") or {}))
+        # 判读 LLM：local（本机 serve）| api（OpenAI 兼容视觉接口）
+        self.llm_cfg = dict(cfg.get("llm") or {})
+        self.llm = None
+
+    def _predict(self, api: str, element: str, image: str, extra_text: str):
+        backend = self.llm_cfg.get("backend", "local")
+        if backend == "api":
+            if self.llm is None:
+                from llmeval import LLMClient
+                self.llm = LLMClient(backend="api",
+                                     base_url=self.llm_cfg.get("base_url", ""),
+                                     api_key=self.llm_cfg.get("api_key", ""),
+                                     model=self.llm_cfg.get("model", ""),
+                                     timeout=self.llm_cfg.get("timeout", 120))
+            prompt = load_prompt(element)
+            if extra_text:
+                prompt = prompt + "\n\nAdditional features:\n" + extra_text
+            txt = self.llm.chat_image(prompt, image, max_tokens=self.llm_cfg.get("max_tokens", 512))
+            try:
+                s = txt[txt.find("{"):txt.rfind("}") + 1]
+                return {"prediction": json.loads(s), "raw": txt}
+            except Exception:
+                return {"prediction": {}, "raw": txt}
+        return self._predict_local(api, element, image, extra_text)
 
     def run(self, image_path: str, api: str, element: str, stats=None) -> Dict[str, Any]:
         bundle = FeatureBundle(element=element, image_path=image_path,
@@ -90,7 +133,7 @@ class ElementPipeline:
         pred = self._predict(api, element, img, fused.text)
         return {"fusion": fused.text, "meta": bundle.meta, "prediction": pred}
 
-    def _predict(self, api, element, image, extra_text):
+    def _predict_local(self, api, element, image, extra_text):
         import requests
         with open(image, "rb") as f:
             r = requests.post(api.rstrip("/") + "/api/predict",

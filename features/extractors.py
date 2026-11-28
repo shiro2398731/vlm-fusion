@@ -115,6 +115,53 @@ class ResNetProbeExtractor(ResNetExtractor):
         return bundle
 
 
+class ClipAPIExtractor(FeatureExtractor):
+    """语义支路的 API 形态：远程视觉语言模型返回嵌入或类别分数。
+
+    契约（POST base_url）：
+      {"model": ..., "image_b64": ...}
+    响应二选一：
+      {"embedding": [..]}  -> semantic_vector
+      {"scores": {label: prob}} -> semantic_scores
+    """
+
+    name = "clip_api"
+
+    def __init__(self, base_url=None, api_key=None, model="clip", timeout=60, **kw):
+        super().__init__(**kw)
+        self.base_url = base_url or os.environ.get("SEMANTIC_API_URL", "")
+        self.api_key = api_key or os.environ.get("SEMANTIC_API_KEY", "")
+        self.model = model
+        self.timeout = timeout
+
+    def extract(self, bundle, labels=None):
+        import base64
+        import requests
+        if not self.base_url:
+            bundle.meta["semantic_status"] = "clip_api: no base_url"
+            return bundle
+        b64 = base64.b64encode(open(bundle.image_path, "rb").read()).decode()
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = "Bearer " + self.api_key
+        r = requests.post(self.base_url,
+                          headers=headers,
+                          json={"model": self.model, "image_b64": b64,
+                                "labels": list(labels or [])},
+                          timeout=self.timeout)
+        r.raise_for_status()
+        data = r.json()
+        if "scores" in data:
+            bundle.semantic_scores = {str(k): float(v) for k, v in data["scores"].items()}
+        elif "embedding" in data:
+            bundle.semantic_vector = np.asarray(data["embedding"], dtype="float32")
+        else:
+            bundle.meta["semantic_status"] = "clip_api: unknown response keys"
+        bundle.meta["semantic"] = {"model": self.model, "backend": "api",
+                                   "endpoint": self.base_url}
+        return bundle
+
+
 class DinoV2Extractor(FeatureExtractor):
     """冻结 DINOv2（timm 本地权重）：CLS 嵌入。"""
 
@@ -293,6 +340,7 @@ REGISTRY = {
     "dinov2_probe": DinoProbeExtractor,
     "clip_vit_b32": ClipExtractor,
     "clip_probe": ClipProbeExtractor,
+    "clip_api": ClipAPIExtractor,
 }
 
 
