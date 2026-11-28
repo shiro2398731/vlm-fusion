@@ -468,6 +468,7 @@ MIT（见 `LICENSE`）。
 - 实验记录：[docs/four_group_results.md](docs/four_group_results.md)
 - 逐元素汇总：[docs/decision_summary.md](docs/decision_summary.md)、[docs/probe_summary.md](docs/probe_summary.md)
 - 独立附件：[docs/附件_三路特征融合架构.md](docs/附件_三路特征融合架构.md) 与同名 docx
+- 全元素结果矩阵附件：[docs/附件二_全元素结果矩阵.md](docs/附件二_全元素结果矩阵.md)（docx/pdf 同名）
 
 ### 复现命令
 
