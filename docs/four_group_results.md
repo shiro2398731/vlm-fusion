@@ -348,3 +348,15 @@ snow_swe（8 张）：
 - 其余持平
 
 因此逐元素开关按“更优探针”选择：sanddust/wind_gale/wave 用 DINOv2，其余默认 CLIP。
+
+## 第二十次：全量三方对照（baseline / CLIP 决策 / DINOv2 决策）
+
+38 个元素全部跑完三方（同分布，2 张/类，tau 0.6）：
+
+- 以最优探针计：**升 26、平 12、降 0**
+- CLIP 在 volcano_so2 等元素更强；DINOv2 在 sanddust、wind_gale、wave、
+  uvai_dust、flare、gpm_nt 等更强
+- green_tide、iod、marine_heatwave 上 DINOv2 明显更差，配置中不选它
+
+明细见 [decision_all_sources.md](decision_all_sources.md)；配置已按“最优探针”重算：
+`configs/fusion_selected.yaml` 38 元素中 26 个启用。

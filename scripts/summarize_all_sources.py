@@ -43,7 +43,7 @@ for el in sorted(base):
         tie += 1
     else:
         down += 1
-    row.append("%s (%+d)" % best[0] if delta else "baseline (0)")
+    row.append(("%s (%+d)" % (best[0], delta)) if delta else "baseline (0)")
     lines.append("| " + " | ".join(row) + " |")
 
 lines += ["", "合计（以最优探针计）：升 %d、平 %d、降 %d，共 %d 元素" % (up, tie, down, up + tie + down)]
