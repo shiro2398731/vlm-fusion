@@ -1,0 +1,496 @@
+{
+ "bloom_chla": {
+  "baseline_det": 93.5,
+  "baseline_sev": 90.3,
+  "probes": {
+   "clip": 95.2,
+   "resnet": 96.8,
+   "dinov2": 96.8
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 6,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "coastal_nt": {
+  "baseline_det": 90.5,
+  "baseline_sev": 89.5,
+  "probes": {
+   "clip": 99.7,
+   "resnet": 99.7,
+   "dinov2": 99.9
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 6,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "coastal_sla": {
+  "baseline_det": 98.9,
+  "baseline_sev": 85.1,
+  "probes": {
+   "clip": 90.4,
+   "resnet": 87.2,
+   "dinov2": 89.4
+  },
+  "decision_sev_ok": 5,
+  "decision_n": 8,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "coral_dhw": {
+  "baseline_det": 98.9,
+  "baseline_sev": 79.5,
+  "probes": {
+   "clip": 94.3,
+   "resnet": 96.6,
+   "dinov2": 95.5
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 6,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "drought_grace": {
+  "baseline_det": 100.0,
+  "baseline_sev": 100.0,
+  "probes": {
+   "clip": 100.0,
+   "resnet": 100.0,
+   "dinov2": 100.0
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "drought_ndvi_clim": {
+  "baseline_det": 99.2,
+  "baseline_sev": 99.2,
+  "probes": {
+   "clip": 99.2,
+   "resnet": 100.0,
+   "dinov2": 100.0
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "earthquake_def": {
+  "baseline_det": 88.9,
+  "baseline_sev": 67.6,
+  "probes": {
+   "clip": 92.6,
+   "resnet": 92.6,
+   "dinov2": 91.7
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 6,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "enso": {
+  "baseline_det": 98.5,
+  "baseline_sev": 100.0,
+  "probes": {
+   "clip": 100.0,
+   "resnet": 95.9,
+   "dinov2": 97.7
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 6,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "flare": {
+  "baseline_det": 97.0,
+  "baseline_sev": 97.0,
+  "probes": {
+   "clip": 81.7,
+   "resnet": 82.5,
+   "dinov2": 87.3
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 8,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "flood_opt": {
+  "baseline_det": 100.0,
+  "baseline_sev": 100.0,
+  "probes": {
+   "clip": 99.6,
+   "resnet": 75.9,
+   "dinov2": 70.4
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 6,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "flood_precip_global": {
+  "baseline_det": 92.2,
+  "baseline_sev": 92.2,
+  "probes": {
+   "clip": 93.8,
+   "resnet": 87.5,
+   "dinov2": 92.2
+  },
+  "decision_sev_ok": 7,
+  "decision_n": 8,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "flood_water": {
+  "baseline_det": 81.0,
+  "baseline_sev": 81.0,
+  "probes": {
+   "clip": 100.0,
+   "resnet": 100.0,
+   "dinov2": 100.0
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "geomagnetic": {
+  "baseline_det": 82.9,
+  "baseline_sev": 74.3,
+  "probes": {
+   "clip": 88.6,
+   "resnet": 91.4,
+   "dinov2": 91.4
+  },
+  "decision_sev_ok": 5,
+  "decision_n": 7,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "gpm_nt": {
+  "baseline_det": 95.5,
+  "baseline_sev": 65.5,
+  "probes": {
+   "clip": 99.6,
+   "resnet": 100.0,
+   "dinov2": 100.0
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 6,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "green_tide": {
+  "baseline_det": 98.0,
+  "baseline_sev": 79.6,
+  "probes": {
+   "clip": 83.7,
+   "resnet": 79.6,
+   "dinov2": 65.3
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 6,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "ground_subsidence": {
+  "baseline_det": 81.0,
+  "baseline_sev": 81.0,
+  "probes": {
+   "clip": 99.2,
+   "resnet": 86.4,
+   "dinov2": 86.8
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "groundwater_grace": {
+  "baseline_det": 95.0,
+  "baseline_sev": 95.0,
+  "probes": {
+   "clip": 100.0,
+   "resnet": 100.0,
+   "dinov2": 100.0
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "groundwater_overuse": {
+  "baseline_det": 88.0,
+  "baseline_sev": 70.5,
+  "probes": {
+   "clip": 79.9,
+   "resnet": 79.7,
+   "dinov2": 81.6
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 6,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "haze": {
+  "baseline_det": 79.5,
+  "baseline_sev": 79.5,
+  "probes": {
+   "clip": 91.1,
+   "resnet": 88.1,
+   "dinov2": 90.2
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 6,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "heatwave_lst": {
+  "baseline_det": 81.2,
+  "baseline_sev": 81.2,
+  "probes": {
+   "clip": 100.0,
+   "resnet": 100.0,
+   "dinov2": 100.0
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "hurricane_opt": {
+  "baseline_det": 80.0,
+  "baseline_sev": 77.1,
+  "probes": {
+   "clip": 80.0,
+   "resnet": 77.1,
+   "dinov2": 74.3
+  },
+  "decision_sev_ok": 5,
+  "decision_n": 6,
+  "fusion_enabled": true,
+  "fusion_source": "semantic"
+ },
+ "hurricane_rain": {
+  "baseline_det": 82.0,
+  "baseline_sev": 84.5,
+  "probes": {
+   "clip": 95.9,
+   "resnet": 79.7,
+   "dinov2": 82.0
+  },
+  "decision_sev_ok": 7,
+  "decision_n": 8,
+  "fusion_enabled": true,
+  "fusion_source": "semantic"
+ },
+ "iod": {
+  "baseline_det": 99.5,
+  "baseline_sev": 99.5,
+  "probes": {
+   "clip": 99.1,
+   "resnet": 85.8,
+   "dinov2": 81.3
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 6,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "marine_heatwave": {
+  "baseline_det": 99.0,
+  "baseline_sev": 100.0,
+  "probes": {
+   "clip": 100.0,
+   "resnet": 96.3,
+   "dinov2": 95.0
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "sanddust": {
+  "baseline_det": 81.7,
+  "baseline_sev": 60.0,
+  "probes": {
+   "clip": 80.0,
+   "resnet": 81.7,
+   "dinov2": 90.0
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 6,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "sea_ice_amsr2": {
+  "baseline_det": 88.6,
+  "baseline_sev": 65.9,
+  "probes": {
+   "clip": 94.7,
+   "resnet": 93.2,
+   "dinov2": 96.2
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 8,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "sea_ice_s2_arctic": {
+  "baseline_det": 81.5,
+  "baseline_sev": 81.5,
+  "probes": {
+   "clip": 100.0,
+   "resnet": 100.0,
+   "dinov2": 100.0
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "snow_fsc": {
+  "baseline_det": 96.6,
+  "baseline_sev": 58.6,
+  "probes": {
+   "clip": 93.1,
+   "resnet": 93.1,
+   "dinov2": 96.6
+  },
+  "decision_sev_ok": 5,
+  "decision_n": 5,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "snow_swe": {
+  "baseline_det": 96.0,
+  "baseline_sev": 78.7,
+  "probes": {
+   "clip": 89.3,
+   "resnet": 89.3,
+   "dinov2": 94.7
+  },
+  "decision_sev_ok": 5,
+  "decision_n": 8,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "snowstorm": {
+  "baseline_det": 70.0,
+  "baseline_sev": 62.5,
+  "probes": {
+   "clip": 95.8,
+   "resnet": 93.7,
+   "dinov2": 94.7
+  },
+  "decision_sev_ok": 7,
+  "decision_n": 8,
+  "fusion_enabled": false,
+  "fusion_source": null
+ },
+ "uvai_dust": {
+  "baseline_det": 84.5,
+  "baseline_sev": 74.2,
+  "probes": {
+   "clip": 94.8,
+   "resnet": 94.8,
+   "dinov2": 97.9
+  },
+  "decision_sev_ok": 7,
+  "decision_n": 8,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "volcano_so2": {
+  "baseline_det": 84.2,
+  "baseline_sev": 65.8,
+  "probes": {
+   "clip": 88.2,
+   "resnet": 80.3,
+   "dinov2": 86.8
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 8,
+  "fusion_enabled": true,
+  "fusion_source": "semantic"
+ },
+ "volcano_thermal": {
+  "baseline_det": 88.0,
+  "baseline_sev": 93.3,
+  "probes": {
+   "clip": 96.0,
+   "resnet": 98.7,
+   "dinov2": 97.3
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "waterlogging_pct": {
+  "baseline_det": 96.2,
+  "baseline_sev": 70.0,
+  "probes": {
+   "clip": 81.2,
+   "resnet": 76.2,
+   "dinov2": 78.8
+  },
+  "decision_sev_ok": 5,
+  "decision_n": 6,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "wave": {
+  "baseline_det": 85.7,
+  "baseline_sev": 53.6,
+  "probes": {
+   "clip": 64.3,
+   "resnet": 78.6,
+   "dinov2": 78.6
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 8,
+  "fusion_enabled": true,
+  "fusion_source": "semantic"
+ },
+ "wildfire": {
+  "baseline_det": 100.0,
+  "baseline_sev": 100.0,
+  "probes": {
+   "clip": 100.0,
+   "resnet": 98.3,
+   "dinov2": 100.0
+  },
+  "decision_sev_ok": 4,
+  "decision_n": 4,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "wildfire_smoke": {
+  "baseline_det": 87.8,
+  "baseline_sev": 67.1,
+  "probes": {
+   "clip": 96.3,
+   "resnet": 92.7,
+   "dinov2": 92.7
+  },
+  "decision_sev_ok": 6,
+  "decision_n": 8,
+  "fusion_enabled": true,
+  "fusion_source": "visual"
+ },
+ "wind_gale": {
+  "baseline_det": 65.4,
+  "baseline_sev": 48.7,
+  "probes": {
+   "clip": 76.9,
+   "resnet": 79.5,
+   "dinov2": 73.1
+  },
+  "decision_sev_ok": 5,
+  "decision_n": 6,
+  "fusion_enabled": true,
+  "fusion_source": "semantic"
+ }
+}
