@@ -80,4 +80,5 @@ class LLMClient:
     def from_config(cls, path: str) -> "LLMClient":
         import yaml
         cfg = yaml.safe_load(open(path, encoding="utf-8")) or {}
-        return cls(backend=cfg.get("backend", "api"), **cfg)
+        backend = cfg.pop("backend", "api")
+        return cls(backend=backend, **cfg)
