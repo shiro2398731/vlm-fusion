@@ -467,6 +467,8 @@ MIT（见 `LICENSE`）。
 
 - 语义与 LLM 均可配置：语义支路 `clip_probe`（本地）或 `clip_api`（远程 HTTP）；
   判读 LLM `llm.backend=local`（本机 serve）或 `api`（OpenAI 兼容视觉接口）
+- 远程示例：[configs/fusion_remote.example.yaml](configs/fusion_remote.example.yaml)
+- 机器可读汇总：[docs/summary.json](docs/summary.json)
 - 四问验收状态：[docs/四问完成情况.md](docs/四问完成情况.md)
 - 全部元素默认配置：[configs/fusion_all.yaml](configs/fusion_all.yaml)（38 元素，语义默认 CLIP 探针）
 - 逐元素开关：[configs/fusion_selected.yaml](configs/fusion_selected.yaml)（38 元素中 24 个启用）
