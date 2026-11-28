@@ -1,0 +1,102 @@
+{
+ "elements": {
+  "coastal_nt": {
+   "n": 6,
+   "ok": 6
+  },
+  "coastal_sla": {
+   "n": 8,
+   "ok": 5
+  },
+  "coral_dhw": {
+   "n": 6,
+   "ok": 6
+  },
+  "earthquake_def": {
+   "n": 6,
+   "ok": 6
+  },
+  "flare": {
+   "n": 8,
+   "ok": 6
+  },
+  "flood_water": {
+   "n": 4,
+   "ok": 4
+  },
+  "geomagnetic": {
+   "n": 7,
+   "ok": 5
+  },
+  "gpm_nt": {
+   "n": 6,
+   "ok": 6
+  },
+  "haze": {
+   "n": 6,
+   "ok": 6
+  },
+  "heatwave_lst": {
+   "n": 4,
+   "ok": 4
+  },
+  "hurricane_opt": {
+   "n": 6,
+   "ok": 4
+  },
+  "hurricane_rain": {
+   "n": 8,
+   "ok": 7
+  },
+  "sanddust": {
+   "n": 6,
+   "ok": 6
+  },
+  "sea_ice_amsr2": {
+   "n": 8,
+   "ok": 6
+  },
+  "sea_ice_s2_arctic": {
+   "n": 4,
+   "ok": 4
+  },
+  "snow_swe": {
+   "n": 8,
+   "ok": 5
+  },
+  "uvai_dust": {
+   "n": 8,
+   "ok": 7
+  },
+  "volcano_so2": {
+   "n": 8,
+   "ok": 6
+  },
+  "volcano_thermal": {
+   "n": 4,
+   "ok": 4
+  },
+  "waterlogging_pct": {
+   "n": 6,
+   "ok": 5
+  },
+  "wave": {
+   "n": 8,
+   "ok": 3
+  },
+  "wildfire": {
+   "n": 4,
+   "ok": 4
+  },
+  "wildfire_smoke": {
+   "n": 8,
+   "ok": 6
+  },
+  "wind_gale": {
+   "n": 6,
+   "ok": 4
+  }
+ },
+ "total_ok": 125,
+ "total_n": 153
+}

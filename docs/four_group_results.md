@@ -574,3 +574,19 @@ raw baseline 本身 2/2。已把 flood_precip_global 设为强制关闭（与 sn
 1. 模型 SWE 读数**没有系统性低估**，斜率≈1，校准不解决问题
 2. 原始链路 2/6 的误差集中在 heavy（训练集仅 3 个 heavy 样本），属于类别少样本
 3. 该元素的正确解法是探针融合（探针验证 89.3% > baseline 77.3%），不是数值校准
+
+## 第三十八次：最终配置部署口径评测（24 个启用元素）
+
+用 `configs/fusion_best.yaml` 直接跑验证集 2 张/类：
+
+| 指标 | baseline | 最终配置 |
+|---|--:|--:|
+| 合计 sev | 76/153 | **125/153** |
+| 元素升降 | - | 24 升、0 平、0 降 |
+
+提升最大：wildfire 0/4→4/4、haze 2/6→6/6、flare 2/8→6/8、
+hurricane_rain 2/8→7/8、gpm_nt 3/6→6/6、sanddust 4/6→6/6。
+
+说明：这是同分布部署口径；训练集外/原始链路的复核见第 5 节与弱元素记录，
+wind_gale/wave/hurricane_opt 已按外部证据改回 CLIP 探针。
+明细：`docs/config_eval.json`，脚本 `scripts/eval_config_deployment.py`。
