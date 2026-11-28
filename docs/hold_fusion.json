@@ -1,0 +1,72 @@
+{
+ "coastal_nt": {
+  "n": 6,
+  "baseline": 6,
+  "fused": 6
+ },
+ "coral_dhw": {
+  "n": 6,
+  "baseline": 4,
+  "fused": 6
+ },
+ "flood_water": {
+  "n": 4,
+  "baseline": 3,
+  "fused": 4
+ },
+ "gpm_nt": {
+  "n": 6,
+  "baseline": 3,
+  "fused": 6
+ },
+ "haze": {
+  "n": 6,
+  "baseline": 3,
+  "fused": 6
+ },
+ "hurricane_rain": {
+  "n": 8,
+  "baseline": 2,
+  "fused": 7
+ },
+ "sanddust": {
+  "n": 6,
+  "baseline": 5,
+  "fused": 6
+ },
+ "sea_ice_amsr2": {
+  "n": 8,
+  "baseline": 3,
+  "fused": 8
+ },
+ "uvai_dust": {
+  "n": 8,
+  "baseline": 5,
+  "fused": 8
+ },
+ "volcano_so2": {
+  "n": 8,
+  "baseline": 3,
+  "fused": 4
+ },
+ "volcano_thermal": {
+  "n": 4,
+  "baseline": 4,
+  "fused": 4
+ },
+ "waterlogging_pct": {
+  "n": 6,
+  "baseline": 5,
+  "fused": 6
+ },
+ "wildfire": {
+  "n": 4,
+  "baseline": 0,
+  "fused": 4
+ },
+ "wind_gale": {
+  "n": 6,
+  "baseline": 3,
+  "fused": 4
+ }
+}

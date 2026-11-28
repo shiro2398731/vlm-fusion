@@ -616,3 +616,15 @@ hold 集本身是训练集外日期（切分核查 verdict=干净）：
 明细：baseline 全判成通用 "flare"，探针能区分 c_flare / m_flare / x_flare。
 结论：flare 探针虽然跨日期绝对准确率降到 78%，但在外部日期上仍显著优于 baseline；
 该元素保持启用（与同分布结论一致）。
+
+## 第四十一次：hold 集（留出样本）baseline vs 最终配置
+
+14 个启用元素在 hold 集（每类 2 张）上的对比，合计 **12 升、2 平、0 降**。
+提升最大：hurricane_rain 2/8→7/8、sea_ice_amsr2 3/8→8/8、wildfire 0/4→4/4、
+gpm_nt 3/6→6/6、haze 3/6→6/6、uvai_dust 5/8→8/8。
+
+完整表：[hold_fusion.md](hold_fusion.md)；数据：`docs/hold_fusion.json`；
+脚本：`scripts/eval_hold_fusion.py`、`scripts/summarize_hold_fusion.py`。
+
+注意：其中部分元素的 hold 与训练同日期（仅 flare/enso/iod/marine 日期干净），
+因此这组结果应表述为“留出样本复核”，不等同跨日期泛化。
