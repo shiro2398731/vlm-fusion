@@ -7,39 +7,39 @@ defaults:
   source: semantic
 
 elements:
-  bloom_chla             {enabled: false, note: "0"}   # base 4/6 -> fused 4/6
-  coastal_nt             {enabled: true , note: "+1"}   # base 5/6 -> fused 6/6
-  drought_grace          {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
-  drought_ndvi_clim      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
-  earthquake_def         {enabled: true , note: "+2"}   # base 4/6 -> fused 6/6
-  enso                   {enabled: false, note: "0"}   # base 6/6 -> fused 6/6
-  flare                  {enabled: true , note: "+2"}   # base 2/8 -> fused 4/8
-  flood_opt              {enabled: false, note: "0"}   # base 6/6 -> fused 6/6
-  flood_precip_global    {enabled: true , note: "+5"}   # base 2/8 -> fused 7/8
-  flood_water            {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4
-  geomagnetic            {enabled: false, note: "0"}   # base 4/7 -> fused 4/7
-  gpm_nt                 {enabled: true , note: "+3"}   # base 3/6 -> fused 6/6
-  green_tide             {enabled: false, note: "-1"}   # base 5/6 -> fused 4/6
-  ground_subsidence      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
-  groundwater_grace      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
-  groundwater_overuse    {enabled: false, note: "0"}   # base 4/6 -> fused 4/6
-  haze                   {enabled: true , note: "+4"}   # base 2/6 -> fused 6/6
-  heatwave_lst           {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4
-  hurricane_opt          {enabled: true , note: "+1"}   # base 3/6 -> fused 4/6
-  hurricane_rain         {enabled: true , note: "+5"}   # base 2/8 -> fused 7/8
-  iod                    {enabled: false, note: "0"}   # base 6/6 -> fused 6/6
-  marine_heatwave        {enabled: false, note: "0"}   # base 4/4 -> fused 4/4
-  sanddust               {enabled: true , note: "+1", source: dinov2}   # base 4/6 -> fused 5/6
-  sea_ice_amsr2          {enabled: true , note: "+3"}   # base 3/8 -> fused 6/8
-  sea_ice_s2_arctic      {enabled: true , note: "+2"}   # base 2/4 -> fused 4/4
-  snow_swe               {enabled: true , note: "+2"}   # base 3/8 -> fused 5/8
-  snowstorm              {enabled: false, note: "0"}   # base 7/8 -> fused 7/8
-  uvai_dust              {enabled: true , note: "+1"}   # base 5/8 -> fused 6/8
-  volcano_so2            {enabled: true , note: "+2"}   # base 4/8 -> fused 6/8
-  volcano_thermal        {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4
-  waterlogging_pct       {enabled: false, note: "0"}   # base 4/6 -> fused 4/6
-  wave                   {enabled: true , note: "+1", source: dinov2}   # base 2/8 -> fused 3/8
-  wildfire               {enabled: true , note: "+4"}   # base 0/4 -> fused 4/4
-  wildfire_smoke         {enabled: true , note: "+3"}   # base 3/8 -> fused 6/8
-  wind_gale              {enabled: true , note: "+1", source: dinov2}   # base 3/6 -> fused 4/6
+  bloom_chla             {enabled: false, note: "0"}   # base 4/6 -> fused 4/6 (semantic)
+  coastal_nt             {enabled: true , note: "+1"}   # base 5/6 -> fused 6/6 (semantic)
+  drought_grace          {enabled: false, note: "0"}   # base 4/4 -> fused 4/4 (semantic)
+  drought_ndvi_clim      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4 (semantic)
+  earthquake_def         {enabled: true , note: "+2", source: visual}   # base 4/6 -> fused 6/6 (dinov2)
+  enso                   {enabled: false, note: "0"}   # base 6/6 -> fused 6/6 (semantic)
+  flare                  {enabled: true , note: "+2"}   # base 2/8 -> fused 4/8 (semantic)
+  flood_opt              {enabled: false, note: "0"}   # base 6/6 -> fused 6/6 (semantic)
+  flood_precip_global    {enabled: true , note: "+5"}   # base 2/8 -> fused 7/8 (semantic)
+  flood_water            {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4 (semantic)
+  geomagnetic            {enabled: false, note: "0"}   # base 4/7 -> fused 4/7 (semantic)
+  gpm_nt                 {enabled: true , note: "+3", source: visual}   # base 3/6 -> fused 6/6 (dinov2)
+  green_tide             {enabled: false, note: "-1"}   # base 5/6 -> fused 4/6 (semantic)
+  ground_subsidence      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4 (semantic)
+  groundwater_grace      {enabled: false, note: "0"}   # base 4/4 -> fused 4/4 (semantic)
+  groundwater_overuse    {enabled: false, note: "0"}   # base 4/6 -> fused 4/6 (semantic)
+  haze                   {enabled: true , note: "+4", source: visual}   # base 2/6 -> fused 6/6 (dinov2)
+  heatwave_lst           {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4 (semantic)
+  hurricane_opt          {enabled: true , note: "+1"}   # base 3/6 -> fused 4/6 (semantic)
+  hurricane_rain         {enabled: true , note: "+5"}   # base 2/8 -> fused 7/8 (semantic)
+  iod                    {enabled: false, note: "0"}   # base 6/6 -> fused 6/6 (semantic)
+  marine_heatwave        {enabled: false, note: "0"}   # base 4/4 -> fused 4/4 (semantic)
+  sanddust               {enabled: true , note: "+2", source: visual}   # base 4/6 -> fused 6/6 (dinov2)
+  sea_ice_amsr2          {enabled: true , note: "+3"}   # base 3/8 -> fused 6/8 (semantic)
+  sea_ice_s2_arctic      {enabled: true , note: "+2"}   # base 2/4 -> fused 4/4 (semantic)
+  snow_swe               {enabled: true , note: "+2", source: visual}   # base 3/8 -> fused 5/8 (dinov2)
+  snowstorm              {enabled: false, note: "0"}   # base 7/8 -> fused 7/8 (semantic)
+  uvai_dust              {enabled: true , note: "+1"}   # base 5/8 -> fused 6/8 (semantic)
+  volcano_so2            {enabled: true , note: "+2"}   # base 4/8 -> fused 6/8 (semantic)
+  volcano_thermal        {enabled: true , note: "+1"}   # base 3/4 -> fused 4/4 (semantic)
+  waterlogging_pct       {enabled: false, note: "0"}   # base 4/6 -> fused 4/6 (semantic)
+  wave                   {enabled: true , note: "+3", source: visual}   # base 2/8 -> fused 5/8 (dinov2)
+  wildfire               {enabled: true , note: "+4"}   # base 0/4 -> fused 4/4 (semantic)
+  wildfire_smoke         {enabled: true , note: "+3"}   # base 3/8 -> fused 6/8 (semantic)
+  wind_gale              {enabled: true , note: "+2", source: visual}   # base 3/6 -> fused 5/6 (dinov2)
   snow_fsc              {enabled: false}  # 外部日期 baseline 8/8，融合会拉低

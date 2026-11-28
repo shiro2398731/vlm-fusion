@@ -11,9 +11,18 @@ base, dec = {}, {}
 for f in glob.glob(os.path.join(D, "*_baseline.json")):
     el = os.path.basename(f)[:-len("_baseline.json")]
     base[el] = json.load(open(f, encoding="utf-8"))
-for f in glob.glob(os.path.join(D, "*_decision_semantic.json")):
-    el = os.path.basename(f)[:-len("_decision_semantic.json")]
-    dec[el] = json.load(open(f, encoding="utf-8"))
+
+# 每种决策源都读，逐元素取 sev_ok 最高者
+best = {}
+for f in glob.glob(os.path.join(D, "*_decision_*.json")):
+    name = os.path.basename(f)[:-5]
+    el, src = name.split("_decision_", 1)
+    j = json.load(open(f, encoding="utf-8"))
+    cur = best.get(el)
+    if cur is None or j.get("sev_ok", 0) > cur["json"].get("sev_ok", 0):
+        best[el] = {"src": src, "json": j}
+dec = {el: v["json"] for el, v in best.items()}
+DEC_SRC = {el: v["src"] for el, v in best.items()}
 
 lines = ["# 逐元素融合开关（由实测生成）",
          "# enabled: true → Qwen 判读 + 探针高置信覆盖（tau 0.6）；false → 保持 baseline",
@@ -39,9 +48,11 @@ for el in sorted(base):
         en = "false"
         note = "%d" % delta
     rows.append((el, en, note))
-    extra = ", source: %s" % OVERRIDES[el] if el in OVERRIDES else ""
-    lines.append("  %-22s {enabled: %-5s, note: \"%s\"%s}   # base %d/%d -> fused %d/%d" % (
-        el, en, note, extra, base[el]["sev_ok"], base[el]["n"], dec[el]["sev_ok"], dec[el]["n"]))
+    src = DEC_SRC.get(el, "semantic")
+    extra = ", source: visual" if src in ("visual", "dinov2") else ""
+    lines.append("  %-22s {enabled: %-5s, note: \"%s\"%s}   # base %d/%d -> fused %d/%d (%s)" % (
+        el, en, note, extra, base[el]["sev_ok"], base[el]["n"],
+        dec[el]["sev_ok"], dec[el]["n"], src))
 
 # 外部日期已单独验证为获益
 for el in ("wave", "earthquake_def"):
