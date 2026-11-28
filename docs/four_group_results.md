@@ -498,3 +498,13 @@ obvious_deform 窗口保持正确。
 两元素在 fusion_best 中 enabled=false，验证了“关闭即保持 baseline”：
 结果与 raw baseline 完全一致。稳定窗口判对，明显沉降窗口被低估为 stable，
 属于数值判读问题，需要阈值/挂件层面处理，而非融合能解决。
+
+## 第三十一次：原始链路端到端（sea_ice_s2_arctic / wildfire）
+
+| 元素 | raw baseline | raw + 决策融合 |
+|---|--:|--:|
+| sea_ice_s2_arctic | 2/2 | 2/2 |
+| wildfire | 12/12 | 12/12 |
+
+两元素在 fusion_best 中启用，原始链路结果与 baseline 一致或全对，
+说明探针在这些元素上没有引入破坏；sea_ice 探针覆盖后等级保持 ice。
