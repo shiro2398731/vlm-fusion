@@ -475,3 +475,15 @@ wind_gale 的探针把 storm 判成 gale，属于等级边界与类别定义问�
 已把 `fusion_best.yaml` 中 wind_gale 的 source 改回 semantic（CLIP 探针），
 重新验证 4/4。说明：逐元素探针选择不能只看同分布 2 张/类的数字，
 必须结合训练集外/原始链路复核。
+
+## 第二十九次：原始链路端到端（earthquake_def）
+
+ARIA GUNW 渲染 2 个窗口：
+
+| 指标 | raw baseline | raw + 决策融合 |
+|---|--:|--:|
+| earthquake_def | 1/2 | **2/2** |
+
+明细：stable 窗口基线误判 slight_deform，探针覆盖为 stable 修正；
+obvious_deform 窗口保持正确。
+该元素（fusion_best 中 source=visual/DINOv2）在原始链路上验证通过。
