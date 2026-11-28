@@ -37,6 +37,8 @@ for f in glob.glob(os.path.join(D, "*_decision_*.json")):
         dec[el] = j
 
 out = {}
+deploy = json.load(open(r"C:\vlm-fusion\docs\config_eval.json", encoding="utf-8"))["elements"]
+hold = json.load(open(r"C:\vlm-fusion\docs\hold_fusion.json", encoding="utf-8"))
 for el in sorted(cap):
     c = cfg.get(el) or {}
     out[el] = {
@@ -45,6 +47,10 @@ for el in sorted(cap):
         "probes": acc.get(el, {}),
         "decision_sev_ok": (dec.get(el) or {}).get("sev_ok"),
         "decision_n": (dec.get(el) or {}).get("n"),
+        "deploy_ok": (deploy.get(el) or {}).get("ok"),
+        "deploy_n": (deploy.get(el) or {}).get("n"),
+        "hold_baseline": (hold.get(el) or {}).get("baseline"),
+        "hold_fused": (hold.get(el) or {}).get("fused"),
         "fusion_enabled": bool(c.get("enabled")),
         "fusion_source": (c.get("fusion") or {}).get("source"),
     }
