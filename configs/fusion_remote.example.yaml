@@ -1,0 +1,17 @@
+# 远程后端示例：语义走 clip_api，判读走 OpenAI 兼容视觉接口
+# 只演示一个元素；复制到其他元素即可。密钥建议走环境变量。
+coral_dhw:
+  enabled: true
+  numeric: {extractor: numeric, fields: [max_dhw], scale: {max_dhw: [0.0, 8.0]}}
+  visual: {extractor: none}
+  semantic:
+    extractor: clip_api
+    base_url: https://your-semantic-api.example/v1/clip   # 返回 {embedding} 或 {scores}
+    api_key: ""            # 或环境变量 SEMANTIC_API_KEY
+    model: clip
+  fusion: {mode: [decision], tau: 0.6, source: semantic}
+  llm:
+    backend: api
+    base_url: https://api.example.com/v1
+    api_key: ""            # 或环境变量 LLM_API_KEY
+    model: qwen3-vl-4b
