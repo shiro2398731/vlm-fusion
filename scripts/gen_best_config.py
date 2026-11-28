@@ -31,8 +31,8 @@ for el in sorted(base):
     b = base[el]
     best = dec.get(el)
     enabled = bool(best and best["json"]["sev_ok"] > b["sev_ok"])
-    if el == "snow_fsc":
-        enabled = False   # 外部日期 baseline 8/8，融合会拉低
+    if el in ("snow_fsc", "flood_precip_global"):
+        enabled = False   # 外部/原始链路复核：融合会拉低
     src = best["src"] if best else "semantic"
     # 外部日期/原始链路证据优先：wind_gale 的 DINOv2 在外部 storm 上高置信误判，
     # CLIP 探针 4/4，改为 semanitic。

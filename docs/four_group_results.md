@@ -535,3 +535,14 @@ ERDDAP 截取的 DHW 网格渲染两窗口，均无热胁迫，融合保持 none
 已把 wave 也改回 semantic（CLIP 探针），fusion_best 复核 3/3。
 与 wind_gale 相同：同分布小样本选出的 DINOv2 在真实链路外日期上不可靠，
 按外部证据回退到 CLIP。
+
+## 第三十五次：flood_precip_global 原始链路复核（关闭融合）
+
+| 探针 | raw fpg sev |
+|---|--:|
+| DINOv2 | 0/2 |
+| CLIP | 0/2 |
+
+两种探针在 GDACS 回退窗口上均高置信误覆盖（flood→none），
+raw baseline 本身 2/2。已把 flood_precip_global 设为强制关闭（与 snow_fsc 同）。
+说明同分布小样本（2 张/类）选出的探针不能盲信，必须过原始链路复核。

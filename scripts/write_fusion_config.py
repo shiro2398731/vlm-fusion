@@ -5,7 +5,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 D = r"C:\vlm-fusion\outputs\four_groups"
 OVERRIDES = {"sanddust": "dinov2", "wind_gale": "dinov2", "wave": "dinov2"}
-FORCE_DISABLE = {"snow_fsc"}   # 外部日期 baseline 8/8，融合会拉低
+FORCE_DISABLE = {"snow_fsc", "flood_precip_global"}   # 外部/原始链路复核会拉低
 P = r"C:\vlm-fusion\outputs\probes"
 
 base, dec = {}, {}

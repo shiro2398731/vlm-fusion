@@ -59,8 +59,8 @@ elements:
     source: visual
   # base 2/8 -> fused 7/8 (dinov2)
   flood_precip_global:
-    enabled: true
-    note: "+5"
+    enabled: false
+    note: "external-baseline-perfect"
     source: visual
   # base 3/4 -> fused 4/4 (dinov2)
   flood_water:

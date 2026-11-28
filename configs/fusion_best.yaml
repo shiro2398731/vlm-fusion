@@ -42,9 +42,7 @@ flood_opt:
   enabled: false
 
 flood_precip_global:
-  enabled: true
-  fusion: {mode: [decision], tau: 0.6, source: visual}
-  visual: {extractor: dinov2_probe, probe_path: outputs/probes/flood_precip_global_dinov2_probe.joblib}
+  enabled: false
 
 flood_water:
   enabled: true
@@ -165,4 +163,4 @@ wind_gale:
   fusion: {mode: [decision], tau: 0.6, source: semantic}
   semantic: {extractor: clip_probe, probe_path: outputs/probes/wind_gale_clip_probe.joblib}
 
-# enabled: 25 / 38
+# enabled: 24 / 38
