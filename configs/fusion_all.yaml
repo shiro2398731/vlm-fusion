@@ -13,6 +13,7 @@ bloom_chla:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 coastal_nt:
   numeric: {extractor: numeric}
@@ -25,6 +26,7 @@ coastal_nt:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 coastal_sla:
   numeric: {extractor: numeric}
@@ -37,6 +39,7 @@ coastal_sla:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 coral_dhw:
   numeric: {extractor: numeric}
@@ -49,6 +52,7 @@ coral_dhw:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 drought_grace:
   numeric: {extractor: numeric}
@@ -61,6 +65,7 @@ drought_grace:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 drought_ndvi_clim:
   numeric: {extractor: numeric}
@@ -73,6 +78,7 @@ drought_ndvi_clim:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 earthquake_def:
   numeric: {extractor: numeric}
@@ -85,6 +91,7 @@ earthquake_def:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 enso:
   numeric: {extractor: numeric}
@@ -97,6 +104,7 @@ enso:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 flare:
   numeric: {extractor: numeric}
@@ -109,6 +117,7 @@ flare:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 flood_opt:
   numeric: {extractor: numeric}
@@ -121,6 +130,7 @@ flood_opt:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 flood_precip_global:
   numeric: {extractor: numeric}
@@ -133,6 +143,7 @@ flood_precip_global:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 flood_water:
   numeric: {extractor: numeric}
@@ -145,6 +156,7 @@ flood_water:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 geomagnetic:
   numeric: {extractor: numeric}
@@ -157,6 +169,7 @@ geomagnetic:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 gpm_nt:
   numeric: {extractor: numeric}
@@ -169,6 +182,7 @@ gpm_nt:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 green_tide:
   numeric: {extractor: numeric}
@@ -181,6 +195,7 @@ green_tide:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 ground_subsidence:
   numeric: {extractor: numeric}
@@ -193,6 +208,7 @@ ground_subsidence:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 groundwater_grace:
   numeric: {extractor: numeric}
@@ -205,6 +221,7 @@ groundwater_grace:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 groundwater_overuse:
   numeric: {extractor: numeric}
@@ -217,6 +234,7 @@ groundwater_overuse:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 haze:
   numeric: {extractor: numeric}
@@ -229,6 +247,7 @@ haze:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 heatwave_lst:
   numeric: {extractor: numeric}
@@ -241,6 +260,7 @@ heatwave_lst:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 hurricane_opt:
   numeric: {extractor: numeric}
@@ -253,6 +273,7 @@ hurricane_opt:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 hurricane_rain:
   numeric: {extractor: numeric}
@@ -265,6 +286,7 @@ hurricane_rain:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 iod:
   numeric: {extractor: numeric}
@@ -277,6 +299,7 @@ iod:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 marine_heatwave:
   numeric: {extractor: numeric}
@@ -289,6 +312,7 @@ marine_heatwave:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 sanddust:
   numeric: {extractor: numeric}
@@ -301,6 +325,7 @@ sanddust:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 sea_ice_amsr2:
   numeric: {extractor: numeric}
@@ -313,6 +338,7 @@ sea_ice_amsr2:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 sea_ice_s2_arctic:
   numeric: {extractor: numeric}
@@ -325,6 +351,7 @@ sea_ice_s2_arctic:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 snow_fsc:
   numeric: {extractor: numeric}
@@ -337,6 +364,7 @@ snow_fsc:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 snow_swe:
   numeric: {extractor: numeric}
@@ -349,6 +377,7 @@ snow_swe:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 snowstorm:
   numeric: {extractor: numeric}
@@ -361,6 +390,7 @@ snowstorm:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 uvai_dust:
   numeric: {extractor: numeric}
@@ -373,6 +403,7 @@ uvai_dust:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 volcano_so2:
   numeric: {extractor: numeric}
@@ -385,6 +416,7 @@ volcano_so2:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 volcano_thermal:
   numeric: {extractor: numeric}
@@ -397,6 +429,7 @@ volcano_thermal:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 waterlogging_pct:
   numeric: {extractor: numeric}
@@ -409,6 +442,7 @@ waterlogging_pct:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 wave:
   numeric: {extractor: numeric}
@@ -421,6 +455,7 @@ wave:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 wildfire:
   numeric: {extractor: numeric}
@@ -433,6 +468,7 @@ wildfire:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 wildfire_smoke:
   numeric: {extractor: numeric}
@@ -445,6 +481,7 @@ wildfire_smoke:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 wind_gale:
   numeric: {extractor: numeric}
@@ -457,5 +494,6 @@ wind_gale:
     include_semantic: true
     include_vectors: true
   eval: {backend: local}
+  llm: {backend: local}
 
 # 元素数：38

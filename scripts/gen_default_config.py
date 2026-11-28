@@ -30,6 +30,7 @@ for el in sorted(cap):
     lines.append("    include_semantic: true")
     lines.append("    include_vectors: true")
     lines.append("  eval: {backend: local}")
+    lines.append("  llm: {backend: local}")
     lines.append("")
 lines.append("# 元素数：%d" % n)
 open(OUT, "w", encoding="utf-8").write("\n".join(lines))
