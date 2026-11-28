@@ -360,3 +360,18 @@ snow_swe（8 张）：
 
 明细见 [decision_all_sources.md](decision_all_sources.md)；配置已按“最优探针”重算：
 `configs/fusion_selected.yaml` 38 元素中 26 个启用。
+
+## 第二十一次：DINOv2 决策融合的阈值敏感性
+
+| 元素 | tau0.5 | tau0.6 | tau0.7 |
+|---|--:|--:|--:|
+| sanddust | 6/6 | 6/6 | 6/6 |
+| wave | 5/8 | 5/8 | 4/8 |
+| wind_gale | 5/6 | 5/6 | 5/6 |
+| flare | 6/8 | 6/8 | 6/8 |
+| gpm_nt | 6/6 | 6/6 | 6/6 |
+| uvai_dust | 7/8 | 7/8 | 6/8 |
+| haze | 6/6 | 6/6 | 6/6 |
+| coastal_nt | 6/6 | 6/6 | 6/6 |
+
+结论：0.6 与 0.5 持平或更优，0.7 在 wave/uvai 上变差；维持 0.6。
