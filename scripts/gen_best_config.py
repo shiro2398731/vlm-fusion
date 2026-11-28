@@ -36,8 +36,8 @@ for el in sorted(base):
     src = best["src"] if best else "semantic"
     # 外部日期/原始链路证据优先：wind_gale 的 DINOv2 在外部 storm 上高置信误判，
     # CLIP 探针 4/4，改为 semanitic。
-    if el == "wind_gale":
-        src = "semantic"
+    if el in ("wind_gale", "wave"):
+        src = "semantic"   # 原始链路外部复核：DINOv2 高置信误判，改回 CLIP
     lines.append("%s:" % el)
     if not enabled:
         lines.append("  enabled: false")

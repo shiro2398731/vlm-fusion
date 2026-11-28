@@ -524,3 +524,14 @@ green_tide 在 fusion_best 中关闭（同分布融合会下降），原始链�
 | coral_dhw | 2/2 | 2/2 |
 
 ERDDAP 截取的 DHW 网格渲染两窗口，均无热胁迫，融合保持 none。
+
+## 第三十四次：wave 原始链路复核与探针修正
+
+| 探针 | raw wave sev |
+|---|--:|
+| DINOv2 | 2/3（高置信误覆盖） |
+| CLIP | **3/3** |
+
+已把 wave 也改回 semantic（CLIP 探针），fusion_best 复核 3/3。
+与 wind_gale 相同：同分布小样本选出的 DINOv2 在真实链路外日期上不可靠，
+按外部证据回退到 CLIP。

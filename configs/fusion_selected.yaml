@@ -171,11 +171,10 @@ elements:
     enabled: true
     note: "+1"
     source: visual
-  # base 2/8 -> fused 4/8 (dinov2)
+  # base 2/8 -> fused 4/8 (semantic)
   wave:
     enabled: true
     note: "+2"
-    source: visual
   # base 0/4 -> fused 4/4 (dinov2)
   wildfire:
     enabled: true
