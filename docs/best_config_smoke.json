@@ -30,12 +30,6 @@
   "source": "probe"
  },
  {
-  "element": "flood_precip_global",
-  "status": "ok",
-  "severity": "heavy",
-  "source": "probe"
- },
- {
   "element": "flood_water",
   "status": "ok",
   "severity": "water",
