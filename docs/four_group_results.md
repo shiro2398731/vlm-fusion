@@ -508,3 +508,11 @@ obvious_deform 窗口保持正确。
 
 两元素在 fusion_best 中启用，原始链路结果与 baseline 一致或全对，
 说明探针在这些元素上没有引入破坏；sea_ice 探针覆盖后等级保持 ice。
+
+## 第三十二次：原始链路端到端（green_tide）
+
+| 指标 | raw baseline | raw + 配置（关闭） |
+|---|--:|--:|
+| green_tide | 2/2 | 2/2 |
+
+green_tide 在 fusion_best 中关闭（同分布融合会下降），原始链路保持 baseline 全对。
