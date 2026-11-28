@@ -456,6 +456,9 @@ MIT（见 `LICENSE`）。
 - 训练集外日期：wave 2/8→3/8、earthquake_def 4/6→6/6、groundwater 4/6→4/6
 - snow_fsc 外部 baseline 8/8，融合会拉低 → 该元素关闭融合
 - CLIP 零样本对渲染图无效（coral 0%、snow_fsc 31%），改「嵌入 + 探针」后 93–94%
+- 三路向量四组对照（弱元素）：视觉向量在 sea_ice_amsr2 3/8→6/8、wildfire_smoke 3/8→5/8；
+  语义向量仍不稳定，故默认保留但按元素可关
+- 四组全量汇总：[docs/four_group_all.md](docs/four_group_all.md)（由脚本生成）
 
 ### 配置与文档
 
