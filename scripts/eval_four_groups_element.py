@@ -12,7 +12,8 @@ VAL = r"C:\vlmdisaster\LLaMA-Factory\data\train_%s_json_val.json" % EL
 OUT = r"C:\vlm-fusion\outputs\four_groups"
 os.makedirs(OUT, exist_ok=True)
 
-recs = [r for r in json.load(open(VAL, encoding="utf-8")) if os.path.exists(r.get("image", ""))]
+recs = [r for r in json.load(open(VAL, encoding="utf-8"))
+        if os.path.exists(r.get("image") or (r.get("images") or [""])[0])]
 by = {}
 for r in recs:
     by.setdefault(r.get("label"), []).append(r)
@@ -52,14 +53,14 @@ for name, vis, sem in GROUPS:
     ok = 0; n = 0
     for r in picked:
         try:
-            out = p.run(r["image"], API, EL, {})
+            out = p.run(r.get("image") or r["images"][0], API, EL, {})
         except Exception as e:
             print(name, "ERR", str(e)[:60], flush=True); continue
         pred = out["prediction"].get("prediction") or out["prediction"]
         n += 1
         if pred.get("severity") == r.get("label"):
             ok += 1
-        print("%-9s %-30s truth %-10s pred %-10s" % (name, os.path.basename(r["image"]),
+        print("%-9s %-30s truth %-10s pred %-10s" % (name, os.path.basename(r.get("image") or r["images"][0]),
                                                      r.get("label"), pred.get("severity")), flush=True)
     results[name] = {"n": n, "sev_ok": ok, "sev_acc": round(100.0 * ok / max(n, 1), 1)}
     print("%-9s sev %d/%d" % (name, ok, n), flush=True)
