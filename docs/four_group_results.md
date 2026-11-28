@@ -405,3 +405,15 @@ snow_swe（8 张）：
 - 视觉文本 +both 在 6/8 元素上升或持平，sea_ice_amsr2 提升最大（3/8→6/8）
 - 语义文本单独注入仍不稳定（wind 2/6、sanddust 3/6）
 - 决策级覆盖仍优于文本注入（如 haze 2/6→6/6）
+
+## 第二十四次：四组对照全量汇总（三路向量默认开启）
+
+38 元素四组对照（baseline / +视觉 / +语义 / +both），全部脚本记录见
+[four_group_all.md](four_group_all.md)。
+
+合计（+both 对比 baseline）：**升 14、平 21、降 4**。
+- 视觉文本（+visual）在 sea_ice_amsr2、wildfire_smoke、snowstorm、gpm_nt 等元素有效
+- 语义文本单独注入仍不稳定（ground_subsidence、groundwater_grace 下降）
+- 文本注入整体不如决策级覆盖（26 升 12 平 0 降）
+
+因此最终采用：三路向量作为输入信息 + 决策级融合；文本注入保留为消融。

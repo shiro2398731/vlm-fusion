@@ -6,9 +6,13 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 D = r"C:\vlm-fusion\outputs\four_groups"
 OUT = r"C:\vlm-fusion\docs\four_group_all.md"
 
+import json as _json
+CAP = _json.load(open(r"C:\vlm-fusion\elements_capability.json", encoding="utf-8"))
 rows = []
 for f in glob.glob(os.path.join(D, "*_four_groups.json")):
     el = os.path.basename(f)[:-len("_four_groups.json")]
+    if el not in CAP:
+        continue
     j = json.load(open(f, encoding="utf-8"))
     if "baseline" not in j:
         continue
